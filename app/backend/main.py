@@ -47,6 +47,17 @@ try:
 except ImportError as e:
     print(f"⚠️  Aviso: Alguns módulos não disponíveis - {e}")
 
+
+# Registrar rotas IA
+try:
+    from app.backend.src.routes.ia_routes import router as ia_router
+    app.include_router(ia_router, prefix="/api/v1/ia", tags=["Inteligência Artificial"])
+    print("✅ Rotas IA Brasileira registradas")
+except ImportError as e:
+    print(f"⚠️  Rotas IA não disponíveis: {e}")
+
+
+
 # Registrar rotas condicionalmente
 try:
     from app.backend.src.routes.whatsapp_routes import router as whatsapp_router
@@ -136,6 +147,13 @@ async def api_info():
             "templates_dir": str(templates_dir) if templates_dir.exists() else "not_found"
         }
     }
+
+
+@app.get("/teste-ia")
+async def teste_ia(request: Request):
+    """Página de teste da IA Brasileira"""
+    return templates.TemplateResponse("teste_ia.html", {"request": request})
+
 
 if __name__ == "__main__":
     import uvicorn

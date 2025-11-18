@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Teste IA Brasileira - HealthPlatform</title>
+  </head>
+  <body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+      <h1 class="text-2xl font-bold text-gray-800 mb-6">
+        🧠 TESTE IA BRASILEIRA
+      </h1>
+
+      <div class="mb-6 p-4 bg-blue-50 rounded-lg">
+        <h2 class="text-lg font-semibold mb-2">
+          📊 Analisar Perfil do Cliente
+        </h2>
+        <form id="analisarForm" class="space-y-3">
+          <div>
+            <label class="block text-sm font-medium">Nome:</label>
+            <input
+              type="text"
+              name="nome"
+              class="w-full p-2 border rounded"
+              value="Carlos Silva"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Idade:</label>
+            <input
+              type="number"
+              name="idade"
+              class="w-full p-2 border rounded"
+              value="35"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Renda (R$):</label>
+            <input
+              type="number"
+              name="renda"
+              class="w-full p-2 border rounded"
+              value="12000"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Dependentes:</label>
+            <input
+              type="number"
+              name="dependentes"
+              class="w-full p-2 border rounded"
+              value="2"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Profissão:</label>
+            <input
+              type="text"
+              name="profissao"
+              class="w-full p-2 border rounded"
+              value="empresario"
+            />
+          </div>
+          <button
+            type="submit"
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            🧠 Analisar Perfil
+          </button>
+        </form>
+      </div>
+
+      <div id="resultado" class="mt-6 p-4 bg-gray-50 rounded-lg hidden">
+        <h3 class="text-lg font-semibold mb-3">🎯 Resultado da Análise:</h3>
+        <div id="resultadoContent"></div>
+      </div>
+
+      <div class="mt-8 p-4 bg-yellow-50 rounded-lg">
+        <h2 class="text-lg font-semibold mb-3">📝 Gerar Script de Venda</h2>
+        <form id="scriptForm" class="space-y-3">
+          <div>
+            <label class="block text-sm font-medium">Nome do Cliente:</label>
+            <input
+              type="text"
+              name="nome"
+              class="w-full p-2 border rounded"
+              value="Maria Santos"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Plano Sugerido:</label>
+            <select name="plano" class="w-full p-2 border rounded">
+              <option value="INDIVIDUAL">Individual</option>
+              <option value="FAMILIAR" selected>Familiar</option>
+              <option value="EMPRESARIAL">Empresarial</option>
+              <option value="VIP">VIP</option>
+            </select>
+          </div>
+          <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            📝 Gerar Script
+          </button>
+        </form>
+      </div>
+
+      <div id="scriptResultado" class="mt-6 p-4 bg-gray-50 rounded-lg hidden">
+        <h3 class="text-lg font-semibold mb-3">💼 Script de Venda:</h3>
+        <div
+          id="scriptContent"
+          class="bg-white p-4 rounded border whitespace-pre-line font-mono text-sm"
+        ></div>
+      </div>
+    </div>
+
+    <script>
+      // Analisar Perfil
+      document
+        .getElementById("analisarForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          const dados = Object.fromEntries(formData);
+          dados.idade = parseInt(dados.idade);
+          dados.renda = parseInt(dados.renda);
+          dados.dependentes = parseInt(dados.dependentes);
+
+          try {
+            const response = await fetch("/api/v1/ia/analisar-perfil", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(dados),
+            });
+            const resultado = await response.json();
+
+            document.getElementById("resultadoContent").innerHTML = `
+                    <div class="bg-green-100 p-4 rounded-lg">
+                        <p><strong>Plano Sugerido:</strong> ${
+                          resultado.data.plano_sugerido
+                        }</p>
+                        <p><strong>Operadora:</strong> ${
+                          resultado.data.operadora_sugerida
+                        }</p>
+                        <p><strong>Faixa de Preço:</strong> R$ ${
+                          resultado.data.faixa_preco_estimada[0]
+                        } - R$ ${resultado.data.faixa_preco_estimada[1]}</p>
+                        <p><strong>Justificativa:</strong> ${
+                          resultado.data.justificativa
+                        }</p>
+                        <p><strong>Cobertura:</strong> ${resultado.data.cobertura_principal.join(
+                          ", "
+                        )}</p>
+                    </div>
+                `;
+            document.getElementById("resultado").classList.remove("hidden");
+          } catch (error) {
+            alert("Erro ao analisar perfil: " + error);
+          }
+        });
+
+      // Gerar Script
+      document
+        .getElementById("scriptForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          const dados = {
+            perfil_cliente: { nome: formData.get("nome") },
+            plano_sugerido: formData.get("plano"),
+          };
+
+          try {
+            const response = await fetch("/api/v1/ia/gerar-script-venda", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(dados),
+            });
+            const resultado = await response.json();
+
+            document.getElementById("scriptContent").innerHTML =
+              resultado.data.script.replace(/\n/g, "<br>");
+            document
+              .getElementById("scriptResultado")
+              .classList.remove("hidden");
+          } catch (error) {
+            console.error("Erro detalhado:", + error);
+            alert("Erro ao gerar script: " + error);
+          }
+        });
+    </script>
+  </body>
+</html>
