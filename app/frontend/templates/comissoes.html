@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Comissões - Health Platform</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .progress-bar {
+        transition: width 0.8s ease-in-out;
+      }
+      .kpi-card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+      }
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e67951",
+              "background-light": "#f8f6f6",
+              "background-dark": "#211511",
+              "card-light": "#ffffff",
+              "card-dark": "#2a1a14",
+              "text-light": "#1c1c1c",
+              "text-dark": "#f5f5f5",
+              "subtext-light": "#876d64",
+              "subtext-dark": "#a18a82",
+              "border-light": "#e5dedc",
+              "border-dark": "#40312c",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              lg: "1rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="flex min-h-screen">
+      <!-- Sidebar Navigation -->
+      <aside
+        class="w-64 bg-card-light dark:bg-card-dark flex-col justify-between hidden lg:flex"
+      >
+        <div class="p-6">
+          <div class="flex flex-col">
+            <div class="flex items-center">
+              <div class="bg-center">
+                <img
+                  class="w-full max-w-48"
+                  src="/static/img/logo_crm.png"
+                  alt="Health Platform Logo"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-6 p-8">
+            <div class="flex flex-col items-center p-2">
+              <div class="flex items-center">
+                <div
+                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                  data-alt="Admin profile picture"
+                >
+                  <h1
+                    class="text-text-light dark:text-text-dark text-base font-medium leading-normal"
+                  >
+                    Admin
+                  </h1>
+                  <p
+                    class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal"
+                  >
+                    Administrador
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <nav class="mt-6 flex flex-col gap-2">
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
+              href="/dashboard"
+            >
+              <span class="material-symbols-outlined">dashboard</span>
+              <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
+              href="/clientes"
+            >
+              <span class="material-symbols-outlined">group</span>
+              <span class="text-sm font-medium">Clientes</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
+              href="leads"
+            >
+              <span class="material-symbols-outlined">leaderboard</span>
+              <span class="text-sm font-medium">Leads</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary"
+              href="/comissoes"
+            >
+              <span class="material-symbols-outlined">paid</span>
+              <span class="text-sm font-medium">Comissões</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
+              href="relatorios"
+            >
+              <span class="material-symbols-outlined">assessment</span>
+              <span class="text-sm font-medium">Relatórios</span>
+            </a>
+          </nav>
+        </div>
+      </aside>
+
+      <div class="flex-1 flex flex-col">
+        <!-- Top Navigation Bar -->
+        <header
+          class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark flex items-center justify-between p-4 sticky top-0 z-10"
+        >
+          <div class="flex items-center gap-4">
+            <button class="lg:hidden text-text-light dark:text-text-dark">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="relative w-64 hidden md:block">
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark"
+                >search</span
+              >
+              <input
+                class="form-input w-full pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border-transparent focus:border-primary focus:ring-primary text-sm text-text-light dark:text-text-dark placeholder-subtext-light dark:placeholder-subtext-dark"
+                placeholder="Buscar corretores, planos..."
+                type="text"
+                id="searchInput"
+              />
+            </div>
+            <button
+              class="relative text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span
+                class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-primary ring-2 ring-card-light dark:ring-card-dark"
+              ></span>
+            </button>
+            <div class="flex items-center gap-2">
+              <div
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                data-alt="Admin profile picture"
+                style="background-color: #e67951; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;"
+              >
+                A
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Content -->
+        <main
+          class="flex-1 p-4 sm:p-6 lg:p-8 bg-background-light dark:bg-background-dark"
+        >
+          <!-- KPI Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="kpi-card bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm border border-border-light dark:border-border-dark">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium mb-1">Total Comissões Mês</p>
+                  <p class="text-2xl font-bold text-text-light dark:text-text-dark" id="totalComissoes">R$ 2.037,64</p>
+                </div>
+                <div class="p-3 bg-primary/10 rounded-lg">
+                  <span class="material-symbols-outlined text-primary">payments</span>
+                </div>
+              </div>
+              <p class="text-xs text-subtext-light dark:text-subtext-dark mt-2">+12% vs mês anterior</p>
+            </div>
+
+            <div class="kpi-card bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm border border-border-light dark:border-border-dark">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium mb-1">Vendas do Mês</p>
+                  <p class="text-2xl font-bold text-text-light dark:text-text-dark" id="totalVendas">R$ 15.000,00</p>
+                </div>
+                <div class="p-3 bg-green-500/10 rounded-lg">
+                  <span class="material-symbols-outlined text-green-500">trending_up</span>
+                </div>
+              </div>
+              <p class="text-xs text-subtext-light dark:text-subtext-dark mt-2">8 vendas realizadas</p>
+            </div>
+
+            <div class="kpi-card bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm border border-border-light dark:border-border-dark">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium mb-1">Comissão Média</p>
+                  <p class="text-2xl font-bold text-text-light dark:text-text-dark" id="comissaoMedia">R$ 254,70</p>
+                </div>
+                <div class="p-3 bg-blue-500/10 rounded-lg">
+                  <span class="material-symbols-outlined text-blue-500">avg_time</span>
+                </div>
+              </div>
+              <p class="text-xs text-subtext-light dark:text-subtext-dark mt-2">Por venda</p>
+            </div>
+
+            <div class="kpi-card bg-card-light dark:bg-card-dark rounded-xl p-6 shadow-sm border border-border-light dark:border-border-dark">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium mb-1">Taxa de Comissão</p>
+                  <p class="text-2xl font-bold text-text-light dark:text-text-dark" id="taxaComissao">13.58%</p>
+                </div>
+                <div class="p-3 bg-purple-500/10 rounded-lg">
+                  <span class="material-symbols-outlined text-purple-500">percent</span>
+                </div>
+              </div>
+              <p class="text-xs text-subtext-light dark:text-subtext-dark mt-2">Média ponderada</p>
+            </div>
+          </div>
+
+          <div class="p-6">
+            <div class="flex flex-wrap justify-between gap-4 mb-6">
+              <div class="flex flex-col gap-1">
+                <p class="text-gray-800 dark:text-white text-3xl font-bold leading-tight tracking-tight">
+                  Comissões - Health Platform
+                </p>
+                <p class="text-gray-500 dark:text-gray-400 text-base">
+                  Sistema de comissões integrado com CRM e WhatsApp
+                </p>
+              </div>
+              <button
+                class="flex min-w-[84px] items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-5 bg-primary text-white text-sm font-medium shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                onclick="openPdfModal()"
+              >
+                <span class="material-symbols-outlined">picture_as_pdf</span>
+                <span class="truncate">Gerar Relatório</span>
+              </button>
+            </div>
+
+            <!-- Filtros -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Corretor</label>
+                <select class="form-select w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" id="filterCorretor">
+                  <option value="">Todos os corretores</option>
+                  <option value="1">Bruna Mamedes</option>
+                  <option value="2">Maiara Andrade</option>
+                  <option value="3">Fernando Diamantino</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Plano</label>
+                <select class="form-select w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" id="filterPlano">
+                  <option value="">Todos os planos</option>
+                  <option value="INDIVIDUAL">Individual</option>
+                  <option value="FAMILIAR">Familiar</option>
+                  <option value="EMPRESARIAL">Empresarial</option>
+                  <option value="VIP">VIP</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
+                <select class="form-select w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" id="filterStatus">
+                  <option value="">Todos os status</option>
+                  <option value="PENDENTE">Pendente</option>
+                  <option value="PAGA">Paga</option>
+                  <option value="CANCELADA">Cancelada</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Período</label>
+                <select class="form-select w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white" id="filterPeriodo">
+                  <option value="2025-11">Novembro 2025</option>
+                  <option value="2025-10">Outubro 2025</option>
+                  <option value="2025-09">Setembro 2025</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Tabela de Comissões -->
+            <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark/50 shadow-sm">
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-gray-50 dark:bg-gray-800/50">
+                    <tr class="text-left text-gray-500 dark:text-gray-400 font-medium">
+                      <th class="px-4 py-3">Venda ID</th>
+                      <th class="px-4 py-3">Corretor</th>
+                      <th class="px-4 py-3">Plano</th>
+                      <th class="px-4 py-3 text-right">Valor Venda</th>
+                      <th class="px-4 py-3 text-right">% Comissão</th>
+                      <th class="px-4 py-3 text-right">Valor Comissão</th>
+                      <th class="px-4 py-3 text-center">Data</th>
+                      <th class="px-4 py-3 text-center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200 dark:divide-gray-700" id="comissoesTable">
+                    <!-- Dados serão preenchidos via JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+              <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+                <span class="text-sm text-gray-500 dark:text-gray-400" id="tableInfo">Carregando...</span>
+                <div class="inline-flex items-center gap-2">
+                  <button class="px-3 py-1 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700" id="prevPage">
+                    Anterior
+                  </button>
+                  <button class="px-3 py-1 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700" id="nextPage">
+                    Próxima
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <!-- Modal PDF -->
+      <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="pdf-modal">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-lg p-6 m-4">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white">Gerar Relatório de Comissões</h3>
+            <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200" onclick="closePdfModal()">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          <div class="mt-4 space-y-4">
+            <p class="text-sm text-gray-600 dark:text-gray-300">
+              Selecione o período para gerar o relatório de comissões. Os valores serão calculados automaticamente.
+            </p>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="start-date">Data Inicial</label>
+                <input class="form-input w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-primary/50 focus:border-primary/50" id="start-date" type="date" value="2025-11-01">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="end-date">Data Final</label>
+                <input class="form-input w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-primary/50 focus:border-primary/50" id="end-date" type="date" value="2025-11-30">
+              </div>
+            </div>
+            <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg space-y-2">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500 dark:text-gray-400">Total de Vendas:</span>
+                <span class="font-medium text-gray-800 dark:text-white">R$ 15.000,00</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500 dark:text-gray-400">Comissões Calculadas:</span>
+                <span class="font-medium text-gray-800 dark:text-white">R$ 2.037,64</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500 dark:text-gray-400">Taxa Média:</span>
+                <span class="font-medium text-gray-800 dark:text-white">13.58%</span>
+              </div>
+              <hr class="border-gray-200 dark:border-gray-600">
+              <div class="flex justify-between font-bold text-base">
+                <span class="text-gray-800 dark:text-white">Total Líquido:</span>
+                <span class="text-primary">R$ 2.037,64</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end gap-3">
+            <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-600" onclick="closePdfModal()">
+              Cancelar
+            </button>
+            <button class="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90" onclick="generatePDF()">
+              <span class="material-symbols-outlined">download</span>
+              <span>Gerar PDF</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Dados mockados baseados no nosso sistema de comissões
+      const comissoesData = [
+        { id: 1, corretor: "Bruna Mamedes", plano: "FAMILIAR", valorVenda: 1500.00, percentual: 12.0, comissao: 180.00, data: "2025-11-15", status: "PAGA" },
+        { id: 2, corretor: "Maiara Andrade", plano: "EMPRESARIAL", valorVenda: 8000.00, percentual: 10.0, comissao: 800.00, data: "2025-11-18", status: "PAGA" },
+        { id: 3, corretor: "Fernando Diamantino", plano: "VIP", valorVenda: 3000.00, percentual: 10.0, comissao: 300.00, data: "2025-11-20", status: "PENDENTE" },
+        { id: 4, corretor: "Bruna Mamedes", plano: "INDIVIDUAL", valorVenda: 300.00, percentual: 15.0, comissao: 45.00, data: "2025-11-22", status: "PAGA" },
+        { id: 5, corretor: "Maiara Andrade", plano: "FAMILIAR", valorVenda: 1200.00, percentual: 12.0, comissao: 144.00, data: "2025-11-25", status: "PENDENTE" },
+        { id: 6, corretor: "Fernando Diamantino", plano: "EMPRESARIAL", valorVenda: 5000.00, percentual: 10.0, comissao: 500.00, data: "2025-11-28", status: "CANCELADA" },
+        { id: 7, corretor: "Bruna Mamedes", plano: "VIP", valorVenda: 2500.00, percentual: 8.0, comissao: 200.00, data: "2025-11-30", status: "PAGA" },
+        { id: 8, corretor: "Maiara Andrade", plano: "FAMILIAR", valorVenda: 800.00, percentual: 15.0, comissao: 120.00, data: "2025-11-30", status: "PENDENTE" }
+      ];
+
+      let currentPage = 1;
+      const itemsPerPage = 5;
+      let filteredData = [...comissoesData];
+
+      // Formatar moeda
+      function formatCurrency(value) {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+      }
+
+      // Formatar data
+      function formatDate(dateString) {
+        return new Date(dateString).toLocaleDateString('pt-BR');
+      }
+
+      // Obter cor do status
+      function getStatusColor(status) {
+        const colors = {
+          'PAGA': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+          'PENDENTE': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
+          'CANCELADA': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
+        };
+        return colors[status] || 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300';
+      }
+
+      // Atualizar tabela
+      function updateTable() {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const pageData = filteredData.slice(startIndex, endIndex);
+        
+        const tableBody = document.getElementById('comissoesTable');
+        tableBody.innerHTML = '';
+
+        pageData.forEach(item => {
+          const row = document.createElement('tr');
+          row.className = 'text-gray-600 dark:text-gray-300';
+          row.innerHTML = `
+            <td class="px-4 py-3 whitespace-nowrap">#${item.id}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.corretor}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.plano}</td>
+            <td class="px-4 py-3 text-right whitespace-nowrap">${formatCurrency(item.valorVenda)}</td>
+            <td class="px-4 py-3 text-right whitespace-nowrap">${item.percentual}%</td>
+            <td class="px-4 py-3 text-right whitespace-nowrap font-medium text-gray-800 dark:text-white">
+              ${formatCurrency(item.comissao)}
+            </td>
+            <td class="px-4 py-3 text-center whitespace-nowrap">${formatDate(item.data)}</td>
+            <td class="px-4 py-3 text-center">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(item.status)}">
+                ${item.status}
+              </span>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+
+        // Atualizar informações da página
+        const totalItems = filteredData.length;
+        const startItem = totalItems > 0 ? startIndex + 1 : 0;
+        const endItem = Math.min(endIndex, totalItems);
+        document.getElementById('tableInfo').textContent = 
+          `Mostrando ${startItem} a ${endItem} de ${totalItems} resultados`;
+
+        // Atualizar botões de paginação
+        document.getElementById('prevPage').disabled = currentPage === 1;
+        document.getElementById('nextPage').disabled = endIndex >= totalItems;
+      }
+
+      // Filtrar dados
+      function filterData() {
+        const corretorFilter = document.getElementById('filterCorretor').value;
+        const planoFilter = document.getElementById('filterPlano').value;
+        const statusFilter = document.getElementById('filterStatus').value;
+
+        filteredData = comissoesData.filter(item => {
+          return (!corretorFilter || item.corretor.includes(corretorFilter === "1" ? "Bruna" : corretorFilter === "2" ? "Maiara" : "Fernando")) &&
+                 (!planoFilter || item.plano === planoFilter) &&
+                 (!statusFilter || item.status === statusFilter);
+        });
+
+        currentPage = 1;
+        updateTable();
+        updateKPICards();
+      }
+
+      // Atualizar KPI Cards
+      function updateKPICards() {
+        const totalComissoes = filteredData.reduce((sum, item) => sum + item.comissao, 0);
+        const totalVendas = filteredData.reduce((sum, item) => sum + item.valorVenda, 0);
+        const comissaoMedia = filteredData.length > 0 ? totalComissoes / filteredData.length : 0;
+        const taxaComissao = totalVendas > 0 ? (totalComissoes / totalVendas) * 100 : 0;
+
+        document.getElementById('totalComissoes').textContent = formatCurrency(totalComissoes);
+        document.getElementById('totalVendas').textContent = formatCurrency(totalVendas);
+        document.getElementById('comissaoMedia').textContent = formatCurrency(comissaoMedia);
+        document.getElementById('taxaComissao').textContent = taxaComissao.toFixed(2) + '%';
+      }
+
+      // Modal functions
+      function openPdfModal() {
+        document.getElementById('pdf-modal').classList.remove('hidden');
+      }
+
+      function closePdfModal() {
+        document.getElementById('pdf-modal').classList.add('hidden');
+      }
+
+      function generatePDF() {
+        alert('Relatório PDF gerado com sucesso!');
+        closePdfModal();
+      }
+
+      // Busca em tempo real
+      document.getElementById('searchInput').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        filteredData = comissoesData.filter(item => 
+          item.corretor.toLowerCase().includes(searchTerm) ||
+          item.plano.toLowerCase().includes(searchTerm) ||
+          item.status.toLowerCase().includes(searchTerm)
+        );
+        currentPage = 1;
+        updateTable();
+        updateKPICards();
+      });
+
+      // Event Listeners
+      document.getElementById('filterCorretor').addEventListener('change', filterData);
+      document.getElementById('filterPlano').addEventListener('change', filterData);
+      document.getElementById('filterStatus').addEventListener('change', filterData);
+      document.getElementById('filterPeriodo').addEventListener('change', filterData);
+      
+      document.getElementById('prevPage').addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          updateTable();
+        }
+      });
+
+      document.getElementById('nextPage').addEventListener('click', () => {
+        if (currentPage * itemsPerPage < filteredData.length) {
+          currentPage++;
+          updateTable();
+        }
+      });
+
+      // Inicializar
+      document.addEventListener('DOMContentLoaded', function() {
+        updateTable();
+        updateKPICards();
+      });
+    </script>
+  </body>
+</html>
