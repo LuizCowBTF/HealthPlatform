@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>HealthCRM Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+
+      .progress-bar {
+        transition: width 0.8s ease-in-out;
+      }
+
+      .kpi-card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+      }
+
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e67951",
+              "background-light": "#f8f6f6",
+              "background-dark": "#211511",
+              "card-light": "#ffffff",
+              "card-dark": "#2a1a14",
+              "text-light": "#1c1c1c",
+              "text-dark": "#f5f5f5",
+              "subtext-light": "#876d64",
+              "subtext-dark": "#a18a82",
+              "border-light": "#e5dedc",
+              "border-dark": "#40312c",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              lg: "1rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="flex min-h-screen">
+      <!-- Sidebar Navigation -->
+      <aside
+        class="w-64 bg-card-light dark:bg-card-dark flex-col justify-between hidden lg:flex"
+      >
+        <div class="p-6">
+          <div class="flex flex-col">
+            <div class="flex items-center">
+              <div class="bg-center">
+                <!-- LOGO NO HEADER ATUALIZADA -->
+                <img
+                  class="w-full max-w-48"
+                  src="/static/img/logo_crm.png"
+                  alt="HealthCRM Logo"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-6 p-8">
+            <div class="flex flex-col items-center p-2">
+              <div class="flex items-center">
+                <div
+                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                  data-alt="John Doe's profile picture">
+                    <h1
+                      class="text-text-light dark:text-text-dark text-base font-medium leading-normal"
+                    >
+                      Admin
+                    </h1>
+                    <p
+                      class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal"
+                    >
+                      Administrador
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <nav class="mt-6 flex flex-col gap-2">
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary"
+              href="/"
+            >
+              <span class="material-symbols-outlined">dashboard</span>
+              <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
+              href="#"
+            >
+              <span class="material-symbols-outlined">group</span>
+              <span class="text-sm font-medium">Clientes</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
+              href="#"
+            >
+              <span class="material-symbols-outlined">leaderboard</span>
+              <span class="text-sm font-medium">Leads</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
+              href="#"
+            >
+              <span class="material-symbols-outlined">paid</span>
+              <span class="text-sm font-medium">Comissões</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
+              href="#"
+            >
+              <span class="material-symbols-outlined">assessment</span>
+              <span class="text-sm font-medium">Relatórios</span>
+            </a>
+          </nav>
+        </div>
+      </aside>
+      <div class="flex-1 flex flex-col">
+        <!-- Top Navigation Bar -->
+        <header
+          class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark flex items-center justify-between p-4 sticky top-0 z-10"
+        >
+          <div class="flex items-center gap-4">
+            <button class="lg:hidden text-text-light dark:text-text-dark">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="relative w-64 hidden md:block">
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark"
+                >search</span
+              >
+              <input
+                class="form-input w-full pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border-transparent focus:border-primary focus:ring-primary text-sm text-text-light dark:text-text-dark placeholder-subtext-light dark:placeholder-subtext-dark"
+                placeholder="Buscar..."
+                type="text"
+              />
+            </div>
+            <button
+              class="relative text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span
+                class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-primary ring-2 ring-card-light dark:ring-card-dark"
+              ></span>
+            </button>
+            <div class="flex items-center gap-2">
+              <div
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                data-alt="Admin profile picture"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA_kl7NNUTxe25i-22FjeqKs3BRTb3s0l8NNXpitih0Iwp5FyoSEBkm68Jj3INTgKcXagL72nOu4JTyRzjS8gqnh-WLL4tMxk_AEuuoNiJLcIeKazC_tlfijqNqJQ3Pn9JXZzkW7HzYsLKR5nYzFnKaCLkSgMixnZ91nJRPAXaGSfTvAYgfkaaFNfgvEvqiaaKrgKYJDzUCmFEV9frshcvIo9Hfi8GWa05lK3PwShZokSr1WRc8ab8QmfauM-hKLp5cOgt8GXflz8I');
+                "
+              ></div>
+            </div>
+          </div>
+        </header>
+        <!-- Main Content -->
+        <main
+          class="flex-1 p-4 sm:p-6 lg:p-8 bg-background-light dark:bg-background-dark"
+        >
+          <!-- Loading State -->
+          <div
+            id="loading-indicator"
+            class="fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hidden"
+          >
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined animate-spin"
+                >refresh</span
+              >
+              <span>Carregando dados...</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            <!-- KPI Cards -->
+            <div
+              class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 md:col-span-2 xl:col-span-4"
+            >
+              <div class="flex flex-col gap-3">
+                <div class="flex gap-6 justify-between">
+                  <p
+                    class="text-text-light dark:text-text-dark text-base font-medium"
+                  >
+                    Meta Mensal
+                  </p>
+                  <p class="text-primary text-sm font-bold" id="monthly-goal">
+                    0%
+                  </p>
+                </div>
+                <div
+                  class="rounded-full bg-background-light dark:bg-background-dark h-2.5"
+                >
+                  <div
+                    class="h-2.5 rounded-full bg-primary progress-bar"
+                    id="goal-progress"
+                    style="width: 0%"
+                  ></div>
+                </div>
+                <p
+                  class="text-subtext-light dark:text-subtext-dark text-sm font-normal"
+                  id="goal-amount"
+                >
+                  Carregando dados...
+                </p>
+              </div>
+            </div>
+            <div
+              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card"
+            >
+              <p
+                class="text-text-light dark:text-text-dark text-base font-medium"
+              >
+                Planos Vendidos
+              </p>
+              <p
+                class="text-primary tracking-tight text-2xl font-bold"
+                id="plans-sold"
+              >
+                0
+              </p>
+            </div>
+            <div
+              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card"
+            >
+              <p
+                class="text-text-light dark:text-text-dark text-base font-medium"
+              >
+                Vidas Cobertas
+              </p>
+              <p
+                class="text-primary tracking-tight text-2xl font-bold"
+                id="lives-covered"
+              >
+                0
+              </p>
+            </div>
+            <div
+              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card"
+            >
+              <p
+                class="text-text-light dark:text-text-dark text-base font-medium"
+              >
+                Taxa de Conversão
+              </p>
+              <p
+                class="text-primary tracking-tight text-2xl font-bold"
+                id="conversion-rate"
+              >
+                0%
+              </p>
+            </div>
+            <div
+              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card"
+            >
+              <p
+                class="text-text-light dark:text-text-dark text-base font-medium"
+              >
+                Receita Atual
+              </p>
+              <p
+                class="text-primary tracking-tight text-2xl font-bold"
+                id="current-revenue"
+              >
+                R$0
+              </p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+            <!-- Chart Cards -->
+            <div
+              class="lg:col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-4"
+            >
+              <div class="flex items-center justify-between">
+                <h3
+                  class="text-text-light dark:text-text-dark text-lg font-semibold"
+                >
+                  Vendas por Operadora
+                </h3>
+                <button
+                  onclick="loadRealDashboardData()"
+                  class="text-primary hover:text-primary/80 transition-colors"
+                >
+                  <span class="material-symbols-outlined">refresh</span>
+                </button>
+              </div>
+              <div class="flex items-center justify-center h-64">
+                <canvas id="salesChart"></canvas>
+              </div>
+            </div>
+            <div
+              class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-4"
+            >
+              <h3
+                class="text-text-light dark:text-text-dark text-lg font-semibold"
+              >
+                Top Corretores
+              </h3>
+              <ul class="space-y-4" id="top-performers">
+                <li
+                  class="text-center py-8 text-subtext-light dark:text-subtext-dark"
+                >
+                  <span class="material-symbols-outlined text-4xl mb-2"
+                    >group</span
+                  >
+                  <p>Carregando corretores...</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="mt-6 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <h3
+                class="text-text-light dark:text-text-dark text-lg font-semibold"
+              >
+                Atividade Recente
+              </h3>
+              <p class="text-subtext-light dark:text-subtext-dark text-sm">
+                Últimas Vendas
+              </p>
+            </div>
+            <div class="space-y-4" id="recent-activity">
+              <div
+                class="text-center py-8 text-subtext-light dark:text-subtext-dark"
+              >
+                <span class="material-symbols-outlined text-4xl mb-2"
+                  >update</span
+                >
+                <p>Carregando atividades recentes...</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- JavaScript para dados reais -->
+    <script>
+      let salesChart = null;
+
+      // Mostrar loading
+      function showLoading() {
+        document.getElementById("loading-indicator").classList.remove("hidden");
+        document.querySelector("main").classList.add("loading");
+      }
+
+      // Esconder loading
+      function hideLoading() {
+        document.getElementById("loading-indicator").classList.add("hidden");
+        document.querySelector("main").classList.remove("loading");
+      }
+
+      async function loadRealDashboardData() {
+    showLoading();
+    console.log("📊 Carregando dados COMPLETOS do dashboard...");
+
+    try {
+        // Usar o endpoint COMPLETO que tem todos os dados
+        const response = await fetch("/api/v1/crm/dashboard/completo");
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("📦 Dados COMPLETOS recebidos:", result);
+
+        if (result.status === "success") {
+            updateDashboardWithRealData(result.data);
+        } else {
+            throw new Error(result.error || "Erro desconhecido");
+        }
+    } catch (error) {
+        console.error("❌ Erro ao carregar dados COMPLETOS:", error);
+        
+        // Fallback para dados básicos
+        console.log("🔄 Tentando carregar dados básicos...");
+        loadBasicData();
+    } finally {
+        hideLoading();
+    }
+}
+
+
+function updateDashboardWithRealData(data) {
+    console.log("🔄 Atualizando dashboard com dados COMPLETOS:", data);
+
+    if (!data || !data.metricas_principais) {
+        console.error("❌ Dados inválidos recebidos");
+        return;
+    }
+
+    const metricas = data.metricas_principais;
+    
+    // 1. META MENSAL (calculada)
+    const metaPercentual = Math.min(Math.round((metricas.receita_mensal / 5000000) * 100), 100);
+    document.getElementById("monthly-goal").textContent = metaPercentual + "%";
+    document.getElementById("goal-progress").style.width = metaPercentual + "%";
+    document.getElementById("goal-amount").textContent = 
+        `R$ ${formatCurrency(metricas.receita_mensal)} / R$ 5.000.000`;
+
+    // 2. KPIs PRINCIPAIS
+    document.getElementById("plans-sold").textContent = 
+        metricas.total_vendas.toLocaleString("pt-BR");
+    document.getElementById("lives-covered").textContent = 
+        (metricas.total_vendas * 2.5).toLocaleString("pt-BR"); // 2.5 vidas por plano
+    document.getElementById("conversion-rate").textContent = 
+        metricas.taxa_conversao.toFixed(1) + "%";
+    document.getElementById("current-revenue").textContent = 
+        "R$ " + formatCurrency(metricas.receita_total);
+
+    // 3. GRÁFICO DE OPERADORAS (usando dados REAIS)
+    if (data.vendas_por_operadora && data.vendas_por_operadora.length > 0) {
+        console.log("📊 Criando gráfico com:", data.vendas_por_operadora);
+        updateSalesChart(data.vendas_por_operadora);
+    } else {
+        console.log("⚠️  Sem dados de operadoras para gráfico");
+    }
+
+    // 4. TOP CORRETORES (usando dados REAIS)
+    if (data.top_corretores && data.top_corretores.length > 0) {
+        console.log("👑 Atualizando top corretores:", data.top_corretores);
+        updateTopBrokers(data.top_corretores);
+    } else {
+        console.log("⚠️  Sem dados de corretores");
+    }
+
+    // 5. ATIVIDADES RECENTES (usando top corretores)
+    if (data.top_corretores && data.top_corretores.length > 0) {
+        console.log("📋 Atualizando atividades:", data.top_corretores.slice(0, 3));
+        updateRecentActivity(data.top_corretores.slice(0, 3));
+    }
+
+    console.log("✅ Dashboard COMPLETO atualizado com sucesso!");
+}
+
+
+// Fallback para dados básicos
+async function loadBasicData() {
+    try {
+        const response = await fetch("/api/v1/crm/dashboard/metricas");
+        const result = await response.json();
+
+        if (result.status === "success") {
+            const metricas = result.data;
+            
+            // Apenas KPIs básicos
+            document.getElementById("plans-sold").textContent = 
+                metricas.total_vendas.toLocaleString("pt-BR");
+            document.getElementById("lives-covered").textContent = 
+                (metricas.total_vendas * 2.5).toLocaleString("pt-BR");
+            document.getElementById("conversion-rate").textContent = 
+                metricas.taxa_conversao.toFixed(1) + "%";
+            document.getElementById("current-revenue").textContent = 
+                "R$ " + formatCurrency(metricas.receita_total);
+                
+            console.log("✅ Dados básicos carregados como fallback");
+        }
+    } catch (error) {
+        console.error("❌ Erro no fallback:", error);
+    }
+}
+
+
+
+      // Atualizar dashboard com dados reais
+      function updateDashboardWithRealData(data) {
+          console.log("🔄 Atualizando com dados reais:", data);
+
+          // Atualizar KPIs com dados das métricas
+          if (data.metricas && data.metricas.data) {
+              const metricas = data.metricas.data;
+              
+              document.getElementById("monthly-goal").textContent = "75%";
+              document.getElementById("goal-progress").style.width = "75%";
+              document.getElementById("goal-amount").textContent = 
+                  `R$ ${formatCurrency(metricas.receita_total)} / R$ 500.000`;
+
+              document.getElementById("plans-sold").textContent = 
+                  metricas.vendas_mes.toLocaleString("pt-BR");
+              document.getElementById("lives-covered").textContent = 
+                  (metricas.vendas_mes * 3).toLocaleString("pt-BR"); // Estimativa: 3 vidas por plano
+              document.getElementById("conversion-rate").textContent = 
+                  metricas.taxa_conversao + "%";
+              document.getElementById("current-revenue").textContent = 
+                  "R$ " + formatCurrency(metricas.receita_total);
+          }
+
+          // Atualizar gráfico de vendas por operadora (mock por enquanto)
+          updateSalesChart([
+              { operator: "Amil", count: 45 },
+              { operator: "Bradesco", count: 38 },
+              { operator: "SulAmérica", count: 32 },
+              { operator: "NotreDame", count: 28 },
+              { operator: "Outras", count: 15 }
+          ]);
+
+          // Atualizar top corretores
+          if (data.corretores && data.corretores.data) {
+              updateTopBrokers(data.corretores.data.slice(0, 5));
+          }
+
+          // Atualizar atividade recente (últimas vendas)
+          if (data.vendas && data.vendas.data) {
+              updateRecentActivity(data.vendas.data.slice(0, 5));
+          }
+
+          console.log("✅ Dashboard atualizado com dados reais!");
+      }
+
+      // Dados mock para fallback
+      function loadMockData() {
+          console.log("🔄 Carregando dados mock...");
+          
+          updateDashboardWithRealData({
+              metricas: {
+                  data: {
+                      total_leads: 8241,
+                      vendas_mes: 342,
+                      receita_total: 422481.95,
+                      taxa_conversao: 4.15,
+                      corretores_ativos: 13
+                  }
+              },
+              vendas: {
+                  data: [
+                      { cliente_nome: "Cliente Recente 1", valor: 1500 },
+                      { cliente_nome: "Cliente Recente 2", valor: 2200 },
+                      { cliente_nome: "Cliente Recente 3", valor: 1800 }
+                  ]
+              },
+              corretores: {
+                  data: [
+                      { nome: "Carlos Silva", total_sales: 45 },
+                      { nome: "Ana Santos", total_sales: 38 },
+                      { nome: "João Oliveira", total_sales: 32 }
+                  ]
+              }
+          });
+      }
+
+      // Gráfico de vendas por operadora - VERSÃO CORRIGIDA
+function updateSalesChart(operadorasData) {
+    const ctx = document.getElementById("salesChart");
+    if (!ctx) {
+        console.log("❌ Elemento salesChart não encontrado");
+        return;
+    }
+
+    // Destruir gráfico anterior se existir
+    if (window.salesChartInstance) {
+        window.salesChartInstance.destroy();
+    }
+
+    // Preparar dados
+    const labels = operadorasData.map(item => item.operadora);
+    const data = operadorasData.map(item => item.vendas);
+    const receitas = operadorasData.map(item => item.receita);
+
+    console.log("📊 Dados do gráfico:", { labels, data, receitas });
+
+    // Criar novo gráfico
+    window.salesChartInstance = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    "#e67951", "#f4a261", "#2a9d8f", "#8b5cf6", 
+                    "#f59e0b", "#10b981", "#ef4444"
+                ],
+                borderWidth: 2,
+                borderColor: "#fff",
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: "bottom",
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.raw || 0;
+                            const receita = receitas[context.dataIndex] || 0;
+                            return `${label}: ${value} vendas (R$ ${formatCurrency(receita)})`;
+                        }
+                    }
+                }
+            },
+        }
+    });
+}
+
+// Top corretores - VERSÃO CORRIGIDA
+function updateTopBrokers(corretoresData) {
+    const container = document.getElementById("top-performers");
+    if (!container) {
+        console.log("❌ Elemento top-performers não encontrado");
+        return;
+    }
+
+    console.log("👑 Dados dos corretores:", corretoresData);
+
+    if (!corretoresData || corretoresData.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-8 text-subtext-light dark:text-subtext-dark">
+                <span class="material-symbols-outlined text-4xl mb-2">group</span>
+                <p>Nenhum corretor encontrado</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = corretoresData.map((corretor, index) => `
+        <li class="flex items-center gap-3 p-3 hover:bg-background-light dark:hover:bg-background-dark rounded-lg transition-colors">
+            <div class="relative">
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm">
+                    ${(corretor.nome || "?").charAt(0).toUpperCase()}
+                </div>
+                ${index < 3 ? `
+                <div class="absolute -top-1 -right-1 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center text-xs text-white">
+                    ${index + 1}
+                </div>
+                ` : ''}
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="font-medium text-text-light dark:text-text-dark text-sm truncate">
+                    ${corretor.nome || "N/A"}
+                </p>
+                <p class="text-primary text-xs">
+                    ${corretor.vendas || 0} vendas
+                </p>
+                <p class="text-subtext-light dark:text-subtext-dark text-xs">
+                    R$ ${formatCurrency(corretor.receita || 0)}
+                </p>
+            </div>
+        </li>
+    `).join("");
+}
+
+// Atividades recentes - VERSÃO CORRIGIDA
+function updateRecentActivity(activities) {
+    const container = document.getElementById("recent-activity");
+    if (!container) {
+        console.log("❌ Elemento recent-activity não encontrado");
+        return;
+    }
+
+    console.log("📋 Dados de atividades:", activities);
+
+    if (!activities || activities.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-8 text-subtext-light dark:text-subtext-dark">
+                <span class="material-symbols-outlined text-4xl mb-2">update</span>
+                <p>Nenhuma atividade recente</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = activities.map(activity => `
+        <div class="flex items-center gap-3 p-3 border border-border-light dark:border-border-dark rounded-lg">
+            <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary text-sm">person</span>
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-text-light dark:text-text-dark truncate">
+                    ${activity.nome || "Corretor"}
+                </p>
+                <p class="text-xs text-subtext-light dark:text-subtext-dark">
+                    ${activity.vendas || 0} vendas • R$ ${formatCurrency(activity.receita || 0)}
+                </p>
+            </div>
+        </div>
+    `).join("");
+}
+
+
+      // Função para formatar moeda
+      function formatCurrency(value) {
+          if (!value) return "0,00";
+          return new Intl.NumberFormat("pt-BR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+          }).format(value);
+      }
+
+
+      // Utilidades
+      function formatCurrency(value) {
+        return new Intl.NumberFormat("pt-BR", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(value || 0);
+      }
+
+      function showError(message) {
+        // Poderia mostrar um toast de erro
+        console.error("Erro:", message);
+      }
+
+      // Inicializar
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("🚀 Dashboard inicializado");
+        loadRealDashboardData(); // Carregar dados ao iniciar
+
+        // Recarregar a cada 5 minutos
+        setInterval(loadRealDashboardData, 300000);
+      });
+
+// Função de DEBUG para ver dados reais
+async function debugDashboardData() {
+    try {
+        const response = await fetch("/api/v1/crm/dashboard/completo");
+        const result = await response.json();
+        
+        console.log("🔍 DEBUG - Dados COMPLETOS da API:", result);
+        
+        if (result.status === "success") {
+            console.log("📊 Métricas principais:", result.data.metricas_principais);
+            console.log("👑 Top corretores:", result.data.top_corretores);
+            console.log("🏢 Vendas por operadora:", result.data.vendas_por_operadora);
+            console.log("📈 Vendas por plano:", result.data.vendas_por_plano);
+            console.log("🌐 Leads por origem:", result.data.leads_por_origem);
+            console.log("📋 Leads por status:", result.data.leads_por_status);
+        }
+    } catch (error) {
+        console.error("❌ DEBUG Error:", error);
+    }
+}
+
+
+// DEBUG: Verificar se os elementos HTML existem
+function debugElements() {
+    console.log("🔍 DEBUG - Verificando elementos HTML:");
+    
+    const elements = {
+        'monthly-goal': document.getElementById("monthly-goal"),
+        'goal-progress': document.getElementById("goal-progress"),
+        'goal-amount': document.getElementById("goal-amount"),
+        'plans-sold': document.getElementById("plans-sold"),
+        'lives-covered': document.getElementById("lives-covered"),
+        'conversion-rate': document.getElementById("conversion-rate"),
+        'current-revenue': document.getElementById("current-revenue"),
+        'salesChart': document.getElementById("salesChart"),
+        'top-performers': document.getElementById("top-performers"),
+        'recent-activity': document.getElementById("recent-activity")
+    };
+    
+    for (const [name, element] of Object.entries(elements)) {
+        if (element) {
+            console.log(`✅ ${name}: EXISTE`);
+            console.log(`   Conteúdo:`, element.textContent || element.innerHTML.substring(0, 50));
+        } else {
+            console.log(`❌ ${name}: NÃO ENCONTRADO`);
+        }
+    }
+}
+
+// Chame esta função depois de atualizar os dados
+function updateDashboardWithRealData(data) {
+    console.log("🔄 Atualizando dashboard com dados COMPLETOS:", data);
+
+    if (!data || !data.metricas_principais) {
+        console.error("❌ Dados inválidos recebidos");
+        return;
+    }
+
+    const metricas = data.metricas_principais;
+    
+    // 1. META MENSAL (calculada)
+    const metaPercentual = Math.min(Math.round((metricas.receita_mensal / 5000000) * 100), 100);
+    document.getElementById("monthly-goal").textContent = metaPercentual + "%";
+    document.getElementById("goal-progress").style.width = metaPercentual + "%";
+    document.getElementById("goal-amount").textContent = 
+        `R$ ${formatCurrency(metricas.receita_mensal)} / R$ 5.000.000`;
+
+    // 2. KPIs PRINCIPAIS
+    document.getElementById("plans-sold").textContent = 
+        metricas.total_vendas.toLocaleString("pt-BR");
+    document.getElementById("lives-covered").textContent = 
+        (metricas.total_vendas * 2.5).toLocaleString("pt-BR");
+    document.getElementById("conversion-rate").textContent = 
+        metricas.taxa_conversao.toFixed(1) + "%";
+    document.getElementById("current-revenue").textContent = 
+        "R$ " + formatCurrency(metricas.receita_total);
+
+    // 3. GRÁFICO DE OPERADORAS
+    if (data.vendas_por_operadora && data.vendas_por_operadora.length > 0) {
+        console.log("📊 Criando gráfico com:", data.vendas_por_operadora);
+        updateSalesChart(data.vendas_por_operadora);
+    }
+
+    // 4. TOP CORRETORES
+    if (data.top_corretores && data.top_corretores.length > 0) {
+        console.log("👑 Atualizando top corretores:", data.top_corretores);
+        updateTopBrokers(data.top_corretores);
+    }
+
+    // 5. ATIVIDADES RECENTES
+    if (data.top_corretores && data.top_corretores.length > 0) {
+        console.log("📋 Atualizando atividades:", data.top_corretores.slice(0, 3));
+        updateRecentActivity(data.top_corretores.slice(0, 3));
+    }
+
+    // DEBUG: Verificar elementos após atualização
+    setTimeout(debugElements, 1000);
+    
+    console.log("✅ Dashboard COMPLETO atualizado com sucesso!");
+}
+
+    </script>
+  </body>
+</html>
