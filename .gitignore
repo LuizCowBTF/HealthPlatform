@@ -4,6 +4,11 @@
 *.lock
 .DS_Store
 
+# Testes de desenvolvimento
+/tests
+/tests/*.py
+/tests/*.*
+
 
 # Python
 __pycache__/

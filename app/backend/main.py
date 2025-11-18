@@ -6,12 +6,24 @@ from fastapi.responses import HTMLResponse, JSONResponse
 import os
 from pathlib import Path
 
+from app.backend.src.routes.whatsapp_webhook import router as whatsapp_router  # ✅ NOME CORRETO
+from app.backend.src.routes.ia_routes import router as ia_router
+from app.backend.src.routes.crm_routes import router as crm_router
+
+
 # Configurar paths CORRETAMENTE
 current_dir = Path(__file__).parent  # app/backend/
 project_root = current_dir.parent.parent  # HealthPlatform/
 frontend_dir = project_root / "app" / "frontend"
 
-app = FastAPI(title="HealthPlatform SaaS", version="2.1.0")
+app = FastAPI(title="Health Platform", version="1.0.0")
+
+
+# Incluir rotas
+app.include_router(whatsapp_router, prefix="/api/v1/whatsapp", tags=["WhatsApp"])
+app.include_router(ia_router, prefix="/api/v1/ia", tags=["IA"])
+app.include_router(crm_router, prefix="/api/v1/crm", tags=["CRM"])
+
 
 print(f"📁 Project Root: {project_root}")
 print(f"📁 Frontend Dir: {frontend_dir}")
