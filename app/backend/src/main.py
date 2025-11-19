@@ -53,17 +53,17 @@ async def comissoes(request: Request):
 @app.get("/clientes", response_class=HTMLResponse)
 async def clientes(request: Request):
     """Página de clientes (placeholder)"""
-    return await serve_template("dashboard.html", request)  # Usar dashboard como fallback
+    return await serve_template("clientes.html", request)  # Usar dashboard como fallback
 
 @app.get("/leads", response_class=HTMLResponse)
 async def leads(request: Request):
     """Página de leads (placeholder)"""
-    return await serve_template("dashboard.html", request)  # Usar dashboard como fallback
+    return await serve_template("leads.html", request)  # Usar dashboard como fallback
 
 @app.get("/relatorios", response_class=HTMLResponse)
 async def relatorios(request: Request):
     """Página de relatórios (placeholder)"""
-    return await serve_template("dashboard.html", request)  # Usar dashboard como fallback
+    return await serve_template("relatorios.html", request)  # Usar dashboard como fallback
 
 async def serve_template(template_name: str, request: Request):
     """Serve templates com fallback"""

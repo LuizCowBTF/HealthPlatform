@@ -1,351 +1,589 @@
 <!DOCTYPE html>
 <html class="light" lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Comissões - Health Platform</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-      rel="stylesheet"
-    />
-    <style>
-      .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-      }
-      .progress-bar {
-        transition: width 0.8s ease-in-out;
-      }
-      .kpi-card:hover {
-        transform: translateY(-2px);
-        transition: transform 0.2s ease;
-      }
-      .loading {
-        opacity: 0.6;
-        pointer-events: none;
-      }
-    </style>
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#e67951",
-              "background-light": "#f8f6f6",
-              "background-dark": "#211511",
-              "card-light": "#ffffff",
-              "card-dark": "#2a1a14",
-              "text-light": "#1c1c1c",
-              "text-dark": "#f5f5f5",
-              "subtext-light": "#876d64",
-              "subtext-dark": "#a18a82",
-              "border-light": "#e5dedc",
-              "border-dark": "#40312c",
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Clientes - Health Platform</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+  </style>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#e67951",
+            background: {
+              light: "#f8f6f6",
+              dark: "#211511"
             },
-            fontFamily: {
-              display: ["Inter", "sans-serif"],
+            card: {
+              light: "#ffffff", 
+              dark: "#2a1a14"
             },
-            borderRadius: {
-              DEFAULT: "0.5rem",
-              lg: "1rem",
-              xl: "1.5rem",
-              full: "9999px",
+            text: {
+              light: "#1c1c1c",
+              dark: "#f5f5f5"
             },
+            subtext: {
+              light: "#876d64",
+              dark: "#a18a82"
+            },
+            border: {
+              light: "#e5dedc",
+              dark: "#40312c"
+            }
           },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
+          }
         },
-      };
-    </script>
-  </head>
-  <body class="bg-background-light dark:bg-background-dark font-display">
-    <div class="flex min-h-screen">
-      <!-- Sidebar Navigation -->
-      <aside
-        class="w-64 bg-card-light dark:bg-card-dark flex-col justify-between hidden lg:flex"
-      >
-        <div class="p-6">
-          <div class="flex flex-col">
-            <div class="flex items-center">
-              <div class="bg-center">
-                <img
-                  class="w-full max-w-48"
-                  src="/static/img/logo_crm.png"
-                  alt="Health Platform Logo"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="flex items-center gap-6 p-8">
-            <div class="flex flex-col items-center p-2">
-              <div class="flex items-center">
-                <div
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                  data-alt="Admin profile picture"
-                >
-                  <h1
-                    class="text-text-light dark:text-text-dark text-base font-medium leading-normal"
-                  >
-                    Admin
-                  </h1>
-                  <p
-                    class="text-subtext-light dark:text-subtext-dark text-sm font-normal leading-normal"
-                  >
-                    Administrador
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <nav class="mt-6 flex flex-col gap-2">
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="/dashboard"
-            >
-              <span class="material-symbols-outlined">dashboard</span>
-              <span class="text-sm font-medium">Dashboard</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="/clientes"
-            >
-              <span class="material-symbols-outlined">group</span>
-              <span class="text-sm font-medium">Clientes</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="leads"
-            >
-              <span class="material-symbols-outlined">leaderboard</span>
-              <span class="text-sm font-medium">Leads</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary"
-              href="/comissoes"
-            >
-              <span class="material-symbols-outlined">paid</span>
-              <span class="text-sm font-medium">Comissões</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="relatorios"
-            >
-              <span class="material-symbols-outlined">assessment</span>
-              <span class="text-sm font-medium">Relatórios</span>
-            </a>
-          </nav>
+      },
+    }
+  </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-card-light dark:bg-card-dark flex-col justify-between hidden lg:flex border-r border-border-light dark:border-border-dark">
+      <div class="p-6">
+        <div class="flex items-center">
+          <img class="w-full max-w-48" src="/static/img/logo_crm.png" alt="Health Platform Logo" />
         </div>
-      </aside>
-
-      <div class="flex-1 flex flex-col">
-        <!-- Top Navigation Bar -->
-        <header
-          class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark flex items-center justify-between p-4 sticky top-0 z-10"
-        >
-          <div class="flex items-center gap-4">
-            <button class="lg:hidden text-text-light dark:text-text-dark">
-              <span class="material-symbols-outlined">menu</span>
-            </button>
+        <div class="flex items-center gap-3 p-8">
+          <div class="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">A</div>
+          <div>
+            <h1 class="text-base font-medium">Admin</h1>
+            <p class="text-subtext-light dark:text-subtext-dark text-sm">Administrador</p>
           </div>
-          <div class="flex items-center gap-4">
-            <div class="relative w-64 hidden md:block">
-              <span
-                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark"
-                >search</span
-              >
-              <input
-                class="form-input w-full pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border-transparent focus:border-primary focus:ring-primary text-sm text-text-light dark:text-text-dark placeholder-subtext-light dark:placeholder-subtext-dark"
-                placeholder="Buscar corretores, planos..."
-                type="text"
-                id="searchInput"
-              />
-            </div>
-            <button
-              class="relative text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark"
-            >
-              <span class="material-symbols-outlined">notifications</span>
-              <span
-                class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-primary ring-2 ring-card-light dark:ring-card-dark"
-              ></span>
-            </button>
-            <div class="flex items-center gap-2">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                data-alt="Admin profile picture"
-                style="background-color: #e67951; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;"
-              >
-                A
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="flex-1 p-4 sm:p-6 lg:p-8 bg-background-light dark:bg-background-dark">
-          <div class="flex-1 p-6 space-y-6">
-            <!-- Page Heading & Actions -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <h1 class="text-3xl font-bold tracking-tight">Clients</h1>
-              <div class="flex gap-3">
-                <button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <span class="material-symbols-outlined text-base">download</span>
-                  <span>Export to .XLSX</span>
-                </button>
-                <button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <span class="material-symbols-outlined text-base">download</span>
-                  <span>Export to .CSV</span>
-                </button>
-              </div>
-            </div>
-            <!-- Filter Bar Card -->
-            <div class="bg-card-light dark:bg-card-dark p-4 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 items-end">
-                <label class="flex flex-col w-full">
-                  <p class="text-sm font-medium pb-2">Period</p>
-                  <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent h-10 placeholder:text-gray-500 px-3 text-sm" placeholder="Select date range" type="text"/>
-                </label>
-                <label class="flex flex-col w-full">
-                  <p class="text-sm font-medium pb-2">Product Category</p>
-                  <select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent h-10 px-3 text-sm">
-                    <option>Health Plan</option>
-                    <option>Dental Plan</option>
-                  </select>
-                </label>
-                <label class="flex flex-col w-full">
-                  <p class="text-sm font-medium pb-2">Origin</p>
-                  <select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent h-10 px-3 text-sm">
-                    <option>Online</option>
-                    <option>Referral</option>
-                  </select>
-                </label>
-                <label class="flex flex-col w-full">
-                  <p class="text-sm font-medium pb-2">Client Name</p>
-                  <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent h-10 placeholder:text-gray-500 px-3 text-sm" placeholder="e.g., John Doe" type="text"/>
-                </label>
-                <label class="flex flex-col w-full">
-                  <p class="text-sm font-medium pb-2">Contract Number</p>
-                  <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent h-10 placeholder:text-gray-500 px-3 text-sm" placeholder="e.g., C12345" type="text"/>
-                </label>
-              </div>
-              <div class="flex justify-end gap-3 mt-4">
-                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-200 dark:bg-gray-600 text-text-light dark:text-text-dark text-sm font-semibold leading-normal tracking-[0.015em] hover:bg-gray-300 dark:hover:bg-gray-500">
-                  <span class="truncate">Clear</span>
-                </button>
-                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-semibold leading-normal tracking-[0.015em] hover:bg-primary/90">
-                  <span class="truncate">Apply Filters</span>
-                </button>
-              </div>
-            </div>
-            <!-- Data Table Card -->
-            <div class="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-border-light dark:border-border-dark overflow-hidden">
-              <div class="p-4 flex justify-between items-center border-b border-border-light dark:border-border-dark">
-                <label class="flex flex-col min-w-40 !h-10 max-w-sm">
-                  <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
-                    <div class="text-gray-500 flex bg-gray-100 dark:bg-gray-700 items-center justify-center pl-3 rounded-l-lg border-r-0">
-                      <span class="material-symbols-outlined">search</span>
-                    </div>
-                    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-gray-100 dark:bg-gray-700 focus:border-none h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal" placeholder="Search table..." value=""/>
-                  </div>
-                </label>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
-                  <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700/50">
-                    <tr>
-                      <th class="px-6 py-3 font-semibold" scope="col">Client</th>
-                      <th class="px-6 py-3 font-semibold" scope="col">Contract Number</th>
-                      <th class="px-6 py-3 font-semibold" scope="col">Product</th>
-                      <th class="px-6 py-3 font-semibold" scope="col">Category</th>
-                      <th class="px-6 py-3 font-semibold" scope="col">Value</th>
-                      <th class="px-6 py-3 font-semibold" scope="col">Date</th>
-                      <th class="px-6 py-3 font-semibold" scope="col">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="bg-card-light dark:bg-card-dark border-b dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer">
-                      <td class="px-6 py-4 font-medium whitespace-nowrap">Carlos Oliveira</td>
-                      <td class="px-6 py-4">CT-58943</td>
-                      <td class="px-6 py-4">Plano Essencial Top</td>
-                      <td class="px-6 py-4">Health</td>
-                      <td class="px-6 py-4">R$ 450,00</td>
-                      <td class="px-6 py-4">2023-03-15</td>
-                      <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/20 text-success">Active</span>
-                      </td>
-                    </tr>
-                    <tr class="bg-card-light dark:bg-card-dark border-b dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer">
-                      <td class="px-6 py-4 font-medium whitespace-nowrap">Mariana Costa</td>
-                      <td class="px-6 py-4">CT-58944</td>
-                      <td class="px-6 py-4">Plano Dental Sorriso</td>
-                      <td class="px-6 py-4">Dental</td>
-                      <td class="px-6 py-4">R$ 89,90</td>
-                      <td class="px-6 py-4">2023-03-18</td>
-                      <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-warning/20 text-warning">Pending</span>
-                      </td>
-                    </tr>
-                    <tr class="bg-card-light dark:bg-card-dark border-b dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer">
-                      <td class="px-6 py-4 font-medium whitespace-nowrap">João Pereira</td>
-                      <td class="px-6 py-4">CT-58945</td>
-                      <td class="px-6 py-4">Plano Completo Mais</td>
-                      <td class="px-6 py-4">Health</td>
-                      <td class="px-6 py-4">R$ 890,50</td>
-                      <td class="px-6 py-4">2023-02-10</td>
-                      <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-danger/20 text-danger">Canceled</span>
-                      </td>
-                    </tr>
-                    <tr class="bg-card-light dark:bg-card-dark border-b dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer">
-                      <td class="px-6 py-4 font-medium whitespace-nowrap">Fernanda Lima</td>
-                      <td class="px-6 py-4">CT-58946</td>
-                      <td class="px-6 py-4">Plano Essencial Top</td>
-                      <td class="px-6 py-4">Health</td>
-                      <td class="px-6 py-4">R$ 450,00</td>
-                      <td class="px-6 py-4">2023-01-25</td>
-                      <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/20 text-success">Active</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!-- Pagination -->
-              <div class="p-4 flex flex-col md:flex-row justify-between items-center text-sm">
-                <span class="text-gray-500 dark:text-gray-400 mb-2 md:mb-0">Showing 1-4 of 100</span>
-                <div class="inline-flex items-center -space-x-px">
-                  <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href="#">Previous</a>
-                  <a class="px-3 py-2 leading-tight text-primary bg-primary/20 border border-primary hover:bg-primary/30" href="#">1</a>
-                  <a class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href="#">2</a>
-                  <a class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href="#">3</a>
-                  <a class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" href="#">Next</a>
-                </div>
-              </div>
-            </div>
-          </div>
-  	    </main>
+        </div>
+        <nav class="mt-6 flex flex-col gap-2">
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20" href="/dashboard">
+            <span class="material-symbols-outlined">dashboard</span><span>Dashboard</span>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="/clientes">
+            <span class="material-symbols-outlined">group</span><span>Clientes</span>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20" href="/leads">
+            <span class="material-symbols-outlined">leaderboard</span><span>Leads</span>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20" href="/comissoes">
+            <span class="material-symbols-outlined">paid</span><span>Comissões</span>
+          </a>
+          <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20" href="/relatorios">
+            <span class="material-symbols-outlined">assessment</span><span>Relatórios</span>
+          </a>
+        </nav>
       </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <!-- Header -->
+      <header class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark flex items-center justify-between p-4 sticky top-0 z-10">
+        <div class="flex items-center gap-4">
+          <button class="lg:hidden"><span class="material-symbols-outlined">menu</span></button>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="relative w-64 hidden md:block">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark">search</span>
+            <input class="w-full pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-transparent focus:border-primary focus:ring-1 focus:ring-primary text-sm placeholder-subtext-light dark:placeholder-subtext-dark" 
+                   placeholder="Buscar clientes, planos..." 
+                   type="text" 
+                   id="searchInput" />
+          </div>
+          <button class="relative text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="absolute top-0 right-0 block size-2 rounded-full bg-primary ring-2 ring-card-light dark:ring-card-dark"></span>
+          </button>
+          <div class="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">A</div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6 bg-background-light dark:bg-background-dark">
+        <div class="flex-1 space-y-2">
+          <!-- Page Heading & Actions -->
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <h1 class="text-3xl font-bold tracking-tight">Clientes</h1>
+            <div class="flex gap-3">
+              <button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600">
+                <span class="material-symbols-outlined text-base">download</span>
+                <span>Exportar .XLSX</span>
+              </button>
+              <button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600">
+                <span class="material-symbols-outlined text-base">download</span>
+                <span>Exportar .CSV</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter Bar Card -->
+          <div class="bg-card-light dark:bg-card-dark p-4 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 items-end">
+              <label class="flex flex-col w-full">
+                <p class="text-sm font-medium pb-2">Período</p>
+                <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent h-10 placeholder:text-gray-500 px-3 text-sm" placeholder="Selecionar período" type="text" id="periodFilter"/>
+              </label>
+              <label class="flex flex-col w-full">
+                <p class="text-sm font-medium pb-2">Categoria do Plano</p>
+                <select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent h-10 px-3 text-sm" id="categoryFilter">
+                  <option value="">Todos</option>
+                  <option>Plano de Saúde</option>
+                  <option>Plano Odontológico</option>
+                </select>
+              </label>
+              <label class="flex flex-col w-full">
+                <p class="text-sm font-medium pb-2">Origem</p>
+                <select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent h-10 px-3 text-sm" id="originFilter">
+                  <option value="">Todas</option>
+                  <option>Online</option>
+                  <option>Indicação</option>
+                </select>
+              </label>
+              <label class="flex flex-col w-full">
+                <p class="text-sm font-medium pb-2">Nome do Cliente</p>
+                <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent h-10 placeholder:text-gray-500 px-3 text-sm" placeholder="ex: João Silva" type="text" id="clientNameFilter"/>
+              </label>
+              <label class="flex flex-col w-full">
+                <p class="text-sm font-medium pb-2">Número do Contrato</p>
+                <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent h-10 placeholder:text-gray-500 px-3 text-sm" placeholder="ex: C12345" type="text" id="contractFilter"/>
+              </label>
+            </div>
+            <div class="flex justify-end gap-3 mt-4">
+              <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-gray-200 dark:bg-gray-600 text-text-light dark:text-text-dark text-sm font-semibold leading-normal tracking-[0.015em] hover:bg-gray-300 dark:hover:bg-gray-500" id="clearFilters">
+                <span class="truncate">Limpar</span>
+              </button>
+              <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-semibold leading-normal tracking-[0.015em] hover:bg-primary/90" id="applyFilters">
+                <span class="truncate">Aplicar Filtros</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Data Table Card -->
+          <div class="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-border-light dark:border-border-dark overflow-hidden">
+            <div class="p-4 flex justify-between items-center border-b border-border-light dark:border-border-dark">
+              <label class="flex flex-col min-w-40 !h-10 max-w-sm">
+                <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                  <div class="text-gray-500 flex bg-gray-100 dark:bg-gray-700 items-center justify-center pl-3 rounded-l-lg border-r-0">
+                    <span class="material-symbols-outlined">search</span>
+                  </div>
+                  <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-gray-100 dark:bg-gray-700 focus:border-none h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal" placeholder="Buscar na tabela..." value="" id="tableSearch"/>
+                </div>
+              </label>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm text-left">
+                <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700/50">
+                  <tr>
+                    <th class="px-6 py-3 font-semibold" scope="col">Cliente</th>
+                    <th class="px-6 py-3 font-semibold" scope="col">Nº Contrato</th>
+                    <th class="px-6 py-3 font-semibold" scope="col">Produto</th>
+                    <th class="px-6 py-3 font-semibold" scope="col">Categoria</th>
+                    <th class="px-6 py-3 font-semibold" scope="col">Valor</th>
+                    <th class="px-6 py-3 font-semibold" scope="col">Data</th>
+                    <th class="px-6 py-3 font-semibold" scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="clientsTableBody">
+                  <!-- Dados serão carregados via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+            <!-- Pagination -->
+            <div class="p-4 flex flex-col md:flex-row justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 mb-2 md:mb-0" id="paginationInfo">Carregando...</span>
+              <div class="inline-flex items-center -space-x-px" id="paginationContainer">
+                <!-- Paginação será gerada via JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
 
       <!-- Client Details Drawer -->
-      <div class="fixed inset-0 bg-black/30 z-20 hidden"></div>
-      <aside class="fixed top-0 right-0 h-full w-full max-w-md bg-card-light dark:bg-card-dark shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-30">
+      <div class="fixed inset-0 bg-black/30 z-20 hidden" id="drawerOverlay"></div>
+      <aside class="fixed top-0 right-0 h-full w-full max-w-md bg-card-light dark:bg-card-dark shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-30" id="clientDrawer">
         <div class="p-6 border-b border-border-light dark:border-border-dark flex justify-between items-center">
-          <h2 class="text-xl font-semibold">Client Details</h2>
-          <button>
+          <h2 class="text-xl font-semibold">Detalhes do Cliente</h2>
+          <button id="closeDrawer">
             <span class="material-symbols-outlined">close</span>
           </button>
         </div>
-        <div class="p-6 space-y-4">
-          <p>Detailed client information will be displayed here.</p>
+        <div class="p-6 space-y-4" id="clientDetails">
+          <!-- Detalhes serão carregados via JavaScript -->
         </div>
       </aside>
-	  </div>
-	
-  	<script>
-	
-	  </script>
-  </body>
+    </div>
+  </div>
+
+  <script>
+    // Variáveis globais
+    let allClients = [];
+    let filteredClients = [];
+    let currentPage = 1;
+    const itemsPerPage = 10;
+
+    // Inicializar quando o DOM carregar
+    document.addEventListener('DOMContentLoaded', function() {
+      loadClients();
+      setupEventListeners();
+    });
+
+    // Configurar event listeners
+    function setupEventListeners() {
+      // Buscar dados quando aplicar filtros
+      document.getElementById('applyFilters').addEventListener('click', applyFilters);
+      
+      // Limpar filtros
+      document.getElementById('clearFilters').addEventListener('click', clearFilters);
+      
+      // Busca em tempo real na tabela
+      document.getElementById('tableSearch').addEventListener('input', function(e) {
+        filterTable(e.target.value);
+      });
+      
+      // Busca no header
+      document.getElementById('searchInput').addEventListener('input', function(e) {
+        filterTable(e.target.value);
+      });
+      
+      // Fechar drawer
+      document.getElementById('closeDrawer').addEventListener('click', closeDrawer);
+      document.getElementById('drawerOverlay').addEventListener('click', closeDrawer);
+    }
+
+    // Buscar leads com status "Plano Fechado"
+    async function loadClients() {
+      try {
+        console.log('🔄 Buscando leads com plano fechado...');
+        
+        // AJUSTE AQUI: Endpoint correto da sua API
+        const response = await fetch('/api/leads?status=Plano Fechado');
+        
+        if (!response.ok) {
+          throw new Error('Erro na resposta da API');
+        }
+        
+        const data = await response.json();
+        console.log('✅ Leads com plano fechado:', data);
+        
+        // Ajuste conforme a estrutura da sua API
+        allClients = data.leads || data || [];
+        filteredClients = [...allClients];
+        renderClients();
+        
+      } catch (error) {
+        console.error('❌ Erro ao carregar clientes:', error);
+        // Fallback para dados mockados
+        loadMockData();
+      }
+    }
+
+    // Dados mockados (remova quando a API estiver funcionando)
+    function loadMockData() {
+      console.log('📋 Usando dados mockados...');
+      allClients = [
+        {
+          id: 1,
+          name: "Carlos Oliveira",
+          email: "carlos.oliveira@email.com",
+          contract_number: "CT-58943",
+          product: "Plano Essencial Top",
+          category: "Saúde",
+          value: 450.00,
+          date: "2023-03-15",
+          status: "active",
+          phone: "(11) 99999-9999",
+          broker: "Ana Silva"
+        },
+        {
+          id: 2,
+          name: "Mariana Costa", 
+          email: "mariana.costa@email.com",
+          contract_number: "CT-58944",
+          product: "Plano Dental Sorriso",
+          category: "Odontológico",
+          value: 89.90,
+          date: "2023-03-18",
+          status: "pending",
+          phone: "(11) 98888-8888",
+          broker: "João Santos"
+        },
+        {
+          id: 3,
+          name: "João Pereira",
+          email: "joao.pereira@email.com",
+          contract_number: "CT-58945", 
+          product: "Plano Completo Mais",
+          category: "Saúde",
+          value: 890.50,
+          date: "2023-02-10",
+          status: "cancelled",
+          phone: "(11) 97777-7777",
+          broker: "Maria Oliveira"
+        },
+        {
+          id: 4,
+          name: "Fernanda Lima",
+          email: "fernanda.lima@email.com",
+          contract_number: "CT-58946",
+          product: "Plano Essencial Top", 
+          category: "Saúde",
+          value: 450.00,
+          date: "2023-01-25",
+          status: "active",
+          phone: "(11) 96666-6666",
+          broker: "Pedro Costa"
+        }
+      ];
+      
+      filteredClients = [...allClients];
+      renderClients();
+    }
+
+    // Renderizar clientes na tabela
+    function renderClients() {
+      const tbody = document.getElementById('clientsTableBody');
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const clientsToShow = filteredClients.slice(startIndex, endIndex);
+
+      if (clientsToShow.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
+              <div class="flex flex-col items-center gap-2">
+                <span class="material-symbols-outlined">search_off</span>
+                <span>Nenhum cliente encontrado</span>
+              </div>
+            </td>
+          </tr>
+        `;
+      } else {
+        tbody.innerHTML = clientsToShow.map(client => `
+          <tr class="bg-card-light dark:bg-card-dark border-b dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer" onclick="openClientDetails(${client.id})">
+            <td class="px-6 py-4 font-medium whitespace-nowrap">
+              <div class="flex items-center gap-3">
+                <div class="size-8 bg-primary/20 rounded-full flex items-center justify-center text-primary font-semibold">
+                  ${client.name.charAt(0)}
+                </div>
+                <div>
+                  <p>${client.name}</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">${client.email}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4">${client.contract_number}</td>
+            <td class="px-6 py-4">${client.product}</td>
+            <td class="px-6 py-4">${client.category}</td>
+            <td class="px-6 py-4">R$ ${client.value.toFixed(2)}</td>
+            <td class="px-6 py-4">${formatDate(client.date)}</td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusClass(client.status)}">
+                ${getStatusText(client.status)}
+              </span>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      updatePagination();
+    }
+
+    // Atualizar paginação
+    function updatePagination() {
+      const totalPages = Math.ceil(filteredClients.length / itemsPerPage);
+      const startItem = (currentPage - 1) * itemsPerPage + 1;
+      const endItem = Math.min(currentPage * itemsPerPage, filteredClients.length);
+      
+      document.getElementById('paginationInfo').textContent = `Mostrando ${startItem}-${endItem} de ${filteredClients.length}`;
+
+      let paginationHTML = '';
+      
+      // Botão Anterior
+      if (currentPage > 1) {
+        paginationHTML += `
+          <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" 
+             href="#" onclick="changePage(${currentPage - 1}); return false;">
+            Anterior
+          </a>`;
+      }
+
+      // Páginas
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === currentPage) {
+          paginationHTML += `
+            <a class="px-3 py-2 leading-tight text-primary bg-primary/20 border border-primary hover:bg-primary/30" 
+               href="#" onclick="changePage(${i}); return false;">
+              ${i}
+            </a>`;
+        } else {
+          paginationHTML += `
+            <a class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" 
+               href="#" onclick="changePage(${i}); return false;">
+              ${i}
+            </a>`;
+        }
+      }
+
+      // Botão Próximo
+      if (currentPage < totalPages) {
+        paginationHTML += `
+          <a class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" 
+             href="#" onclick="changePage(${currentPage + 1}); return false;">
+            Próximo
+          </a>`;
+      }
+
+      document.getElementById('paginationContainer').innerHTML = paginationHTML;
+    }
+
+    // Mudar página
+    function changePage(page) {
+      currentPage = page;
+      renderClients();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Aplicar filtros
+    function applyFilters() {
+      const category = document.getElementById('categoryFilter').value;
+      const origin = document.getElementById('originFilter').value;
+      const clientName = document.getElementById('clientNameFilter').value.toLowerCase();
+      const contract = document.getElementById('contractFilter').value.toLowerCase();
+
+      filteredClients = allClients.filter(client => {
+        return (!category || client.category === category) &&
+               (!origin || client.origin === origin) &&
+               (!clientName || client.name.toLowerCase().includes(clientName)) &&
+               (!contract || client.contract_number.toLowerCase().includes(contract));
+      });
+
+      currentPage = 1;
+      renderClients();
+    }
+
+    // Limpar filtros
+    function clearFilters() {
+      document.getElementById('categoryFilter').value = '';
+      document.getElementById('originFilter').value = '';
+      document.getElementById('clientNameFilter').value = '';
+      document.getElementById('contractFilter').value = '';
+      document.getElementById('periodFilter').value = '';
+      
+      filteredClients = [...allClients];
+      currentPage = 1;
+      renderClients();
+    }
+
+    // Filtrar tabela
+    function filterTable(searchTerm) {
+      const term = searchTerm.toLowerCase();
+      filteredClients = allClients.filter(client => 
+        client.name.toLowerCase().includes(term) ||
+        client.email.toLowerCase().includes(term) ||
+        client.contract_number.toLowerCase().includes(term) ||
+        client.product.toLowerCase().includes(term)
+      );
+      currentPage = 1;
+      renderClients();
+    }
+
+    // Abrir detalhes do cliente
+    function openClientDetails(clientId) {
+      const client = allClients.find(c => c.id === clientId);
+      if (!client) return;
+
+      document.getElementById('clientDetails').innerHTML = `
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="size-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-semibold text-lg">
+              ${client.name.charAt(0)}
+            </div>
+            <div>
+              <h3 class="font-semibold">${client.name}</h3>
+              <p class="text-sm text-gray-500">${client.email}</p>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <p class="text-sm text-gray-500">Telefone</p>
+              <p class="font-medium">${client.phone || 'N/A'}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Contrato</p>
+              <p class="font-medium">${client.contract_number}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Plano</p>
+              <p class="font-medium">${client.product}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Valor</p>
+              <p class="font-medium">R$ ${client.value.toFixed(2)}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Data</p>
+              <p class="font-medium">${formatDate(client.date)}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Status</p>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusClass(client.status)}">
+                ${getStatusText(client.status)}
+              </span>
+            </div>
+          </div>
+          
+          ${client.broker ? `
+            <div>
+              <p class="text-sm text-gray-500">Corretor</p>
+              <p class="font-medium">${client.broker}</p>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      document.getElementById('drawerOverlay').classList.remove('hidden');
+      document.getElementById('clientDrawer').classList.remove('translate-x-full');
+    }
+
+    // Fechar drawer
+    function closeDrawer() {
+      document.getElementById('drawerOverlay').classList.add('hidden');
+      document.getElementById('clientDrawer').classList.add('translate-x-full');
+    }
+
+    // Funções auxiliares
+    function formatDate(dateString) {
+      return new Date(dateString).toLocaleDateString('pt-BR');
+    }
+
+    function getStatusClass(status) {
+      const classes = {
+        active: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+        pending: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
+        cancelled: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
+      };
+      return classes[status] || 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
+    }
+
+    function getStatusText(status) {
+      const texts = {
+        active: 'Ativo',
+        pending: 'Pendente', 
+        cancelled: 'Cancelado'
+      };
+      return texts[status] || status;
+    }
+  </script>
+
+</body>
 </html>
