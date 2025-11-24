@@ -134,42 +134,55 @@ async def get_dashboard_completo():
                     "vendas": operadora[1],
                     "faturamento": float(operadora[2])
                 })
-            
-            # ✅ TOP CORRETORES (usando broker_id)
+
+
+            # ✅ TOP CORRETORES CORRIGIDO - COM NOMES REAIS
             top_corretores = []
             cursor = await db.execute("""
-            SELECT broker_id, COUNT(*) as vendas, COUNT(*) * 1500 as faturamento
-            FROM leads 
-            WHERE status LIKE '%Fechado%' AND broker_id IS NOT NULL
-            GROUP BY broker_id 
+            SELECT 
+                b.id,
+                b.name as nome,  -- ✅ Nome REAL da tabela brokers
+                COUNT(l.id) as vendas, 
+                COUNT(l.id) * 1500 as faturamento
+            FROM leads l
+            JOIN brokers b ON l.broker_id = b.id  -- ✅ Join com tabela brokers
+            WHERE l.status LIKE '%Fechado%' AND l.broker_id IS NOT NULL
+            GROUP BY b.id, b.name
             ORDER BY vendas DESC 
             LIMIT 5
             """)
             corretores_data = await cursor.fetchall()
-            
+
             for i, corretor in enumerate(corretores_data):
-                broker_id = corretor[0]
-                
                 top_corretores.append({
-                    "nome": f"Corretor {broker_id}",
-                    "vendas": corretor[1],
-                    "faturamento": float(corretor[2]),
+                    "nome": corretor[1],  # ✅ Nome REAL do broker
+                    "vendas": corretor[2],
+                    "faturamento": float(corretor[3]),
                     "posicao": i + 1
                 })
+
             
-            # ✅ ATIVIDADES RECENTES CORRIGIDAS
+            # ✅ ATIVIDADES RECENTES CORRIGIDAS - COM NOMES REAIS
             atividades_recentes = []
             cursor = await db.execute("""
-            SELECT l.full_name, l.status, l.created_at, l.broker_id, l.source
+            SELECT 
+                l.full_name, 
+                l.status, 
+                l.created_at, 
+                l.broker_id, 
+                l.source,
+                b.name as nome_corretor  -- ✅ Nome REAL do broker
             FROM leads l
+            LEFT JOIN brokers b ON l.broker_id = b.id  -- ✅ Join com tabela brokers
             WHERE l.status LIKE '%Fechado%'
             ORDER BY l.created_at DESC 
             LIMIT 5
             """)
             atividades_data = await cursor.fetchall()
-            
+
             for atividade in atividades_data:
                 broker_id = atividade[3]
+                nome_corretor = atividade[5] or "Não atribuído"  # ✅ Nome REAL
                 
                 # Buscar vendas totais CORRETAS do corretor
                 if broker_id:
@@ -192,11 +205,12 @@ async def get_dashboard_completo():
                 atividades_recentes.append({
                     "cliente": atividade[0] or "Cliente",
                     "acao": f"Contrato {nome_operadora}",
-                    "corretor": f"Corretor {broker_id}" if broker_id else "Não atribuído",
+                    "corretor": nome_corretor,  # ✅ Nome REAL do broker
                     "data": atividade[2],
                     "vendas": total_vendas,
                     "faturamento": faturamento_total
                 })
+
             
             # ✅ LEADS POR STATUS
             leads_por_status = []
@@ -268,6 +282,130 @@ async def get_dashboard_metricas():
             }
             
     except Exception as e:
+        return {"error": str(e)}
+
+# ✅ ENDPOINT AVANÇADO - MÉTRICAS DETALHADAS POR CORRETOR
+@app.get("/api/v1/crm/dashboard/avancado")
+async def get_dashboard_avancado():
+    """Dashboard com métricas avançadas e performance por corretor"""
+    try:
+        if not os.path.exists(DATABASE_PATH):
+            return {"error": "Banco não encontrado"}
+            
+        async with aiosqlite.connect(DATABASE_PATH) as db:
+            # ✅ MÉTRICAS GERAIS AVANÇADAS
+            cursor = await db.execute("""
+            SELECT 
+                COUNT(*) as total_leads,
+                SUM(CASE WHEN status LIKE '%Fechado%' THEN 1 ELSE 0 END) as total_vendas,
+                SUM(CASE WHEN status LIKE '%Fechado%' THEN 1500 ELSE 0 END) as faturamento_total,
+                SUM(CASE WHEN status LIKE '%Conversação%' THEN 1 ELSE 0 END) as em_negociacao,
+                SUM(CASE WHEN status LIKE '%Cotação%' THEN 1 ELSE 0 END) as propostas_enviadas
+            FROM leads
+            """)
+            metricas_gerais = await cursor.fetchone()
+            
+            # ✅ PERFORMANCE DETALHADA POR CORRETOR
+            cursor = await db.execute("""
+            SELECT 
+                b.id,
+                b.name as nome_corretor,
+                b.email,
+                COALESCE(b.monthly_goal, 10000) as meta_mensal,
+                
+                -- Métricas de vendas
+                COUNT(l.id) as total_leads,
+                SUM(CASE WHEN l.status LIKE '%Fechado%' THEN 1 ELSE 0 END) as vendas_fechadas,
+                SUM(CASE WHEN l.status LIKE '%Fechado%' THEN 1500 ELSE 0 END) as faturamento_gerado,
+                
+                -- Métricas de conversão
+                ROUND(
+                    (SUM(CASE WHEN l.status LIKE '%Fechado%' THEN 1 ELSE 0 END) * 100.0 / 
+                    NULLIF(COUNT(l.id), 0)), 
+                2) as taxa_conversao,
+                
+                -- Métricas de pipeline
+                SUM(CASE WHEN l.status LIKE '%Conversação%' THEN 1 ELSE 0 END) as em_negociacao,
+                SUM(CASE WHEN l.status LIKE '%Cotação%' THEN 1 ELSE 0 END) as propostas_enviadas,
+                
+                -- Performance vs Meta
+                ROUND(
+                    (SUM(CASE WHEN l.status LIKE '%Fechado%' THEN 1500 ELSE 0 END) * 100.0 / 
+                    NULLIF(COALESCE(b.monthly_goal, 10000), 0)), 
+                2) as atingimento_meta
+                
+            FROM brokers b
+            LEFT JOIN leads l ON b.id = l.broker_id
+            WHERE b.is_active = 1 OR b.is_active IS NULL
+            GROUP BY b.id, b.name, b.email, b.monthly_goal
+            ORDER BY faturamento_gerado DESC
+            """)
+            
+            performance_corretores = []
+            corretores_data = await cursor.fetchall()
+            
+            for corretor in corretores_data:
+                performance_corretores.append({
+                    "id": corretor[0],
+                    "nome": corretor[1],
+                    "email": corretor[2],
+                    "meta_mensal": corretor[3] or 0,
+                    "total_leads": corretor[4] or 0,
+                    "vendas_fechadas": corretor[5] or 0,
+                    "faturamento_gerado": corretor[6] or 0,
+                    "taxa_conversao": corretor[7] or 0,
+                    "leads_negociacao": corretor[8] or 0,
+                    "propostas_enviadas": corretor[9] or 0,
+                    "atingimento_meta": corretor[10] or 0,
+                    "status_meta": "✅ Atingiu" if (corretor[10] or 0) >= 100 else "🟡 Em andamento" if (corretor[10] or 0) > 0 else "❌ Não iniciado"
+                })
+            
+            # ✅ EVOLUÇÃO MENSAL DETALHADA
+            cursor = await db.execute("""
+            SELECT 
+                strftime('%Y-%m', created_at) as mes,
+                COUNT(*) as total_leads,
+                SUM(CASE WHEN status LIKE '%Fechado%' THEN 1 ELSE 0 END) as vendas,
+                SUM(CASE WHEN status LIKE '%Fechado%' THEN 1500 ELSE 0 END) as faturamento,
+                SUM(CASE WHEN status LIKE '%Conversação%' THEN 1 ELSE 0 END) as negociacao,
+                SUM(CASE WHEN status LIKE '%Cotação%' THEN 1 ELSE 0 END) as propostas
+            FROM leads
+            WHERE created_at IS NOT NULL
+            GROUP BY strftime('%Y-%m', created_at)
+            ORDER BY mes DESC
+            LIMIT 12
+            """)
+            
+            evolucao_mensal = []
+            meses_data = await cursor.fetchall()
+            
+            for mes in meses_data:
+                evolucao_mensal.append({
+                    "mes": mes[0],
+                    "total_leads": mes[1],
+                    "vendas": mes[2],
+                    "faturamento": mes[3],
+                    "leads_negociacao": mes[4],
+                    "propostas_enviadas": mes[5],
+                    "taxa_conversao_mes": round((mes[2] * 100.0 / mes[1]), 2) if mes[1] > 0 else 0
+                })
+            
+            return {
+                "metricas_gerais": {
+                    "total_leads": metricas_gerais[0] or 0,
+                    "total_vendas": metricas_gerais[1] or 0,
+                    "faturamento_total": metricas_gerais[2] or 0,
+                    "leads_negociacao": metricas_gerais[3] or 0,
+                    "propostas_enviadas": metricas_gerais[4] or 0,
+                    "taxa_conversao_geral": round((metricas_gerais[1] * 100.0 / metricas_gerais[0]), 2) if metricas_gerais[0] > 0 else 0
+                },
+                "performance_corretores": performance_corretores,
+                "evolucao_mensal": evolucao_mensal,
+                "timestamp": datetime.now().isoformat()
+            }
+            
+    except Exception as e:
+        print(f"❌ Erro no dashboard avançado: {str(e)}")
         return {"error": str(e)}
 
 # ✅ ENDPOINT PARA CLIENTES
