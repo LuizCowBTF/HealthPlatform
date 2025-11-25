@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>HealthCRM Dashboard</title>
+        <script
+            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+            rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet" />
+        <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .progress-bar {
+        transition: width 0.8s ease-in-out;
+      }
+      .kpi-card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+      }
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+      }
+    </style>
+
+        <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e67951",
+              "background-light": "#f8f6f6",
+              "background-dark": "#211511",
+              "card-light": "#ffffff",
+              "card-dark": "#2a1a14",
+              "text-light": "#1c1c1c",
+              "text-dark": "#f5f5f5",
+              "subtext-light": "#876d64",
+              "subtext-dark": "#a18a82",
+              "border-light": "#e5dedc",
+              "border-dark": "#40312c",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              lg: "1rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    </head>
+    <body class="bg-background-light dark:bg-background-dark font-display">
+        <div
+            class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+            <div class="layout-container flex h-full grow flex-col">
+                <div
+                    class="px-4 md:px-10 lg:px-20 flex flex-1 justify-center py-5">
+                    <div
+                        class="layout-content-container flex flex-col w-full max-w-4xl flex-1">
+                        <div class="flex flex-col gap-8 p-4">
+                            <div class="flex flex-wrap justify-between gap-3">
+                                <div class="flex min-w-72 flex-col gap-2">
+                                    <p
+                                        class="text-3xl font-black tracking-tighter text-[#111714] dark:text-white">New
+                                        Proposal Registration</p>
+                                    <p
+                                        class="text-base font-normal text-[#648772] dark:text-gray-400">Fill
+                                        in the details below to register a new
+                                        proposal.</p>
+                                </div>
+                            </div>
+                            <form
+                                class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                                <div class="flex flex-col">
+                                    <label
+                                        class="flex flex-col min-w-40 flex-1">
+                                        <p
+                                            class="text-base font-medium pb-2 text-[#111714] dark:text-white">Broker
+                                            Name</p>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-500 focus:outline-0 focus:ring-0 border-none bg-[#f0f4f2] dark:bg-background-dark dark:border dark:border-gray-700 h-14 placeholder:text-[#648772] p-4 text-base font-normal"
+                                            disabled value="John Doe" />
+                                    </label>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label
+                                        class="flex flex-col min-w-40 flex-1">
+                                        <p
+                                            class="text-base font-medium pb-2 text-[#111714] dark:text-white">Plan
+                                            Value</p>
+                                        <div class="relative">
+                                            <span
+                                                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#648772]">attach_money</span>
+                                            <input
+                                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111714] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce5df] dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary h-14 placeholder:text-[#648772] pl-10 pr-4 py-[15px] text-base font-normal"
+                                                placeholder="Enter the total plan value"
+                                                value />
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label
+                                        class="flex flex-col min-w-40 flex-1">
+                                        <p
+                                            class="text-base font-medium pb-2 text-[#111714] dark:text-white">Number
+                                            of Lives</p>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111714] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce5df] dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary h-14 placeholder:text-[#648772] p-[15px] text-base font-normal"
+                                            placeholder="Enter the number of lives covered"
+                                            value />
+                                    </label>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label
+                                        class="flex flex-col min-w-40 flex-1">
+                                        <p
+                                            class="text-base font-medium pb-2 text-[#111714] dark:text-white">Category</p>
+                                        <select
+                                            class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111714] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce5df] dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary h-14 placeholder:text-[#648772] p-[15px] text-base font-normal appearance-none bg-no-repeat bg-right"
+                                            style="background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27%23648772%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M215.39 92.94a8 8 0 00-11.31 0L128 169.37 51.92 92.94a8 8 0 10-11.32 11.32l82.05 82.05a8 8 0 0011.32 0l81.42-82.06a8 8 0 000-11.31z%27/%3e%3c/svg%3e');">
+                                            <option value>Select a
+                                                category</option>
+                                            <option
+                                                value="individual">Individual</option>
+                                            <option value="group">Group</option>
+                                            <option
+                                                value="senior">Senior</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label
+                                        class="flex flex-col min-w-40 flex-1">
+                                        <p
+                                            class="text-base font-medium pb-2 text-[#111714] dark:text-white">Carrier</p>
+                                        <select
+                                            class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111714] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce5df] dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary h-14 placeholder:text-[#648772] p-[15px] text-base font-normal appearance-none bg-no-repeat bg-right"
+                                            style="background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27%23648772%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M215.39 92.94a8 8 0 00-11.31 0L128 169.37 51.92 92.94a8 8 0 10-11.32 11.32l82.05 82.05a8 8 0 0011.32 0l81.42-82.06a8 8 0 000-11.31z%27/%3e%3c/svg%3e');">
+                                            <option value>Select a
+                                                carrier</option>
+                                            <option value="aetna">Aetna</option>
+                                            <option value="cigna">Cigna</option>
+                                            <option value="united">United
+                                                Healthcare</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label
+                                        class="flex flex-col min-w-40 flex-1">
+                                        <p
+                                            class="text-base font-medium pb-2 text-[#111714] dark:text-white">Product</p>
+                                        <select
+                                            class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111714] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce5df] dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary h-14 placeholder:text-[#648772] p-[15px] text-base font-normal appearance-none bg-no-repeat bg-right"
+                                            style="background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27%23648772%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M215.39 92.94a8 8 0 00-11.31 0L128 169.37 51.92 92.94a8 8 0 10-11.32 11.32l82.05 82.05a8 8 0 0011.32 0l81.42-82.06a8 8 0 000-11.31z%27/%3e%3c/svg%3e');">
+                                            <option value>Select a
+                                                product</option>
+                                            <option value="hmo">HMO</option>
+                                            <option value="ppo">PPO</option>
+                                            <option value="pos">POS</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label
+                                        class="flex flex-col min-w-40 flex-1">
+                                        <p
+                                            class="text-base font-medium pb-2 text-[#111714] dark:text-white">Contract
+                                            Duration</p>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111714] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce5df] dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary h-14 placeholder:text-[#648772] p-[15px] text-base font-normal"
+                                            placeholder="e.g., 12 months"
+                                            value />
+                                    </label>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label
+                                        class="flex flex-col min-w-40 flex-1">
+                                        <p
+                                            class="text-base font-medium pb-2 text-[#111714] dark:text-white">Supervisor</p>
+                                        <select
+                                            class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111714] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce5df] dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary h-14 placeholder:text-[#648772] p-[15px] text-base font-normal appearance-none bg-no-repeat bg-right"
+                                            style="background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27%23648772%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M215.39 92.94a8 8 0 00-11.31 0L128 169.37 51.92 92.94a8 8 0 10-11.32 11.32l82.05 82.05a8 8 0 0011.32 0l81.42-82.06a8 8 0 000-11.31z%27/%3e%3c/svg%3e');">
+                                            <option value>Select a
+                                                supervisor</option>
+                                            <option value="supervisor1">Jane
+                                                Smith</option>
+                                            <option value="supervisor2">Michael
+                                                Brown</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label
+                                        class="flex flex-col min-w-40 flex-1">
+                                        <p
+                                            class="text-base font-medium pb-2 text-[#111714] dark:text-white">Coordinator</p>
+                                        <select
+                                            class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111714] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce5df] dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary h-14 placeholder:text-[#648772] p-[15px] text-base font-normal appearance-none bg-no-repeat bg-right"
+                                            style="background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724px%27 height=%2724px%27 fill=%27%23648772%27 viewBox=%270 0 256 256%27%3e%3cpath d=%27M215.39 92.94a8 8 0 00-11.31 0L128 169.37 51.92 92.94a8 8 0 10-11.32 11.32l82.05 82.05a8 8 0 0011.32 0l81.42-82.06a8 8 0 000-11.31z%27/%3e%3c/svg%3e');">
+                                            <option value>Select a
+                                                coordinator</option>
+                                            <option value="coordinator1">Emily
+                                                Johnson</option>
+                                            <option value="coordinator2">David
+                                                Wilson</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="flex flex-col">
+                                    <label
+                                        class="flex flex-col min-w-40 flex-1">
+                                        <p
+                                            class="text-base font-medium pb-2 text-[#111714] dark:text-white">Contract
+                                            Number</p>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111714] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce5df] dark:border-gray-700 bg-white dark:bg-background-dark focus:border-primary h-14 placeholder:text-[#648772] p-[15px] text-base font-normal"
+                                            placeholder="Enter contract number"
+                                            value />
+                                    </label>
+                                </div>
+                            </form>
+                            <div
+                                class="md:col-span-2 flex justify-end gap-4 pt-4">
+                                <button
+                                    class="px-6 py-3 rounded-lg bg-gray-200 dark:bg-gray-700 text-[#111714] dark:text-white text-base font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Cancel</button>
+                                <button
+                                    class="px-6 py-3 rounded-lg bg-primary text-white text-base font-medium hover:bg-primary/90 transition-colors flex items-center gap-2">
+                                    Submit Proposal
+                                    <span
+                                        class="material-symbols-outlined">send</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body></html>

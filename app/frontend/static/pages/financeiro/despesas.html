@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>HealthCRM Dashboard</title>
+    <script
+      src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet" />
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .progress-bar {
+        transition: width 0.8s ease-in-out;
+      }
+      .kpi-card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+      }
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+      }
+    </style>
+
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e67951",
+              "background-light": "#f8f6f6",
+              "background-dark": "#211511",
+              "card-light": "#ffffff",
+              "card-dark": "#2a1a14",
+              "text-light": "#1c1c1c",
+              "text-dark": "#f5f5f5",
+              "subtext-light": "#876d64",
+              "subtext-dark": "#a18a82",
+              "border-light": "#e5dedc",
+              "border-dark": "#40312c",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              lg: "1rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="flex min-h-screen">
+      <!-- Main Content -->
+      <main class="flex-1 ml-0 transition-all duration-300">
+        <!-- Page Content -->
+        <div class="p-6 lg:p-10">
+          <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+            <p
+              class="text-accent dark:text-white text-3xl font-black leading-tight tracking-[-0.033em] min-w-72">Purchase
+              Requests</p>
+            <button
+              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] shadow-md hover:opacity-90 transition-opacity">
+              <span class="truncate">New Request</span>
+            </button>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column: Request Form -->
+            <div class="lg:col-span-2">
+              <div
+                class="p-6 bg-secondary dark:bg-gray-800 rounded-xl shadow-lg">
+                <p
+                  class="text-accent dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] mb-6">Create
+                  New Purchase Request</p>
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <label class="flex flex-col col-span-2">
+                    <p
+                      class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Item
+                      Name/Description</p>
+                    <input
+                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-accent dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 h-12 placeholder:text-gray-500 dark:placeholder:text-gray-400 p-3 text-base font-normal"
+                      placeholder="e.g., Apple MacBook Pro 16-inch" value />
+                  </label>
+                  <label class="flex flex-col">
+                    <p
+                      class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Category</p>
+                    <select
+                      class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-accent dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 h-12 placeholder:text-gray-500 dark:placeholder:text-gray-400 px-3 text-base font-normal">
+                      <option>Office Supplies</option>
+                      <option>Equipment</option>
+                      <option>Software</option>
+                      <option>Other</option>
+                    </select>
+                  </label>
+                  <label class="flex flex-col">
+                    <p
+                      class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Quantity</p>
+                    <input
+                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-accent dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 h-12 placeholder:text-gray-500 dark:placeholder:text-gray-400 p-3 text-base font-normal"
+                      placeholder="1" type="number" value="1" />
+                  </label>
+                  <label class="flex flex-col col-span-2">
+                    <p
+                      class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Preferred
+                      Vendor (Optional)</p>
+                    <input
+                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-accent dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 h-12 placeholder:text-gray-500 dark:placeholder:text-gray-400 p-3 text-base font-normal"
+                      placeholder="e.g., Amazon, Apple Store" value />
+                  </label>
+                  <label class="flex flex-col col-span-2">
+                    <p
+                      class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Justification</p>
+                    <textarea
+                      class="form-textarea flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-lg text-accent dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 h-24 placeholder:text-gray-500 dark:placeholder:text-gray-400 p-3 text-base font-normal"
+                      placeholder="Provide a reason for this purchase..."></textarea>
+                  </label>
+                  <div class="col-span-2">
+                    <p
+                      class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Attachments
+                      (Optional)</p>
+                    <div class="flex items-center justify-center w-full">
+                      <label
+                        class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:hover:border-gray-500 dark:hover:bg-gray-600 transition-colors"
+                        for="dropzone-file">
+                        <div
+                          class="flex flex-col items-center justify-center pt-5 pb-6">
+                          <span
+                            class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-4xl">cloud_upload</span>
+                          <p
+                            class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                              class="font-semibold">Click to upload</span> or
+                            drag and drop</p>
+                          <p
+                            class="text-xs text-gray-500 dark:text-gray-400">SVG,
+                            PNG, JPG or PDF (MAX. 800x400px)</p>
+                        </div>
+                        <input class="hidden" id="dropzone-file" type="file" />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-span-2 flex justify-end mt-4">
+                    <button
+                      class="flex min-w-[120px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold leading-normal shadow-md hover:opacity-90 transition-opacity"
+                      type="submit">
+                      <span class="truncate">Submit Request</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- Right Column: Request History -->
+            <div class="lg:col-span-1">
+              <div
+                class="p-6 bg-secondary dark:bg-gray-800 rounded-xl shadow-lg h-full">
+                <p
+                  class="text-accent dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] mb-4">My
+                  Request History</p>
+                <div class="border-b border-gray-200 dark:border-gray-700 mb-4">
+                  <nav aria-label="Tabs" class="flex space-x-4">
+                    <a
+                      class="px-3 py-2 font-medium text-sm rounded-md text-primary bg-primary/20 dark:text-white dark:bg-primary"
+                      href="#">All</a>
+                    <a
+                      class="px-3 py-2 font-medium text-sm rounded-md text-gray-500 dark:text-gray-400 hover:text-accent dark:hover:text-white"
+                      href="#">Pending</a>
+                    <a
+                      class="px-3 py-2 font-medium text-sm rounded-md text-gray-500 dark:text-gray-400 hover:text-accent dark:hover:text-white"
+                      href="#">Approved</a>
+                    <a
+                      class="px-3 py-2 font-medium text-sm rounded-md text-gray-500 dark:text-gray-400 hover:text-accent dark:hover:text-white"
+                      href="#">Rejected</a>
+                  </nav>
+                </div>
+                <div class="space-y-4">
+                  <!-- Request Item -->
+                  <div
+                    class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <div class="flex justify-between items-start">
+                      <div>
+                        <p
+                          class="font-semibold text-accent dark:text-white">Laptop
+                          for New Designer</p>
+                        <p
+                          class="text-sm text-gray-500 dark:text-gray-400">Submitted:
+                          2023-10-26</p>
+                      </div>
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">Approved</span>
+                    </div>
+                  </div>
+                  <!-- Request Item -->
+                  <div
+                    class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <div class="flex justify-between items-start">
+                      <div>
+                        <p
+                          class="font-semibold text-accent dark:text-white">Office
+                          Chairs (x5)</p>
+                        <p
+                          class="text-sm text-gray-500 dark:text-gray-400">Submitted:
+                          2023-10-24</p>
+                      </div>
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">Pending</span>
+                    </div>
+                  </div>
+                  <!-- Request Item -->
+                  <div
+                    class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <div class="flex justify-between items-start">
+                      <div>
+                        <p
+                          class="font-semibold text-accent dark:text-white">Adobe
+                          Creative Cloud License</p>
+                        <p
+                          class="text-sm text-gray-500 dark:text-gray-400">Submitted:
+                          2023-10-22</p>
+                      </div>
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">Rejected</span>
+                    </div>
+                  </div>
+                  <!-- Empty State Example -->
+                  <!--
+                  <div class="text-center py-10">
+                      <span class="material-symbols-outlined text-gray-400 text-6xl">inbox</span>
+                      <p class="mt-4 text-lg font-semibold text-accent dark:text-white">No requests yet</p>
+                      <p class="text-gray-500 dark:text-gray-400">Create your first purchase request to see it here.</p>
+                  </div>
+                  -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body></html>

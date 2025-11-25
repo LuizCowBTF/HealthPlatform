@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>HealthCRM Dashboard</title>
+        <script
+            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+            rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet" />
+        <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .progress-bar {
+        transition: width 0.8s ease-in-out;
+      }
+      .kpi-card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+      }
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+      }
+    </style>
+
+        <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e67951",
+              "background-light": "#f8f6f6",
+              "background-dark": "#211511",
+              "card-light": "#ffffff",
+              "card-dark": "#2a1a14",
+              "text-light": "#1c1c1c",
+              "text-dark": "#f5f5f5",
+              "subtext-light": "#876d64",
+              "subtext-dark": "#a18a82",
+              "border-light": "#e5dedc",
+              "border-dark": "#40312c",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              lg: "1rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    </head>
+    <body class="bg-background-light dark:bg-background-dark font-display">
+        <div class="flex min-h-screen">
+            <!-- Main Content -->
+<main class="flex-1 p-10">
+<div class="flex flex-col gap-8">
+<!-- Page Header -->
+<div class="flex flex-wrap justify-between gap-4 items-center">
+<div class="flex flex-col gap-1">
+<p class="text-accent dark:text-white text-3xl font-bold leading-tight tracking-tight">Register Receipt</p>
+<p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">Enter the details of the new receipt below.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Registration Form -->
+<div class="lg:col-span-2">
+<div class="bg-secondary dark:bg-gray-800/50 rounded-xl shadow-sm p-8">
+<h3 class="text-xl font-semibold mb-6 text-accent dark:text-white">New Receipt Details</h3>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col col-span-1">
+<p class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Operator Name</p>
+<input class="form-input w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-accent dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-subtle-grey dark:border-gray-700 bg-secondary dark:bg-gray-900 h-12 placeholder:text-gray-500 px-4 text-base font-normal leading-normal" placeholder="Enter operator name" value=""/>
+</label>
+<label class="flex flex-col col-span-1">
+<p class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Plan Value (BRL)</p>
+<input class="form-input w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-accent dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-subtle-grey dark:border-gray-700 bg-secondary dark:bg-gray-900 h-12 placeholder:text-gray-500 px-4 text-base font-normal leading-normal" placeholder="R$ 0,00" value=""/>
+</label>
+<label class="flex flex-col col-span-2">
+<p class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Contract Number</p>
+<input class="form-input w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-accent dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-subtle-grey dark:border-gray-700 bg-secondary dark:bg-gray-900 h-12 placeholder:text-gray-500 px-4 text-base font-normal leading-normal" placeholder="Enter contract number" value=""/>
+</label>
+<label class="flex flex-col col-span-1">
+<p class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Associated Broker</p>
+<select class="form-select w-full min-w-0 flex-1 overflow-hidden rounded-lg text-accent dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-subtle-grey dark:border-gray-700 bg-secondary dark:bg-gray-900 h-12 px-4 text-base font-normal leading-normal">
+<option>Select Broker</option>
+<option>João Pereira</option>
+<option>Maria Costa</option>
+</select>
+</label>
+<label class="flex flex-col col-span-1">
+<p class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Payment Date</p>
+<input class="form-input w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-accent dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-subtle-grey dark:border-gray-700 bg-secondary dark:bg-gray-900 h-12 placeholder:text-gray-500 px-4 text-base font-normal leading-normal" type="date"/>
+</label>
+<label class="flex flex-col col-span-1">
+<p class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Payment Method</p>
+<select class="form-select w-full min-w-0 flex-1 overflow-hidden rounded-lg text-accent dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-subtle-grey dark:border-gray-700 bg-secondary dark:bg-gray-900 h-12 px-4 text-base font-normal leading-normal">
+<option>Select Method</option>
+<option>PIX</option>
+<option>Bank Transfer</option>
+<option>Billet</option>
+</select>
+</label>
+<label class="flex flex-col col-span-2">
+<p class="text-accent dark:text-gray-300 text-sm font-medium leading-normal pb-2">Description (Optional)</p>
+<textarea class="form-textarea w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-accent dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border border-subtle-grey dark:border-gray-700 bg-secondary dark:bg-gray-900 placeholder:text-gray-500 p-4 text-base font-normal leading-normal" placeholder="Add any relevant notes..." rows="3"></textarea>
+</label>
+<div class="col-span-2 flex justify-end gap-4 mt-4">
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-gray-200 dark:bg-gray-700 text-accent dark:text-white text-sm font-semibold leading-normal tracking-wide hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" type="button">
+<span class="truncate">Clear Form</span>
+</button>
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-sm font-semibold leading-normal tracking-wide hover:bg-primary/90 transition-colors" type="submit">
+<span class="truncate">Register Receipt</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Recent Receipts -->
+<div class="lg:col-span-1">
+<div class="bg-secondary dark:bg-gray-800/50 rounded-xl shadow-sm p-8 h-full">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-semibold text-accent dark:text-white">Recently Added</h3>
+<a class="text-sm font-medium text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between p-4 rounded-lg bg-background-light dark:bg-gray-900/70 hover:shadow-md transition-shadow">
+<div class="flex flex-col">
+<p class="font-medium text-accent dark:text-white">Amil Saúde</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Broker: João Pereira</p>
+</div>
+<p class="font-semibold text-green-600 dark:text-green-500">R$ 450,00</p>
+</div>
+<div class="flex items-center justify-between p-4 rounded-lg bg-background-light dark:bg-gray-900/70 hover:shadow-md transition-shadow">
+<div class="flex flex-col">
+<p class="font-medium text-accent dark:text-white">Bradesco Saúde</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Broker: Maria Costa</p>
+</div>
+<p class="font-semibold text-green-600 dark:text-green-500">R$ 1.200,00</p>
+</div>
+<div class="flex items-center justify-between p-4 rounded-lg bg-background-light dark:bg-gray-900/70 hover:shadow-md transition-shadow">
+<div class="flex flex-col">
+<p class="font-medium text-accent dark:text-white">SulAmérica</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Broker: João Pereira</p>
+</div>
+<p class="font-semibold text-green-600 dark:text-green-500">R$ 780,50</p>
+</div>
+<div class="flex items-center justify-between p-4 rounded-lg bg-background-light dark:bg-gray-900/70 hover:shadow-md transition-shadow">
+<div class="flex flex-col">
+<p class="font-medium text-accent dark:text-white">Unimed</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Broker: Ana Silva</p>
+</div>
+<p class="font-semibold text-green-600 dark:text-green-500">R$ 950,00</p>
+</div>
+<div class="flex items-center justify-between p-4 rounded-lg bg-background-light dark:bg-gray-900/70 hover:shadow-md transition-shadow">
+<div class="flex flex-col">
+<p class="font-medium text-accent dark:text-white">Golden Cross</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Broker: Maria Costa</p>
+</div>
+<p class="font-semibold text-green-600 dark:text-green-500">R$ 320,00</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</div>
+</body>
+</html>

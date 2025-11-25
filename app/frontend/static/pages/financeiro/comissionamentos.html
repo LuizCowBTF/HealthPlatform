@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>HealthCRM Dashboard</title>
+        <script
+            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+            rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet" />
+        <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .progress-bar {
+        transition: width 0.8s ease-in-out;
+      }
+      .kpi-card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+      }
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+      }
+    </style>
+
+        <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e67951",
+              "background-light": "#f8f6f6",
+              "background-dark": "#211511",
+              "card-light": "#ffffff",
+              "card-dark": "#2a1a14",
+              "text-light": "#1c1c1c",
+              "text-dark": "#f5f5f5",
+              "subtext-light": "#876d64",
+              "subtext-dark": "#a18a82",
+              "border-light": "#e5dedc",
+              "border-dark": "#40312c",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              lg: "1rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    </head>
+    <body class="bg-background-light dark:bg-background-dark font-display">
+        <div class="flex min-h-screen">
+            <!-- Main Content -->
+            <!-- Page Content -->
+            <div
+                class="flex-1 overflow-y-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column: Contract List -->
+                <div class="lg:col-span-1 flex flex-col gap-6">
+                    <div>
+                        <h2
+                            class="text-2xl font-bold text-text-primary dark:text-white">Analysis
+                            Queue</h2>
+                        <p
+                            class="text-text-secondary dark:text-gray-400">Contracts
+                            Pending Technical Analysis</p>
+                    </div>
+                    <!-- Filters -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="flex-1">
+                            <label
+                                class="text-sm font-medium text-text-secondary dark:text-gray-400"
+                                for="broker-filter">Broker</label>
+                            <select
+                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-lg"
+                                id="broker-filter">
+                                <option>All Brokers</option>
+                                <option>Broker A</option>
+                                <option>Broker B</option>
+                            </select>
+                        </div>
+                        <div class="flex-1">
+                            <label
+                                class="text-sm font-medium text-text-secondary dark:text-gray-400">Status</label>
+                            <div
+                                class="mt-1 flex rounded-lg shadow-sm bg-white dark:bg-gray-800 p-1 space-x-1">
+                                <button
+                                    class="w-full text-center py-1.5 text-sm font-medium rounded-md text-text-primary dark:text-white bg-gray-100 dark:bg-gray-700">Pending</button>
+                                <button
+                                    class="w-full text-center py-1.5 text-sm font-medium rounded-md text-text-secondary dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50">Approved</button>
+                                <button
+                                    class="w-full text-center py-1.5 text-sm font-medium rounded-md text-text-secondary dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50">Reproved</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Contract List -->
+                    <div class="space-y-4 overflow-y-auto pr-2 -mr-2">
+                        <div
+                            class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-soft cursor-pointer border-2 border-primary">
+                            <div class="flex justify-between items-start">
+                                <p
+                                    class="font-bold text-text-primary dark:text-white">#12345</p>
+                                <span
+                                    class="px-2 py-0.5 text-xs font-semibold rounded-full bg-status-pending/20 text-status-pending">Pending</span>
+                            </div>
+                            <p
+                                class="text-lg font-semibold text-text-primary dark:text-white mt-1">Ana
+                                Silva</p>
+                            <p
+                                class="text-sm text-text-secondary dark:text-gray-400">Submitted:
+                                2023-10-26</p>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-soft cursor-pointer hover:border-2 hover:border-primary/50 transition-all duration-200">
+                            <div class="flex justify-between items-start">
+                                <p
+                                    class="font-bold text-text-primary dark:text-white">#12346</p>
+                                <span
+                                    class="px-2 py-0.5 text-xs font-semibold rounded-full bg-status-approved/20 text-status-approved">Approved</span>
+                            </div>
+                            <p
+                                class="text-lg font-semibold text-text-primary dark:text-white mt-1">Bruno
+                                Costa</p>
+                            <p
+                                class="text-sm text-text-secondary dark:text-gray-400">Submitted:
+                                2023-10-25</p>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-soft cursor-pointer hover:border-2 hover:border-primary/50 transition-all duration-200">
+                            <div class="flex justify-between items-start">
+                                <p
+                                    class="font-bold text-text-primary dark:text-white">#12347</p>
+                                <span
+                                    class="px-2 py-0.5 text-xs font-semibold rounded-full bg-status-reproved/20 text-status-reproved">Reproved</span>
+                            </div>
+                            <p
+                                class="text-lg font-semibold text-text-primary dark:text-white mt-1">Carla
+                                Dias</p>
+                            <p
+                                class="text-sm text-text-secondary dark:text-gray-400">Submitted:
+                                2023-10-24</p>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-soft cursor-pointer hover:border-2 hover:border-primary/50 transition-all duration-200">
+                            <div class="flex justify-between items-start">
+                                <p
+                                    class="font-bold text-text-primary dark:text-white">#12348</p>
+                                <span
+                                    class="px-2 py-0.5 text-xs font-semibold rounded-full bg-status-pending/20 text-status-pending">Pending</span>
+                            </div>
+                            <p
+                                class="text-lg font-semibold text-text-primary dark:text-white mt-1">Daniel
+                                Alves</p>
+                            <p
+                                class="text-sm text-text-secondary dark:text-gray-400">Submitted:
+                                2023-10-23</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column: Preview Panel -->
+                <div
+                    class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow-soft flex flex-col">
+                    <div class="p-6 border-b dark:border-gray-700">
+                        <h3
+                            class="text-xl font-bold text-text-primary dark:text-white">Contract
+                            Details: #12345</h3>
+                        <p
+                            class="text-sm text-text-secondary dark:text-gray-400">Client:
+                            Ana Silva | Broker: Broker A</p>
+                    </div>
+                    <div class="flex-grow p-6 overflow-y-auto space-y-6">
+                        <!-- Documents -->
+                        <div>
+                            <h4
+                                class="font-semibold text-text-primary dark:text-white mb-3">Required
+                                Documents</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div
+                                    class="border dark:border-gray-700 rounded-lg p-3 flex flex-col items-center justify-center text-center hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-primary">description</span>
+                                    <p
+                                        class="text-sm font-medium mt-2 text-text-primary dark:text-white">ID
+                                        Document</p>
+                                    <p
+                                        class="text-xs text-text-secondary dark:text-gray-400">View</p>
+                                </div>
+                                <div
+                                    class="border dark:border-gray-700 rounded-lg p-3 flex flex-col items-center justify-center text-center hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-primary">home</span>
+                                    <p
+                                        class="text-sm font-medium mt-2 text-text-primary dark:text-white">Proof
+                                        of Residence</p>
+                                    <p
+                                        class="text-xs text-text-secondary dark:text-gray-400">View</p>
+                                </div>
+                                <div
+                                    class="border dark:border-gray-700 rounded-lg p-3 flex flex-col items-center justify-center text-center hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer">
+                                    <span
+                                        class="material-symbols-outlined text-4xl text-primary">health_and_safety</span>
+                                    <p
+                                        class="text-sm font-medium mt-2 text-text-primary dark:text-white">Health
+                                        Statement</p>
+                                    <p
+                                        class="text-xs text-text-secondary dark:text-gray-400">View</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Actions -->
+                        <div>
+                            <h4
+                                class="font-semibold text-text-primary dark:text-white mb-3">Actions</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <label
+                                        class="text-sm font-medium text-text-secondary dark:text-gray-400"
+                                        for="rejection-reason">Reason for
+                                        Rejection (if applicable)</label>
+                                    <textarea
+                                        class="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-primary focus:border-primary sm:text-sm dark:bg-gray-900 dark:text-white"
+                                        id="rejection-reason"
+                                        placeholder="Add comments here..."
+                                        rows="3"></textarea>
+                                </div>
+                                <div class="flex gap-4">
+                                    <button
+                                        class="flex-1 h-11 flex items-center justify-center gap-2 px-6 bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-500/20 font-bold">
+                                        <span
+                                            class="material-symbols-outlined">thumb_down</span>
+                                        <span>Reject</span>
+                                    </button>
+                                    <button
+                                        class="flex-1 h-11 flex items-center justify-center gap-2 px-6 bg-primary text-white rounded-lg hover:bg-primary/90 font-bold shadow-soft">
+                                        <span
+                                            class="material-symbols-outlined">thumb_up</span>
+                                        <span>Approve</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Audit Trail -->
+                        <div>
+                            <h4
+                                class="font-semibold text-text-primary dark:text-white mb-3">Audit
+                                Trail</h4>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="bg-gray-100 dark:bg-gray-700 rounded-full size-8 flex items-center justify-center">
+                                        <span
+                                            class="material-symbols-outlined text-text-secondary dark:text-gray-400 text-base">person</span>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-sm text-text-primary dark:text-white"><strong>John
+                                                Doe</strong> viewed the
+                                            contract.</p>
+                                        <p
+                                            class="text-xs text-text-secondary dark:text-gray-400">2023-10-26
+                                            10:05 AM</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="bg-gray-100 dark:bg-gray-700 rounded-full size-8 flex items-center justify-center">
+                                        <span
+                                            class="material-symbols-outlined text-text-secondary dark:text-gray-400 text-base">upload_file</span>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="text-sm text-text-primary dark:text-white">Contract
+                                            submitted by <strong>Broker
+                                                A</strong>.</p>
+                                        <p
+                                            class="text-xs text-text-secondary dark:text-gray-400">2023-10-26
+                                            09:30 AM</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body></html>
