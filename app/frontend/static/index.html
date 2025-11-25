@@ -1,146 +1,425 @@
+<!DOCTYPE html>
 <html class="light" lang="pt-BR">
-    <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>HealthCRM Dashboard</title>
-        <script
-            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-            rel="stylesheet" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-            rel="stylesheet" />
-        <style>
-      .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-      }
 
-      .progress-bar {
-        transition: width 0.8s ease-in-out;
-      }
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>HealthCRM Dashboard</title>
+    <script
+      src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet" />
+    <style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
 
-      .kpi-card:hover {
-        transform: translateY(-2px);
-        transition: transform 0.2s ease;
-      }
+    .progress-bar {
+      transition: width 0.8s ease-in-out;
+    }
 
-      .loading {
-        opacity: 0.6;
-        pointer-events: none;
-      }
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      transition: transform 0.2s ease;
+    }
 
-      .chart-container {
-        position: relative;
-        height: 300px;
-        width: 100%;
-      }
-    </style>
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
 
-        <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#e67951",
-              "background-light": "#f8f6f6",
-              "background-dark": "#211511",
-              "card-light": "#ffffff",
-              "card-dark": "#2a1a14",
-              "text-light": "#1c1c1c",
-              "text-dark": "#f5f5f5",
-              "subtext-light": "#876d64",
-              "subtext-dark": "#a18a82",
-              "border-light": "#e5dedc",
-              "border-dark": "#40312c",
-            },
-            fontFamily: {
-              display: ["Inter", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.5rem",
-              lg: "1rem",
-              xl: "1.5rem",
-              full: "9999px",
-            },
+    .chart-container {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+  </style>
+
+    <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#e67951",
+            "background-light": "#f8f6f6",
+            "background-dark": "#211511",
+            "card-light": "#ffffff",
+            "card-dark": "#2a1a14",
+            "text-light": "#1c1c1c",
+            "text-dark": "#f5f5f5",
+            "subtext-light": "#876d64",
+            "subtext-dark": "#a18a82",
+            "border-light": "#e5dedc",
+            "border-dark": "#40312c",
+          },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem",
+            lg: "1rem",
+            xl: "1.5rem",
+            full: "9999px",
           },
         },
-      };
-    </script>
-    </head>
+      },
+    };
+  </script>
 
-    <body
-        class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-white">
-        <div
-            class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
+    <script>
+    // Função para expandir/colapsar submenus
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      const icon = document.getElementById(`icon-${id}`);
+      if (submenu.classList.contains('hidden')) {
+        // Expandir
+        submenu.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        // Colapsar
+        submenu.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    // Função para colapsar/expandir o sidebar principal
+    function toggleSidebar() {
+      const expandedSidebar = document.getElementById('expanded-sidebar');
+      const recolherSidebar = document.getElementById('recolher-sidebar');
+      const mainContent = document.getElementById('main-content');
+
+      expandedSidebar.classList.toggle('hidden');
+      recolherSidebar.classList.toggle('hidden');
+    }
+  </script>
+  </head>
+
+  <body class="bg-background-light dark:bg-background-dark font-display">
+    <div
+      class="relative flex h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-hidden"
+      style='font-family: Inter, "Noto Sans", sans-serif;'>
+      <div class="flex h-full grow flex-row">
+        <div id="expanded-sidebar"
+          class="flex flex-col justify-between bg-sidebar-bg p-4 shadow-lg w-64 transition-all duration-300 ease-in-out">
+          <div class="flex items-center gap-2 px-2 my-3 mb-6">
+            <img src="../img/LOGO.png" class="w-48" alt="HealthCRM Logo" />
+          </div>
+          <div class="flex items-center gap-3 mt-1 ml-4">
             <div
-                class="absolute inset-0 z-0 h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#4b5563_1px,transparent_1px)]"></div>
-            <div
-                class="relative z-10 flex w-full max-w-md flex-col items-center gap-8 rounded-xl bg-white/50 p-8 shadow-2xl backdrop-blur-lg dark:bg-background-dark/50">
-                <div class="flex w-full flex-col items-center gap-2">
-                    <div
-                        class="flex items-center justify-center">
-                        <img src="./img/LOGO.png" class="size-full"
-                            alt="HelathCRM Logo">
-                    </div>
-                </div>
-                <div class="w-full">
-                    <form class="flex flex-col gap-4">
-                        <label class="flex flex-col">
-                            <p
-                                class="pb-2 text-base font-medium text-[#171311] dark:text-white">E-mail:</p>
-                            <div
-                                class="relative flex w-full flex-1 items-center">
-                                <input
-                                    class="form-input h-14 w-full flex-1 resize-none overflow-hidden rounded-xl border border-[#e5dedc] bg-white p-4 pr-12 text-base font-normal text-[#171311] placeholder:text-[#876d64] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
-                                    placeholder="Digite seu E-mail aqui"
-                                    type="email" />
-                                <div
-                                    class="absolute right-4 text-[#876d64] dark:text-gray-400">
-                                    <span
-                                        class="material-symbols-outlined">mail</span>
-                                </div>
-                            </div>
-                        </label>
-                        <label class="flex flex-col">
-                            <p
-                                class="pb-2 text-base font-medium text-[#171311] dark:text-white">Senha</p>
-                            <div
-                                class="relative flex w-full flex-1 items-center">
-                                <input
-                                    class="form-input h-14 w-full flex-1 resize-none overflow-hidden rounded-xl border border-[#e5dedc] bg-white p-4 pr-12 text-base font-normal text-[#171311] placeholder:text-[#876d64] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400"
-                                    placeholder="Digite sua Senha aqui"
-                                    type="password" />
-                                <div
-                                    class="absolute right-4 text-[#876d64] dark:text-gray-400">
-                                    <span
-                                        class="material-symbols-outlined">lock</span>
-                                </div>
-                            </div>
-                        </label>
-                        <div class="flex items-center justify-end">
-                            <a
-                                class="text-sm text-primary hover:underline dark:text-primary"
-                                href="#">Esqueceu sua senha?</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="flex w-full flex-col gap-4">
-                    <button
-                        class="flex h-14 w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-primary text-base font-bold tracking-[0.015em] text-white transition-transform duration-200 hover:scale-105">
-                        <span class="truncate">Login</span>
-                    </button>
-                    <p
-                        class="text-center text-sm text-[#876d64] dark:text-gray-400">
-                        Não tem cadastro ainda? <a
-                            class="font-medium text-primary hover:underline"
-                            href="#">Registrar-se</a>
-                    </p>
-                </div>
+              class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+              data-alt="User avatar"
+              style="background-image: url('https://i.pravatar.cc/150?img=1');"></div>
+            <div class="flex flex-col">
+              <p class="text-accent text-sm font-semibold">Fábio
+                Damico</p>
+              <p class="text-gray-500 text-xs">User Master</p>
             </div>
+          </div>
+          <div class="flex flex-col gap-8 overflow-y-auto mt-8">
+            <div class="flex flex-col gap-1">
+              <button onclick="toggleSubmenu('dashboard-geral-menu')"
+                class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                <div class="flex items-center gap-3">
+                  <span class="material-symbols-outlined text-2xl">home</span>
+                  <span class="text-sm font-medium">Início</span>
+                </div>
+                <span id="icon-dashboard-geral-menu"
+                  class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+              </button>
+              <div id="dashboard-geral-menu"
+                class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="index.html">Dashboard Geral</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Executivo</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">KPI Dashboard</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Financeiro</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Times</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Dashboard Coordenador</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Gerenciamento Metas</a>
+              </div>
+
+              <button onclick="toggleSubmenu('clientes-leads-menu')"
+                class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                <div class="flex items-center gap-3">
+                  <span class="material-symbols-outlined text-2xl">groups</span>
+                  <span class="text-sm font-medium">Clientes &
+                    Leads</span>
+                </div>
+                <span id="icon-clientes-leads-menu"
+                  class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+              </button>
+              <div id="clientes-leads-menu"
+                class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Incluir Lead</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Atualizar Leads</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Base de Clientes / Banco de
+                  Dados</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Chat Corretores</a>
+              </div>
+
+              <button onclick="toggleSubmenu('financeiro-menu')"
+                class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                <div class="flex items-center gap-3">
+                  <span
+                    class="material-symbols-outlined text-2xl">monetization_on</span>
+                  <span class="text-sm font-medium">Financeiro</span>
+                </div>
+                <span id="icon-financeiro-menu"
+                  class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+              </button>
+              <div id="financeiro-menu"
+                class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Despesas</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Receitas</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Livro Caixa</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Propostas</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Comissionamento</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Requisições</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Aprovações</a>
+              </div>
+
+              <button onclick="toggleSubmenu('operacoes-menu')"
+                class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                <div class="flex items-center gap-3">
+                  <span
+                    class="material-symbols-outlined text-2xl">business_center</span>
+                  <span class="text-sm font-medium">Operações</span>
+                </div>
+                <span id="icon-operacoes-menu"
+                  class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+              </button>
+              <div id="operacoes-menu"
+                class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Gerenciador de Catálogo</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Analítico</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Configurações de Usuários e
+                  Hierarquia</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Admin Chat</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Reclamações anonimas</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Calendário Geral</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Banco de Documentos</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Banco de Corretores</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Gerenciamento de Corretores</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Gerenciamento de Equipes</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Configurações Corretores</a>
+              </div>
+
+              <button onclick="toggleSubmenu('treinamento-rh-menu')"
+                class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                <div class="flex items-center gap-3">
+                  <span
+                    class="material-symbols-outlined text-2xl">psychology</span>
+                  <span class="text-sm font-medium">Treinamento
+                    & RH</span>
+                </div>
+                <span id="icon-treinamento-rh-menu"
+                  class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+              </button>
+              <div id="treinamento-rh-menu"
+                class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">HR Page (Central de RH)</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Página de Treinamento</a>
+              </div>
+
+              <button onclick="toggleSubmenu('marketing-menu')"
+                class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                <div class="flex items-center gap-3">
+                  <span
+                    class="material-symbols-outlined text-2xl">trending_up</span>
+                  <span class="text-sm font-medium">Marketing</span>
+                </div>
+                <span id="icon-marketing-menu"
+                  class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+              </button>
+              <div id="marketing-menu"
+                class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">KPI</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Campanhas</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Gerenciamento</a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="#">Analítico</a>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2 pt-4">
+            <button onclick="toggleSidebar()"
+              class="flex items-center justify-center gap-3 rounded-lg px-3 py-2 text-accent hover:bg-background-light">
+              <span
+                class="material-symbols-outlined text-2xl">chevron_left</span>
+              <span class="text-sm font-medium">Recolher</span>
+            </button>
+            <div class="border-t border-background-light my-2"></div>
+
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+              href="#">
+              <span class="material-symbols-outlined text-2xl">settings</span>
+              <span class="text-sm font-medium">Configurações</span>
+            </a>
+
+            <a
+              class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+              href="#">
+              <span class="material-symbols-outlined text-2xl">logout</span>
+              <span class="text-sm font-medium">Logout</span>
+            </a>
+          </div>
         </div>
-    </body>
+
+        <div id="recolher-sidebar"
+          class="hidden flex-col justify-between bg-sidebar-bg p-4 shadow-lg w-20 transition-all duration-300 ease-in-out items-center">
+          <div class="flex flex-col gap-8">
+            <div class="flex items-center justify-center pt-2">
+              <span
+                class="material-symbols-outlined text-primary text-3xl">health_and_safety</span>
+            </div>
+
+            <div class="flex flex-col gap-4">
+              <a
+                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                href="#" title="Dashboard Geral">
+                <span class="material-symbols-outlined text-2xl">home</span>
+              </a>
+              <a
+                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                href="#" title="Clientes & Leads">
+                <span class="material-symbols-outlined text-2xl">groups</span>
+              </a>
+              <a
+                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                href="#" title="Financeiro">
+                <span
+                  class="material-symbols-outlined text-2xl">monetization_on</span>
+              </a>
+              <a
+                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                href="#" title="Operações">
+                <span
+                  class="material-symbols-outlined text-2xl">business_center</span>
+              </a>
+              <a
+                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                href="#" title="Treinamento & RH">
+                <span
+                  class="material-symbols-outlined text-2xl">psychology</span>
+              </a>
+              <a
+                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                href="#" title="Marketing">
+                <span
+                  class="material-symbols-outlined text-2xl">trending_up</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2 w-full">
+            <button onclick="toggleSidebar()"
+              class="flex items-center justify-center gap-3 rounded-lg px-3 py-2 text-accent hover:bg-background-light"
+              title="Expand">
+              <span
+                class="material-symbols-outlined text-2xl">chevron_right</span>
+            </button>
+            <div class="border-t border-background-light my-2 w-full"></div>
+            <a
+              class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+              href="#" title="Configurações">
+              <span class="material-symbols-outlined text-2xl">settings</span>
+            </a>
+            <a
+              class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+              href="#" title="Logout">
+              <span class="material-symbols-outlined text-2xl">logout</span>
+            </a>
+          </div>
+        </div>
+
+        <main id="main-content" class="flex-1 p-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+    </script>
+  </body>
 
 </html>
