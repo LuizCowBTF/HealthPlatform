@@ -108,7 +108,7 @@
         <div id="expanded-sidebar"
           class="flex flex-col justify-between bg-sidebar-bg p-4 shadow-lg w-64 transition-all duration-300 ease-in-out">
           <div class="flex items-center gap-2 px-2 my-3 mb-6">
-            <img src="../img/LOGO.png" class="w-48" alt="HealthCRM Logo" />
+            <img src="./img/LOGO.png" class="w-48" alt="HealthCRM Logo" />
           </div>
           <div class="flex items-center gap-3 mt-1 ml-4">
             <div
@@ -136,13 +136,21 @@
                 class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="index.html">Dashboard Geral</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../dashboards/dashboard.html')">
+                  Dashboard Geral
+                </a>
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="#">Executivo</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../static/pages/relatorios/kpi_financeiro2.html')">
+                  Executivo
+                </a>
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="#">KPI Dashboard</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../static/pages/relatorios/kpi_dashboard.html')">
+                </a>
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
                   href="#">Financeiro</a>
@@ -160,7 +168,8 @@
               <button onclick="toggleSubmenu('clientes-leads-menu')"
                 class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
                 <div class="flex items-center gap-3">
-                  <span class="material-symbols-outlined text-2xl">groups</span>
+                  <span
+                    class="material-symbols-outlined text-2xl">groups</span>
                   <span class="text-sm font-medium">Clientes &
                     Leads</span>
                 </div>
@@ -411,7 +420,7 @@
         </div>
 
         <main id="main-content" class="flex-1 p-8">
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <div class="mb-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
 
           </div>
         </main>
@@ -419,6 +428,94 @@
     </div>
 
     <script>
+      // Função principal para carregar dashboards
+function loadDashboard(url) {
+    const mainContent = document.getElementById('main-content');
+    
+    // Feedback visual de carregamento
+    mainContent.innerHTML = `
+        <div class="flex flex-col items-center justify-center h-64">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            <p class="mt-4 text-subtext-light dark:text-subtext-dark">Carregando dashboard...</p>
+        </div>
+    `;
+    
+    // Usar setTimeout para dar tempo de ver o loading
+    setTimeout(() => {
+        mainContent.innerHTML = `
+            <iframe 
+                src="${url}" 
+                class="w-full h-screen border-0"
+                onload="console.log('✅ Dashboard carregado: ${url}')"
+                onerror="showDashboardError('${url}')">
+            </iframe>
+        `;
+    }, 500);
+}
+
+// Função para tratar erros
+function showDashboardError(url) {
+    const mainContent = document.getElementById('main-content');
+    mainContent.innerHTML = `
+        <div class="flex flex-col items-center justify-center h-64 text-red-500">
+            <span class="material-symbols-outlined text-4xl mb-4">error</span>
+            <h3 class="text-xl font-bold mb-2">Erro ao carregar</h3>
+            <p class="text-sm text-center mb-4">Não foi possível carregar: ${url}</p>
+            <button onclick="loadStaticDashboard()" 
+                    class="bg-primary text-white px-4 py-2 rounded-lg">
+                Carregar Dashboard Simples
+            </button>
+        </div>
+    `;
+}
+
+// Fallback com conteúdo estático
+function loadStaticDashboard() {
+    const mainContent = document.getElementById('main-content');
+    mainContent.innerHTML = `
+        <div class="p-6">
+            <h2 class="text-2xl font-bold mb-6">Dashboard Geral</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div class="kpi-card bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-lg border border-border-light dark:border-border-dark">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Total de Vendas</h3>
+                        <span class="material-symbols-outlined text-primary">trending_up</span>
+                    </div>
+                    <p class="text-2xl font-bold text-primary mt-2">R$ 50.000</p>
+                    <p class="text-sm text-green-500 mt-1">+12% vs último mês</p>
+                </div>
+                
+                <div class="kpi-card bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-lg border border-border-light dark:border-border-dark">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Novos Leads</h3>
+                        <span class="material-symbols-outlined text-green-500">group</span>
+                    </div>
+                    <p class="text-2xl font-bold text-green-500 mt-2">124</p>
+                    <p class="text-sm text-subtext-light dark:text-subtext-dark mt-1">+24 esta semana</p>
+                </div>
+                
+                <div class="kpi-card bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-lg border border-border-light dark:border-border-dark">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Taxa de Conversão</h3>
+                        <span class="material-symbols-outlined text-blue-500">percent</span>
+                    </div>
+                    <p class="text-2xl font-bold text-blue-500 mt-2">23%</p>
+                    <p class="text-sm text-subtext-light dark:text-subtext-dark mt-1">Meta: 25%</p>
+                </div>
+                
+                <div class="kpi-card bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-lg border border-border-light dark:border-border-dark">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-text-light dark:text-text-dark">Clientes Ativos</h3>
+                        <span class="material-symbols-outlined text-purple-500">verified</span>
+                    </div>
+                    <p class="text-2xl font-bold text-purple-500 mt-2">89</p>
+                    <p class="text-sm text-green-500 mt-1">+8 este mês</p>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
     </script>
   </body>
 
