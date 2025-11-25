@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>HealthCRM Dashboard</title>
+        <script
+            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+            rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet" />
+        <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .progress-bar {
+        transition: width 0.8s ease-in-out;
+      }
+      .kpi-card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+      }
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+      }
+    </style>
+
+        <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e67951",
+              "background-light": "#f8f6f6",
+              "background-dark": "#211511",
+              "card-light": "#ffffff",
+              "card-dark": "#2a1a14",
+              "text-light": "#1c1c1c",
+              "text-dark": "#f5f5f5",
+              "subtext-light": "#876d64",
+              "subtext-dark": "#a18a82",
+              "border-light": "#e5dedc",
+              "border-dark": "#40312c",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              lg: "1rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    </head>
+    <body
+        class="bg-background-light dark:bg-background-dark font-display text-[#212529] dark:text-white">
+        <div
+            class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+            <div class="layout-container flex h-full grow flex-col">
+                <div
+                    class="px-4 md:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center py-5">
+                    <div
+                        class="layout-content-container flex flex-col w-full max-w-4xl flex-1">
+                        <div class="flex flex-wrap justify-between gap-3 p-4">
+                            <p
+                                class="text-[#171311] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">Add
+                                New Lead</p>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <label class="flex flex-col min-w-40 flex-1">
+                                    <p
+                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">Name</p>
+                                    <div class="relative">
+                                        <span
+                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">person</span>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
+                                            placeholder="Enter first name"
+                                            value />
+                                    </div>
+                                </label>
+                                <label class="flex flex-col min-w-40 flex-1">
+                                    <p
+                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">Last
+                                        Name</p>
+                                    <div class="relative">
+                                        <span
+                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">badge</span>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
+                                            placeholder="Enter last name"
+                                            value />
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <label class="flex flex-col min-w-40 flex-1">
+                                    <p
+                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">Phone</p>
+                                    <div class="relative">
+                                        <span
+                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">phone</span>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
+                                            pattern="[0-9]*"
+                                            placeholder="Enter phone number"
+                                            type="tel" value />
+                                    </div>
+                                    <p
+                                        class="text-error text-sm mt-1 hidden">Phone
+                                        must contain only digits.</p>
+                                </label>
+                                <label class="flex flex-col min-w-40 flex-1">
+                                    <p
+                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">Email</p>
+                                    <div class="relative">
+                                        <span
+                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">email</span>
+                                        <input
+                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
+                                            placeholder="Enter email address"
+                                            type="email" value />
+                                    </div>
+                                </label>
+                            </div>
+                            <label class="flex flex-col min-w-40 flex-1">
+                                <p
+                                    class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">Neighborhood</p>
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">location_city</span>
+                                    <input
+                                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
+                                        placeholder="Enter neighborhood"
+                                        value />
+                                </div>
+                            </label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="flex flex-col">
+                                    <p
+                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">Category</p>
+                                    <div
+                                        class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
+                                        <button
+                                            class="flex-1 py-2 px-4 rounded-md text-center text-sm font-medium bg-primary text-white shadow">PME</button>
+                                        <button
+                                            class="flex-1 py-2 px-4 rounded-md text-center text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600">PF</button>
+                                        <button
+                                            class="flex-1 py-2 px-4 rounded-md text-center text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600">Adesão</button>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <p
+                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">Temperature</p>
+                                    <div class="relative">
+                                        <span
+                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">thermostat</span>
+                                        <select
+                                            class="form-select w-full appearance-none cursor-pointer rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 pl-11 pr-10 text-base font-normal">
+                                            <option>Cold</option>
+                                            <option>Warm</option>
+                                            <option>Hot</option>
+                                        </select>
+                                        <span
+                                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">expand_more</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="flex flex-col">
+                                    <p
+                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">Negotiation
+                                        Status</p>
+                                    <div class="relative">
+                                        <span
+                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">work</span>
+                                        <select
+                                            class="form-select w-full appearance-none cursor-pointer rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 pl-11 pr-10 text-base font-normal">
+                                            <option>Em Conversação</option>
+                                            <option>Proposta Digitada</option>
+                                            <option>Plano Fechado</option>
+                                        </select>
+                                        <span
+                                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">expand_more</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <p
+                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">Lead
+                                        Source</p>
+                                    <div class="relative">
+                                        <span
+                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">campaign</span>
+                                        <select
+                                            class="form-select w-full appearance-none cursor-pointer rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 pl-11 pr-10 text-base font-normal">
+                                            <option>Facebook</option>
+                                            <option>Instagram</option>
+                                            <option>Indicação</option>
+                                            <option>Landing Page</option>
+                                        </select>
+                                        <span
+                                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">expand_more</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center pt-4">
+                                <input
+                                    class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-primary focus:ring-primary bg-gray-100 dark:bg-gray-700"
+                                    id="current-date-checkbox"
+                                    type="checkbox" />
+                                <label
+                                    class="ml-2 block text-sm text-gray-900 dark:text-gray-300"
+                                    for="current-date-checkbox">Use current
+                                    date</label>
+                            </div>
+                            <div class="pt-6 flex justify-end">
+                                <button
+                                    class="bg-primary text-white font-bold py-3 px-8 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-300 flex items-center gap-2"
+                                    disabled>
+                                    <span
+                                        class="material-symbols-outlined">save</span>
+                                    Save Lead
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body></html>

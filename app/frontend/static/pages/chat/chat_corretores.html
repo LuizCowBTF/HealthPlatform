@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>HealthCRM Dashboard</title>
+        <script
+            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+            rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet" />
+        <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .progress-bar {
+        transition: width 0.8s ease-in-out;
+      }
+      .kpi-card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+      }
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+      }
+    </style>
+
+        <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e67951",
+              "background-light": "#f8f6f6",
+              "background-dark": "#211511",
+              "card-light": "#ffffff",
+              "card-dark": "#2a1a14",
+              "text-light": "#1c1c1c",
+              "text-dark": "#f5f5f5",
+              "subtext-light": "#876d64",
+              "subtext-dark": "#a18a82",
+              "border-light": "#e5dedc",
+              "border-dark": "#40312c",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              lg: "1rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    </head>
+    <body class="bg-background-light dark:bg-background-dark font-display">
+        <div class="flex min-h-screen">
+            <!-- Main Content -->
+            <main
+                class="flex-1 flex bg-background-light dark:bg-background-dark">
+                <!-- Conversation List Panel -->
+                <div
+                    class="w-1/3 border-r border-gray-200 dark:border-gray-700 bg-secondary dark:bg-background-dark flex flex-col">
+                    <div
+                        class="p-4 border-b border-gray-200 dark:border-gray-700">
+                        <label class="flex flex-col min-w-40 h-12 w-full">
+                            <div
+                                class="flex w-full flex-1 items-stretch rounded-xl h-full">
+                                <div
+                                    class="text-gray-500 dark:text-gray-400 flex border-none bg-background-light dark:bg-gray-800 items-center justify-center pl-4 rounded-l-xl border-r-0">
+                                    <span
+                                        class="material-symbols-outlined">search</span>
+                                </div>
+                                <input
+                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-xl text-accent dark:text-white focus:outline-0 focus:ring-0 border-none bg-background-light dark:bg-gray-800 h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 pl-2 text-base font-normal leading-normal"
+                                    placeholder="Search chats" value />
+                            </div>
+                        </label>
+                    </div>
+                    <div class="flex-1 overflow-y-auto">
+                        <div
+                            class="flex items-center gap-4 bg-primary/20 dark:bg-primary/30 px-4 min-h-[72px] py-2 justify-between cursor-pointer">
+                            <div class="flex items-center gap-4">
+                                <div class="relative">
+                                    <div
+                                        class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14"
+                                        data-alt="John Doe's profile picture"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfnorx7cI457YiHRpQ6DlIW2xDgb2klS1frTblIRGB6N2txVH8FJ1ZL89XuT4t4vt1EjUyhFjaEQtM3iU_ln8pxGxaXBNt7SWbRo7Yx4iM4N8_wwcdMhjnG96X-ve_ROxMbYMpYUbRcH2rrhqESo3m4C7wRtO-XHvKFL_S2VaWZ6sYxNk5QPhohUlTrMa-NzTqgjrLiSM5tngPE0sNQZH_HauUssPUc0opDGZtu1U_xsfh6GTjzShUc-5dMZV4Unp_ZHMnhtr30Hg");'></div>
+                                    <span
+                                        class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-secondary dark:border-background-dark"></span>
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <p
+                                        class="text-accent dark:text-white text-base font-medium leading-normal line-clamp-1">John
+                                        Doe</p>
+                                    <p
+                                        class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Sure,
+                                        I will get back to you on that.</p>
+                                </div>
+                            </div>
+                            <div class="shrink-0 flex flex-col items-end gap-1">
+                                <p
+                                    class="text-gray-500 dark:text-gray-400 text-xs font-normal">10:45
+                                    AM</p>
+                                <div
+                                    class="flex size-6 items-center justify-center rounded-full bg-primary text-white text-xs font-bold">2</div>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-center gap-4 bg-secondary dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+                            <div class="flex items-center gap-4">
+                                <div class="relative">
+                                    <div
+                                        class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14"
+                                        data-alt="Jane Smith's profile picture"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAiT9QHlzgip_3iI1azdlg4MgjmsN19HIekPMs9tSChsy_WXz-ZGxouweqlwHa7dk_z4WseNzYQFGHKWTrM3d2BR3Co21soGEAHOj_jdyG5l_UzsMEYPq102bBa0WAsbTMvLROMbghKvMQrZXhwKIZW6sdU-04CNkNlEvCmM57eDiXbqqMzIc-QB0AyHlSQYbfMk1VhVtJyl4IHegMD5Z-s9xXLsflLw0BmW9vkDDwy6ByRbs5-w_QVtFtioKv21kt5nDRZIa9n9PQ");'></div>
+                                    <span
+                                        class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-gray-400 border-2 border-secondary dark:border-background-dark"></span>
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <p
+                                        class="text-accent dark:text-white text-base font-medium leading-normal line-clamp-1">Jane
+                                        Smith</p>
+                                    <p
+                                        class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Can
+                                        you please check the new client's
+                                        policy?</p>
+                                </div>
+                            </div>
+                            <div class="shrink-0"><p
+                                    class="text-gray-500 dark:text-gray-400 text-xs font-normal">10:42
+                                    AM</p></div>
+                        </div>
+                        <div
+                            class="flex items-center gap-4 bg-secondary dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+                            <div class="flex items-center gap-4">
+                                <div class="relative">
+                                    <div
+                                        class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14"
+                                        data-alt="Samuel Green's profile picture"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjWLJoXWE6LoSoYnZqTW9EyIW_cjcVseslmUsPXglnbWFylWkbOBa0ILLDZtMWtwnQ4h-iArEAX79m9ZJBK3ul6h53LuX9Y15fgZNgdWeCpIp7yCwCfn8k8QHkt71o8JC_haoyvnZV8vJSdXYF4uxTiVA8kN3ultu3kJIKOxdHkiNzrjjb3vlSHOVsRLEfydHEEhuQLAO6dj0jqWwKhZNkCMOqJgG5W5oeivNa1CRBpoh55Pg79TMb7YtZWWBxzhcoCMtIMx3CNA4");'></div>
+                                    <span
+                                        class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-secondary dark:border-background-dark"></span>
+                                </div>
+                                <div class="flex flex-col justify-center">
+                                    <p
+                                        class="text-accent dark:text-white text-base font-medium leading-normal line-clamp-1">Samuel
+                                        Green</p>
+                                    <p
+                                        class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Perfect,
+                                        thank you!</p>
+                                </div>
+                            </div>
+                            <div class="shrink-0"><p
+                                    class="text-gray-500 dark:text-gray-400 text-xs font-normal">Yesterday</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Active Chat Panel -->
+                <div class="flex-1 flex flex-col">
+                    <!-- Chat Header -->
+                    <div
+                        class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-secondary dark:bg-background-dark shadow-sm">
+                        <div class="flex items-center gap-4">
+                            <div class="relative">
+                                <div
+                                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12"
+                                    data-alt="John Doe's profile picture"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZQW9hw0wWapaOEc-FCr5UHdaOt9DHdubbzigKSuthQooyH6yfuh_qJ8vrZLmSawxyXcMpFxI3lpE_2_NYARREAnDI0cZ7p-z0YOyu676pMNPyYZ1yEx9d2fVe_4tkcKOxvWVWMQZnC2cwiTW9U3kKBK6Pq5vVrpg-XqtywPZibiOpyurAROYETDatpYj1x8_fjKjitK3kpFPGZhsK3KF2T_N6EzplSMGG2XfOxsClgaZUjH0BAyFpfczzTwxteXehsGna_Pd0Jw0");'></div>
+                                <span
+                                    class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 border-2 border-secondary dark:border-background-dark"></span>
+                            </div>
+                            <div>
+                                <h3
+                                    class="text-lg font-bold text-accent dark:text-white">John
+                                    Doe</h3>
+                                <p class="text-sm text-green-500">Online</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button
+                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                <span
+                                    class="material-symbols-outlined">call</span>
+                            </button>
+                            <button
+                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                <span
+                                    class="material-symbols-outlined">videocam</span>
+                            </button>
+                            <button
+                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                <span
+                                    class="material-symbols-outlined">more_vert</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Chat History -->
+                    <div class="flex-1 p-6 overflow-y-auto space-y-6">
+                        <!-- Received Message -->
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                                data-alt="John Doe's profile picture"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBR7Ru7yiVSh8ZFQmx8mfaLmXLx1c1t-fP4UYiwaGw5d8Fb2cHk_73CYK-lhnrTcuN7EvxKoZJAr7hNN6gODi4ZEVYm38VpWCt8YaA0Lo20f2NLF9CDtJCFXSmmFUHROrqQHmGd7lthZzTnPzDRhtcZ9X3ybutkIXdAgd53S4tGvTepeopltYnn4HQN0lN1nRWpay2DkCxR_Ud3LIgPzhWCU1rIcQLJhIA2Gk2jPrEYuglC-JNJ2DVjCfaqWV8h59kpbDd_GnioQtE");'></div>
+                            <div class="max-w-md">
+                                <div
+                                    class="bg-secondary dark:bg-gray-800 p-3 rounded-lg rounded-tl-none shadow">
+                                    <p
+                                        class="text-sm text-accent dark:text-white">Hi,
+                                        I'm reviewing the policy for the new
+                                        client. Can you confirm their start
+                                        date?</p>
+                                </div>
+                                <p
+                                    class="text-xs text-gray-500 dark:text-gray-400 mt-1">10:40
+                                    AM</p>
+                            </div>
+                        </div>
+                        <!-- Sent Message -->
+                        <div class="flex items-start gap-3 justify-end">
+                            <div class="max-w-md">
+                                <div
+                                    class="bg-primary text-white p-3 rounded-lg rounded-br-none shadow">
+                                    <p class="text-sm">Of course. Their policy
+                                        starts on the 1st of next month.</p>
+                                </div>
+                                <div class="flex items-center justify-end mt-1">
+                                    <p
+                                        class="text-xs text-gray-500 dark:text-gray-400 mr-1">10:41
+                                        AM</p>
+                                    <span
+                                        class="material-symbols-outlined text-blue-500 text-base">done_all</span>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                                data-alt="Admin's profile picture"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuByOuTyMw5AtJVz1YuPYPIMo44KhjfFe-IBhPVV43w4B6OIO6KnPBbTrug73wfx4oALDnK_r7mXYF5CC8tErRCVevPI7NAnr5OT14j35GKQ3Tsg7dblOWCqAvmjrzw63XMZEQLyNLHtur_BTopvDFnL94FMKx46xlRxHPz4HcQyxZQDbWSQqg1-mp5y1S5ieiP0-80C37tETpz7itKjKUxAvesBJwoqczr6eMCyF3Stm_oR2AJSkfTrT_-qHGHvx-Taj9v3RvuwkBY");'></div>
+                        </div>
+                        <!-- Received Message -->
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                                data-alt="John Doe's profile picture"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvy7rl_GzjX-P6gHqN3KNmKidkVnKiwdTk0C_1n1QcwwD3H041_Dd_nRmBlGJNAgQDwwkFqeiqY1DVYLt20efJ_wV7jwmZXaxvY0SMIkvkwCpWQWr7zK-N_s7yIr4c8MoyAg7OD92RhDhnQzW3nC6SBoUrYR3Nc10bxg3rKa4H7K9_4NpLjAUURgxsW7n5wYlQEiKUw2LH3Q0uh7Inw9NK1GmGFM3oTDm8_t_LLNjCLzSpY5tuXYoXrWO_T4R9tgGCHqsUOZaFkLc");'></div>
+                            <div class="max-w-md">
+                                <div
+                                    class="bg-secondary dark:bg-gray-800 p-3 rounded-lg rounded-tl-none shadow">
+                                    <p
+                                        class="text-sm text-accent dark:text-white">Sure,
+                                        I will get back to you on that.</p>
+                                </div>
+                                <p
+                                    class="text-xs text-gray-500 dark:text-gray-400 mt-1">10:45
+                                    AM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Message Input Area -->
+                    <div
+                        class="p-4 bg-secondary dark:bg-background-dark border-t border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center gap-4">
+                            <button
+                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                <span
+                                    class="material-symbols-outlined">sentiment_satisfied</span>
+                            </button>
+                            <button
+                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                <span
+                                    class="material-symbols-outlined">attach_file</span>
+                            </button>
+                            <input
+                                class="flex-1 bg-background-light dark:bg-gray-800 border-none rounded-full h-12 px-5 text-sm focus:ring-primary focus:border-primary placeholder-gray-500 dark:placeholder-gray-400 text-accent dark:text-white"
+                                placeholder="Type your message here..."
+                                type="text" />
+                            <button
+                                class="bg-primary text-white rounded-full p-3 shadow-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                                <span
+                                    class="material-symbols-outlined">send</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body></html>

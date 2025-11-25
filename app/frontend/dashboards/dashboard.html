@@ -4,16 +4,15 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>HealthCRM Dashboard</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script
+      src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <style>
       .material-symbols-outlined {
         font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
@@ -70,140 +69,16 @@
   </head>
   <body class="bg-background-light dark:bg-background-dark font-display">
     <div class="flex min-h-screen">
-      <!-- Sidebar -->
-      <aside
-        class="w-64 bg-card-light dark:bg-card-dark flex-col justify-between hidden lg:flex"
-      >
-        <div class="p-6">
-          <div class="flex flex-col">
-            <div class="flex items-center">
-              <div
-                class="w-full max-w-48 h-12 bg-primary rounded-lg flex items-center justify-center"
-              >
-                <img
-                  class="w-full max-w-48"
-                  src="/static/img/logo_crm.png"
-                  alt="Health Platform Logo"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="flex items-center gap-6 p-8">
-            <div class="flex items-center gap-3">
-              <div
-                class="size-12 bg-primary rounded-full flex items-center justify-center text-white font-bold"
-              >
-                AD
-              </div>
-              <div>
-                <h1
-                  class="text-text-light dark:text-text-dark text-base font-medium"
-                >
-                  Admin
-                </h1>
-                <p
-                  class="text-subtext-light dark:text-subtext-dark text-sm font-normal"
-                >
-                  Administrador
-                </p>
-              </div>
-            </div>
-          </div>
-          <nav class="mt-6 flex flex-col gap-2">
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary"
-              href="/dashboard"
-            >
-              <span class="material-symbols-outlined">dashboard</span>
-              <span class="text-sm font-medium">Dashboard</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="/clientes"
-            >
-              <span class="material-symbols-outlined">group</span>
-              <span class="text-sm font-medium">Clientes</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="/leads"
-            >
-              <span class="material-symbols-outlined">leaderboard</span>
-              <span class="text-sm font-medium">Leads</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="/comissoes"
-            >
-              <span class="material-symbols-outlined">paid</span>
-              <span class="text-sm font-medium">Comissões</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="/relatorios"
-            >
-              <span class="material-symbols-outlined">assessment</span>
-              <span class="text-sm font-medium">Relatórios</span>
-            </a>
-          </nav>
-        </div>
-      </aside>
-
-      <div class="flex-1 flex flex-col">
-        <!-- Header -->
-        <header
-          class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark flex items-center justify-between p-4 sticky top-0 z-10"
-        >
-          <div class="flex items-center gap-4">
-            <button class="lg:hidden text-text-light dark:text-text-dark">
-              <span class="material-symbols-outlined">menu</span>
-            </button>
-            <h1 class="text-xl font-bold text-primary">Dashboard</h1>
-          </div>
-          <div class="flex items-center gap-4">
-            <div class="relative w-64 hidden md:block">
-              <span
-                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark"
-                >search</span
-              >
-              <input
-                class="form-input w-full pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border-transparent focus:border-primary focus:ring-primary text-sm text-text-light dark:text-text-dark placeholder-subtext-light dark:placeholder-subtext-dark"
-                placeholder="Buscar..."
-                type="text"
-              />
-            </div>
-            <button
-              class="relative text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark"
-            >
-              <span class="material-symbols-outlined">notifications</span>
-              <span
-                class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-primary ring-2 ring-card-light dark:ring-card-dark"
-              ></span>
-            </button>
-            <div class="flex items-center gap-2">
-              <div
-                class="size-10 bg-primary rounded-full flex items-center justify-center text-white font-bold"
-              >
-                AD
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <!-- Main Content -->
         <!-- Main Content -->
         <main
-          class="flex-1 p-4 sm:p-6 lg:p-8 bg-background-light dark:bg-background-dark"
-        >
+          class="flex-1 p-4 sm:p-6 lg:p-8 bg-background-light dark:bg-background-dark">
           <!-- Loading -->
           <div
             id="loading-indicator"
-            class="fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hidden z-50"
-          >
+            class="fixed top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hidden z-50">
             <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined animate-spin"
-                >refresh</span
-              >
+              <span
+                class="material-symbols-outlined animate-spin">refresh</span>
               <span>Carregando dados...</span>
             </div>
           </div>
@@ -211,13 +86,11 @@
           <!-- KPI Cards -->
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             <div
-              class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 md:col-span-2 xl:col-span-4"
-            >
+              class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 md:col-span-2 xl:col-span-4">
               <div class="flex flex-col gap-3">
                 <div class="flex gap-6 justify-between">
                   <p
-                    class="text-text-light dark:text-text-dark text-base font-medium"
-                  >
+                    class="text-text-light dark:text-text-dark text-base font-medium">
                     Meta Mensal
                   </p>
                   <p class="text-primary text-sm font-bold" id="monthly-goal">
@@ -225,83 +98,68 @@
                   </p>
                 </div>
                 <div
-                  class="rounded-full bg-background-light dark:bg-background-dark h-2.5"
-                >
+                  class="rounded-full bg-background-light dark:bg-background-dark h-2.5">
                   <div
                     class="h-2.5 rounded-full bg-primary progress-bar"
                     id="goal-progress"
-                    style="width: 0%"
-                  ></div>
+                    style="width: 0%"></div>
                 </div>
                 <p
                   class="text-subtext-light dark:text-subtext-dark text-sm font-normal"
-                  id="goal-amount"
-                >
+                  id="goal-amount">
                   Carregando dados...
                 </p>
               </div>
             </div>
 
             <div
-              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card"
-            >
+              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card">
               <p
-                class="text-text-light dark:text-text-dark text-base font-medium"
-              >
+                class="text-text-light dark:text-text-dark text-base font-medium">
                 Planos Vendidos
               </p>
               <p
                 class="text-primary tracking-tight text-2xl font-bold"
-                id="plans-sold"
-              >
+                id="plans-sold">
                 0
               </p>
             </div>
 
             <div
-              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card"
-            >
+              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card">
               <p
-                class="text-text-light dark:text-text-dark text-base font-medium"
-              >
+                class="text-text-light dark:text-text-dark text-base font-medium">
                 Vidas Cobertas
               </p>
               <p
                 class="text-primary tracking-tight text-2xl font-bold"
-                id="lives-covered"
-              >
+                id="lives-covered">
                 0
               </p>
             </div>
 
             <div
-              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card"
-            >
+              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card">
               <p
-                class="text-text-light dark:text-text-dark text-base font-medium"
-              >
+                class="text-text-light dark:text-text-dark text-base font-medium">
                 Taxa de Conversão
               </p>
               <p
                 class="text-primary tracking-tight text-2xl font-bold"
-                id="conversion-rate"
-              >
+                id="conversion-rate">
                 0%
               </p>
             </div>
 
             <div
-              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card"
-            >
+              class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm kpi-card">
               <p
-                class="text-text-light dark:text-text-dark text-base font-medium"
-              >
+                class="text-text-light dark:text-text-dark text-base font-medium">
                 Receita Atual
               </p>
               <p
                 class="text-primary tracking-tight text-2xl font-bold"
-                id="current-revenue"
-              >
+                id="current-revenue">
                 R$0
               </p>
             </div>
@@ -310,18 +168,15 @@
           <!-- NOVA ORDEM: 1. Vendas por Operadora -->
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
             <div
-              class="lg:col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-4"
-            >
+              class="lg:col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-4">
               <div class="flex items-center justify-between">
                 <h3
-                  class="text-text-light dark:text-text-dark text-lg font-semibold"
-                >
+                  class="text-text-light dark:text-text-dark text-lg font-semibold">
                   Vendas por Operadora
                 </h3>
                 <button
                   onclick="loadRealDashboardData()"
-                  class="text-primary hover:text-primary/80 transition-colors"
-                >
+                  class="text-primary hover:text-primary/80 transition-colors">
                   <span class="material-symbols-outlined">refresh</span>
                 </button>
               </div>
@@ -332,17 +187,15 @@
 
             <!-- 2. Evolução Mensal -->
             <div
-              class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-4"
-            >
+              class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-4">
               <div class="flex items-center justify-between mb-4">
                 <h3
-                  class="text-text-light dark:text-text-dark text-lg font-semibold"
-                >
+                  class="text-text-light dark:text-text-dark text-lg font-semibold">
                   Evolução Mensal
                 </h3>
-                <span class="text-sm text-subtext-light dark:text-subtext-dark"
-                  >Últimos 12 meses</span
-                >
+                <span
+                  class="text-sm text-subtext-light dark:text-subtext-dark">Últimos
+                  12 meses</span>
               </div>
               <div class="chart-container">
                 <canvas id="evolucaoMensalChart"></canvas>
@@ -352,25 +205,21 @@
 
           <!-- 3. Performance por Corretor -->
           <div
-            class="mt-6 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm"
-          >
+            class="mt-6 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm">
             <div class="flex items-center justify-between mb-4">
               <h3
-                class="text-text-light dark:text-text-dark text-lg font-semibold"
-              >
+                class="text-text-light dark:text-text-dark text-lg font-semibold">
                 Performance por Corretor
               </h3>
-              <span class="text-sm text-subtext-light dark:text-subtext-dark"
-                >Meta vs Realizado</span
-              >
+              <span
+                class="text-sm text-subtext-light dark:text-subtext-dark">Meta
+                vs Realizado</span>
             </div>
             <div class="space-y-4" id="performance-corretores">
               <div
-                class="text-center py-8 text-subtext-light dark:text-subtext-dark"
-              >
-                <span class="material-symbols-outlined text-4xl mb-2"
-                  >trending_up</span
-                >
+                class="text-center py-8 text-subtext-light dark:text-subtext-dark">
+                <span
+                  class="material-symbols-outlined text-4xl mb-2">trending_up</span>
                 <p>Carregando performance...</p>
               </div>
             </div>
@@ -378,27 +227,22 @@
 
           <!-- 4. Top Corretores -->
           <div
-            class="mt-6 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm"
-          >
+            class="mt-6 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm">
             <div class="flex items-center justify-between mb-4">
               <h3
-                class="text-text-light dark:text-text-dark text-lg font-semibold"
-              >
+                class="text-text-light dark:text-text-dark text-lg font-semibold">
                 Top Corretores
               </h3>
               <span
-                class="text-xs text-subtext-light dark:text-subtext-dark bg-primary/10 px-2 py-1 rounded"
-              >
+                class="text-xs text-subtext-light dark:text-subtext-dark bg-primary/10 px-2 py-1 rounded">
                 Este Mês
               </span>
             </div>
             <ul class="space-y-4" id="top-performers">
               <li
-                class="text-center py-8 text-subtext-light dark:text-subtext-dark"
-              >
-                <span class="material-symbols-outlined text-4xl mb-2"
-                  >group</span
-                >
+                class="text-center py-8 text-subtext-light dark:text-subtext-dark">
+                <span
+                  class="material-symbols-outlined text-4xl mb-2">group</span>
                 <p>Carregando corretores...</p>
               </li>
             </ul>
@@ -406,12 +250,10 @@
 
           <!-- 5. Atividade Recente -->
           <div
-            class="mt-6 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm"
-          >
+            class="mt-6 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm">
             <div class="flex items-center justify-between mb-4">
               <h3
-                class="text-text-light dark:text-text-dark text-lg font-semibold"
-              >
+                class="text-text-light dark:text-text-dark text-lg font-semibold">
                 Atividade Recente
               </h3>
               <p class="text-subtext-light dark:text-subtext-dark text-sm">
@@ -420,11 +262,9 @@
             </div>
             <div class="space-y-4" id="recent-activity">
               <div
-                class="text-center py-8 text-subtext-light dark:text-subtext-dark"
-              >
-                <span class="material-symbols-outlined text-4xl mb-2"
-                  >update</span
-                >
+                class="text-center py-8 text-subtext-light dark:text-subtext-dark">
+                <span
+                  class="material-symbols-outlined text-4xl mb-2">update</span>
                 <p>Carregando atividades recentes...</p>
               </div>
             </div>
@@ -433,20 +273,17 @@
           <!-- MODAL DETALHES CORRETOR -->
           <div
             id="corretorModal"
-            class="fixed inset-0 bg-black bg-opacity-50 hidden z-50"
-          >
+            class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
             <div class="flex items-center justify-center min-h-screen p-4">
               <div
-                class="bg-card-light dark:bg-card-dark rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-              >
+                class="bg-card-light dark:bg-card-dark rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 <div class="flex justify-between items-center mb-4">
                   <h3 class="text-xl font-semibold" id="modalTitle">
                     Detalhes do Corretor
                   </h3>
                   <button
                     onclick="fecharModal()"
-                    class="text-subtext-light hover:text-text-light"
-                  >
+                    class="text-subtext-light hover:text-text-light">
                     <span class="material-symbols-outlined">close</span>
                   </button>
                 </div>

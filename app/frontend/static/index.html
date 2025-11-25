@@ -149,20 +149,33 @@
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
                   href="javascript:void(0)"
-                  onclick="loadDashboard('../static/pages/relatorios/kpi_dashboard.html')">
+                  onclick="loadDashboard('../dashboards/kpi_dashboard.html')">
+                  KPI - Dashboard
                 </a>
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="#">Financeiro</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../static/pages/relatorios/kpi_financeiro.html')">
+                  Financeiro
+                </a>
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="#">Times</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../static/pages/relatorios/kpi_financeiro.html')">
+                  Times
+                </a>
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="#">Dashboard Coordenador</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../dashboards/coordenador.html')">
+                  Dashboard Coordenador
+                </a>
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="#">Gerenciamento Metas</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../static/pages/executivo/gerenc_metas.html')">
+                  Gerenciamento Metas
+                </a>
               </div>
 
               <button onclick="toggleSubmenu('clientes-leads-menu')"
@@ -180,17 +193,34 @@
                 class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="#">Incluir Lead</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../static/pages/leads/incluir_leads.html')">
+                  Incluir Lead
+                </a>
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="#">Atualizar Leads</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../static/pages/leads/atualizar_leads.html')">
+                  Atualizar Leads
+                </a>
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="#">Base de Clientes / Banco de
-                  Dados</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../static/pages/clients/base_clients.html')">
+                  Base de Clientes / Banco de Dados
+                </a>
                 <a
                   class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                  href="#">Chat Corretores</a>
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../static/pages/leads/visao_geral.html')">
+                  Detalhes de Contrato
+                </a>
+                <a
+                  class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                  href="javascript:void(0)"
+                  onclick="loadDashboard('../static/pages/chat/chat_corretores.html')">
+                  Chat Corretores
+                </a>
               </div>
 
               <button onclick="toggleSubmenu('financeiro-menu')"
@@ -420,10 +450,13 @@
         </div>
 
         <main id="main-content" class="flex-1 p-8">
-          <div class="mb-6 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-
-          </div>
+          <!-- DASHBOARD CARREGADO AUTOMATICAMENTE -->
+          <iframe
+            src="../dashboards/dashboard.html"
+            class="w-full h-screen border-0">
+          </iframe>
         </main>
+
       </div>
     </div>
 
@@ -517,6 +550,13 @@ function loadStaticDashboard() {
 }
 
     </script>
+
+    <script>
+    // Carrega automaticamente quando a página abre
+    window.onload = function() {
+        console.log('✅ Dashboard carregado automaticamente!');
+    };
+</script>
   </body>
 
 </html>

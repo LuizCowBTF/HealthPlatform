@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>HealthCRM Dashboard</title>
+        <script
+            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+            rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet" />
+        <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .progress-bar {
+        transition: width 0.8s ease-in-out;
+      }
+      .kpi-card:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+      }
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+      }
+    </style>
+
+        <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#e67951",
+              "background-light": "#f8f6f6",
+              "background-dark": "#211511",
+              "card-light": "#ffffff",
+              "card-dark": "#2a1a14",
+              "text-light": "#1c1c1c",
+              "text-dark": "#f5f5f5",
+              "subtext-light": "#876d64",
+              "subtext-dark": "#a18a82",
+              "border-light": "#e5dedc",
+              "border-dark": "#40312c",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              lg: "1rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    </head>
+    <body class="bg-background-light dark:bg-background-dark font-display">
+        <div class="flex min-h-screen">
+            <!-- Main Content -->
+            <main class="flex-1 flex flex-col overflow-y-auto">
+                <!-- Top Navbar -->
+                <header
+                    class="h-16 bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark flex items-center justify-between px-8 sticky top-0 z-10">
+                    <div class="flex items-center gap-4">
+                        <button
+                            class="p-2 -ml-2 rounded-full text-text-muted-light dark:text-text-muted-dark hover:bg-primary/10 lg:hidden">
+                            <span class="material-symbols-outlined">menu</span>
+                        </button>
+                        <label class="relative hidden sm:block">
+                            <span
+                                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-muted-light dark:text-text-muted-dark">search</span>
+                            <input
+                                class="form-input w-full min-w-40 max-w-64 pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border-transparent focus:ring-primary focus:border-primary text-sm text-text-light dark:text-text-dark placeholder-text-muted-light dark:placeholder-text-muted-dark"
+                                placeholder="Quick Search..." />
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button
+                            class="relative p-2 rounded-full text-text-muted-light dark:text-text-muted-dark hover:bg-primary/10">
+                            <span
+                                class="material-symbols-outlined">notifications</span>
+                            <span
+                                class="absolute top-1 right-1 block h-2 w-2 rounded-full bg-primary ring-2 ring-card-light dark:ring-card-dark"></span>
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                                data-alt="User avatar"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAy7qlpf8I589nbRdrmjjUNDyYseMSdstY0sdXcXslBbP3XsdmS1b16jzHr2P9Zk3QJD4uBrrHoWnDw70KWa4V3aIgB6_DfwUK52IHCA-tSD6qDWKuHcJaJRw5FD4k3q4LcFWhuw511-GZNpiil7MXKYW-R6GitGAbKez5XwFt5yiPnD5q7ZESDjsvVaTzYLF-saUzMqcvOtWkjlrILN7PxpPm0LRtKzpYomAUK_m2xonF93vSb3QcC5c5kOUEMxCCmeLUXnIfMhiw");'></div>
+                            <div class="hidden md:block">
+                                <p
+                                    class="text-sm font-semibold text-text-light dark:text-text-dark">Ana
+                                    Almeida</p>
+                                <span
+                                    class="material-symbols-outlined text-xs text-text-muted-light dark:text-text-muted-dark">expand_more</span>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <!-- Content Area -->
+                <div class="flex-1 p-8">
+                    <!-- Breadcrumbs & Header -->
+                    <div
+                        class="flex flex-wrap items-center justify-between gap-4 mb-8">
+                        <div>
+                            <div
+                                class="flex items-center gap-2 text-sm text-text-muted-light dark:text-text-muted-dark">
+                                <a class="hover:text-primary" href="#">Leads</a>
+                                <span>/</span>
+                                <span
+                                    class="text-text-light dark:text-text-dark font-medium">Marcelo
+                                    Torres</span>
+                            </div>
+                            <div class="flex items-center gap-4 mt-2">
+                                <h2
+                                    class="text-3xl font-bold text-text-light dark:text-text-dark">Marcelo
+                                    Torres</h2>
+                                <span
+                                    class="px-3 py-1 text-xs font-semibold text-blue-800 bg-blue-100 rounded-full">New</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button
+                                class="flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-background-light dark:bg-card-dark border border-border-light dark:border-border-dark text-sm font-semibold text-text-light dark:text-text-dark hover:bg-primary/10">
+                                <span
+                                    class="material-symbols-outlined text-base">edit</span>
+                                <span>Edit</span>
+                            </button>
+                            <button
+                                class="flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-primary text-white text-sm font-semibold hover:opacity-90">
+                                <span
+                                    class="material-symbols-outlined text-base">person_add</span>
+                                <span>Convert to Client</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Tabs -->
+                    <div
+                        class="border-b border-border-light dark:border-border-dark">
+                        <nav class="flex gap-8 -mb-px">
+                            <a
+                                class="py-4 px-1 inline-flex items-center gap-2 text-sm font-medium text-primary border-b-2 border-primary"
+                                href="#">Overview</a>
+                            <a
+                                class="py-4 px-1 inline-flex items-center gap-2 text-sm font-medium text-text-muted-light dark:text-text-muted-dark hover:text-primary border-b-2 border-transparent"
+                                href="#">Contract Details</a>
+                            <a
+                                class="py-4 px-1 inline-flex items-center gap-2 text-sm font-medium text-text-muted-light dark:text-text-muted-dark hover:text-primary border-b-2 border-transparent"
+                                href="#">Financials</a>
+                            <a
+                                class="py-4 px-1 inline-flex items-center gap-2 text-sm font-medium text-text-muted-light dark:text-text-muted-dark hover:text-primary border-b-2 border-transparent"
+                                href="#">Documents</a>
+                            <a
+                                class="py-4 px-1 inline-flex items-center gap-2 text-sm font-medium text-text-muted-light dark:text-text-muted-dark hover:text-primary border-b-2 border-transparent"
+                                href="#">History</a>
+                        </nav>
+                    </div>
+                    <!-- Tab Content -->
+                    <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Left Column -->
+                        <div class="lg:col-span-2 flex flex-col gap-8">
+                            <div
+                                class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-sm">
+                                <h3
+                                    class="text-lg font-semibold text-text-light dark:text-text-dark mb-4">Lead
+                                    Information</h3>
+                                <div
+                                    class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">Email
+                                            Address</span>
+                                        <span
+                                            class="font-medium text-text-light dark:text-text-dark">marcelo.torres@example.com</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">Phone
+                                            Number</span>
+                                        <span
+                                            class="font-medium text-text-light dark:text-text-dark">(11)
+                                            98765-4321</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">Lead
+                                            Source</span>
+                                        <span
+                                            class="font-medium text-text-light dark:text-text-dark">Website
+                                            Form</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">Assigned
+                                            Broker</span>
+                                        <span
+                                            class="font-medium text-text-light dark:text-text-dark">Ana
+                                            Almeida</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-sm">
+                                <h3
+                                    class="text-lg font-semibold text-text-light dark:text-text-dark mb-4">Contract
+                                    Details</h3>
+                                <div
+                                    class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">Contract
+                                            ID</span>
+                                        <span
+                                            class="font-medium text-text-light dark:text-text-dark">#CT-2024-0345</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">Health
+                                            Plan</span>
+                                        <span
+                                            class="font-medium text-text-light dark:text-text-dark">Premium
+                                            Care 500</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">Start
+                                            Date</span>
+                                        <span
+                                            class="font-medium text-text-light dark:text-text-dark">2024-08-01</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">End
+                                            Date</span>
+                                        <span
+                                            class="font-medium text-text-light dark:text-text-dark">2025-07-31</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-sm">
+                                <h3
+                                    class="text-lg font-semibold text-text-light dark:text-text-dark mb-4">Financials</h3>
+                                <div
+                                    class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">Commission</span>
+                                        <span
+                                            class="font-medium text-text-light dark:text-text-dark">R$
+                                            450,00</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">Payment
+                                            Status</span>
+                                        <span
+                                            class="font-medium text-green-600 dark:text-green-400">Paid</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span
+                                            class="text-text-muted-light dark:text-text-muted-dark">Due
+                                            Date</span>
+                                        <span
+                                            class="font-medium text-text-light dark:text-text-dark">2024-07-15</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right Column -->
+                        <div class="lg:col-span-1 flex flex-col gap-8">
+                            <div
+                                class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-sm">
+                                <h3
+                                    class="text-lg font-semibold text-text-light dark:text-text-dark mb-4">Observations</h3>
+                                <div
+                                    class="text-sm text-text-muted-light dark:text-text-muted-dark space-y-4">
+                                    <div>
+                                        <p
+                                            class="text-text-light dark:text-text-dark">Client
+                                            interested in family plan options.
+                                            Follow up next week to discuss
+                                            additional dependents.</p>
+                                        <p class="text-xs mt-1">Ana Almeida - 2
+                                            days ago</p>
+                                    </div>
+                                    <div
+                                        class="border-t border-border-light dark:border-border-dark pt-4">
+                                        <p
+                                            class="text-text-light dark:text-text-dark">Initial
+                                            call made. Sent proposal via
+                                            email.</p>
+                                        <p class="text-xs mt-1">Ana Almeida - 5
+                                            days ago</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="mt-4 w-full flex items-center justify-center gap-2 h-9 px-4 rounded-lg bg-primary/10 text-primary text-sm font-semibold hover:bg-primary/20">
+                                    <span
+                                        class="material-symbols-outlined text-base">add_comment</span>
+                                    <span>Add Note</span>
+                                </button>
+                            </div>
+                            <div
+                                class="bg-card-light dark:bg-card-dark p-6 rounded-lg shadow-sm">
+                                <h3
+                                    class="text-lg font-semibold text-text-light dark:text-text-dark mb-4">Documents</h3>
+                                <ul class="space-y-3">
+                                    <li
+                                        class="flex items-center justify-between text-sm">
+                                        <div class="flex items-center gap-3">
+                                            <span
+                                                class="material-symbols-outlined text-primary">description</span>
+                                            <span
+                                                class="font-medium text-text-light dark:text-text-dark">Signed_Contract.pdf</span>
+                                        </div>
+                                        <a
+                                            class="text-text-muted-light dark:text-text-muted-dark hover:text-primary"
+                                            href="#"><span
+                                                class="material-symbols-outlined">download</span></a>
+                                    </li>
+                                    <li
+                                        class="flex items-center justify-between text-sm">
+                                        <div class="flex items-center gap-3">
+                                            <span
+                                                class="material-symbols-outlined text-primary">description</span>
+                                            <span
+                                                class="font-medium text-text-light dark:text-text-dark">Proposal_v2.pdf</span>
+                                        </div>
+                                        <a
+                                            class="text-text-muted-light dark:text-text-muted-dark hover:text-primary"
+                                            href="#"><span
+                                                class="material-symbols-outlined">download</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body></html>
