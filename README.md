@@ -543,48 +543,133 @@ git push -u orig
 HealthPlatform/
 ├── app/
 │   ├── backend/
+│   │   ├── __pycache__/
 │   │   ├── src/
-│   │   │   ├── core/              # Configurações centrais
+│   │   │   ├── __pycache__/
+│   │   │   ├── core/                                   # Configurações centrais
+│   │   │   │   ├── __pycache__/
+│   │   │   │   ├── modules/                            # Módulos do SaaS
+│   │   │   │   │   ├── ai/                             # AI completa
+│   │   │   │   │   │   ├── __pycache__/
+│   │   │   │   │   │   ├── health_ia.py
+│   │   │   │   │   │   └── service.py
+│   │   │   │   │   ├── auth/                           # Autenticação
+│   │   │   │   │   ├── crm/                            # CRM completo
+│   │   │   │   │   │   ├── __pycache__/
+│   │   │   │   │   │   ├── models.py
+│   │   │   │   │   │   └── service.py
+│   │   │   │   │   ├── finance/                        # Apuração financeira
+│   │   │   │   │   │   ├── __pycache__/
+│   │   │   │   │   │   ├── comissoes_models.py
+│   │   │   │   │   │   ├── comissoes_service.py
+│   │   │   │   │   │   └── service.py
+│   │   │   │   │   ├── whatsapp/                       # Integração WhatsApp
+│   │   │   │   │   │   └── service.py
+│   │   │   │   ├── services/                           # Módulos dos Serviços
+│   │   │   │   │   │   ├── __pycache__/
+│   │   │   │   │   │   └── orchestration_service.py
 │   │   │   │   ├── config.py
-│   │   │   │   ├── database.py
-│   │   │   │   └── security.py
-│   │   │   ├── modules/           # Módulos do SaaS
-│   │   │   │   ├── crm/           # CRM completo
-│   │   │   │   ├── finance/       # Apuração financeira
-│   │   │   │   ├── whatsapp/      # Integração WhatsApp
-│   │   │   │   ├── ai/            # IA e Analytics
-│   │   │   │   └── auth/          # Autenticação
-│   │   │   ├── shared/            # Utilitários
-│   │   │   │   ├── utils.py
-│   │   │   │   └── validators.py
-│   │   │   └── api/               # Rotas da API
-│   │   │       ├── v1/
-│   │   │       │   ├── crm_routes.py
-│   │   │       │   ├── finance_routes.py
-│   │   │       │   └── whatsapp_routes.py
-│   │   │       └── __init__.py
-│   │   ├── requirements.txt
-│   │   └── main.py
-│   └── frontend/
-│       ├── templates/
-│       │   ├── base.html
-│       │   ├── dashboard.html     # Dashboard SaaS
-│       │   ├── crm/
-│       │   ├── finance/
-│       │   └── whatsapp/
-│       ├── static/
-│       │   ├── css/
-│       │   ├── js/
-│       │   └── img/
-│       └── components/            # Componentes reutilizáveis
-├── tests/
-├── scripts/                       # Scripts de deploy
-├── docs/                          # Documentação
-└── docker/                        # Configuração Docker
+│   │   │   │   └── database.py
+│   │   │   ├── routes/                                 # Módulos de Rotas
+│   │   │   │   │   ├── __pycache__/
+│   │   │   │   │   ├── comissoes_routes.py
+│   │   │   │   │   ├── crm_routes.py
+│   │   │   │   │   ├── ia_routes.py
+│   │   │   │   │   ├── whatsapp_routes.py
+│   │   │   │   │   └── whatsapp_webhooh.py
+│   │   │   ├── services/                                # Módulos do Serviços
+│   │   │   │   ├── __pycache__/
+│   │   │   │   ├── crm_service.py
+│   │   │   │   └── whatsapp_service.py
+│   │   │   └── main.py
+│   ├── frontend/
+│   │   │   ├── css/
+│   │   │   │   ├── style.css
+│   │   │   ├── dashboards/
+│   │   │   │   ├── clientes.html
+│   │   │   │   ├── comissoes.html
+│   │   │   │   ├── coordenador.html
+│   │   │   │   ├── dashboard.html
+│   │   │   │   ├── kpi_dashboard.html
+│   │   │   │   ├── leads.html
+│   │   │   │   ├── relatorios.html
+│   │   │   │   └── teste_ia.html
+│   │   │   ├── img/
+│   │   │   │   ├── LOGO_MENU.png
+│   │   │   │   └── LOGO.png
+│   │   │   ├── js/
+│   │   │   │   └── charts.js
+│   │   │   ├── pges/
+│   │   │   │   ├── auth/
+│   │   │   │   │   ├── forgot_password.html
+│   │   │   │   │   ├── login.html
+│   │   │   │   │   └── register.html
+│   │   │   │   ├── chat/
+│   │   │   │   │   └── chat_corretores.html
+│   │   │   │   ├── clients/
+│   │   │   │   │   └── base_clients.html
+│   │   │   │   ├── executivo/
+│   │   │   │   │   └── geren_metas.html
+│   │   │   │   ├── financeiro/
+│   │   │   │   │   ├── aprovacoes.html
+│   │   │   │   │   ├── comissionamentos.html
+│   │   │   │   │   ├── despesas.html
+│   │   │   │   │   ├── livro_caixa.html
+│   │   │   │   │   ├── propostas.html
+│   │   │   │   │   ├── receitas.html
+│   │   │   │   │   └── requisicoes.html
+│   │   │   │   ├── leads/
+│   │   │   │   │   ├── atualizar_leads.html
+│   │   │   │   │   ├── detalhes_leads.html
+│   │   │   │   │   ├── incluir_leads.html
+│   │   │   │   │   └── visao_geral.html
+│   │   │   │   ├── marketing/
+│   │   │   │   │   ├── analitico.html
+│   │   │   │   │   ├── campanhas.html
+│   │   │   │   │   ├── gerenciamento.html
+│   │   │   │   │   └── KPI.html
+│   │   │   │   ├── operacoes/
+│   │   │   │   │   ├── admin_chat.py
+│   │   │   │   │   ├── analiticos.html
+│   │   │   │   │   ├── comissoes_routes.html
+│   │   │   │   │   ├── banco_corretores.html
+│   │   │   │   │   ├── banco_documentos.html
+│   │   │   │   │   ├── calendario_geral.html
+│   │   │   │   │   ├── config_corretotes.html
+│   │   │   │   │   ├── config_usuarios_hierarquia.html
+│   │   │   │   │   ├── geren_catalogo.html
+│   │   │   │   │   ├── geren_corretores.html
+│   │   │   │   │   ├── geren_equipes.html
+│   │   │   │   │   ├── reclamacoes_anonimas.html
+│   │   │   │   ├── relatorios/
+│   │   │   │   │   ├── kpi_financeiro.html
+│   │   │   │   │   ├── kpi_financeiro2.html
+│   │   │   │   │   └── performance_times.html
+│   │   │   │   └── treinamento_rh/
+│   │   │   │   │   ├── HR_page.html
+│   │   │   │   │   └── treinamentos.html
+│   │   │   └── index.html
+│   └── Documentacao/
+│   │   ├── EXCEL/
+│   │   │   └── CRM_Almeida_Consultoria.xlsx
+│   │   ├── PDFs/
+│   │   │   ├── PLANO_SERVICOS.pdf
+│   │   │   ├── PLANOS_DETALHAMENTO.pdf
+│   │   │   ├── PLANOS_ESTRUTURA.pdf
+│   │   │   ├── Projeto HealthCRM Python.pdf
+│   │   ├── Contexto.md
+│   │   └── RoadMap-Desenvolvimento.pdf
+│   ├── .env
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── health_platform.db
+│   ├── LICENSE
+│   ├── README.md
+│   ├── requirements.txt
+│   └── run.py
+
 
 ```
-
-
 
 <br><br>
 [📋 Índice](#-índice)
