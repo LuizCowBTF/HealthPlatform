@@ -4,16 +4,15 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Clientes - Health Platform</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script
+      src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <style>
       .material-symbols-outlined {
         font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
@@ -56,135 +55,26 @@
     </script>
   </head>
   <body
-    class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark"
-  >
+    class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
     <div class="flex min-h-screen">
-      <!-- Sidebar -->
-      <aside
-        class="w-64 bg-card-light dark:bg-card-dark flex-col justify-between hidden lg:flex border-r border-border-light dark:border-border-dark"
-      >
-        <div class="p-6">
-          <div class="flex items-center">
-            <img
-              class="w-full max-w-48"
-              src="/static/img/logo_crm.png"
-              alt="Health Platform Logo"
-            />
-          </div>
-          <div class="flex items-center gap-3 p-8">
-            <div
-              class="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold"
-            >
-              A
-            </div>
-            <div>
-              <h1 class="text-base font-medium">Admin</h1>
-              <p class="text-subtext-light dark:text-subtext-dark text-sm">
-                Administrador
-              </p>
-            </div>
-          </div>
-          <nav class="mt-6 flex flex-col gap-2">
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="/dashboard"
-            >
-              <span class="material-symbols-outlined">dashboard</span
-              ><span>Dashboard</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary"
-              href="/clientes"
-            >
-              <span class="material-symbols-outlined">group</span
-              ><span>Clientes</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="/leads"
-            >
-              <span class="material-symbols-outlined">leaderboard</span
-              ><span>Leads</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="/comissoes"
-            >
-              <span class="material-symbols-outlined">paid</span
-              ><span>Comissões</span>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2 rounded-lg text-subtext-light dark:text-subtext-dark hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
-              href="/relatorios"
-            >
-              <span class="material-symbols-outlined">assessment</span
-              ><span>Relatórios</span>
-            </a>
-          </nav>
-        </div>
-      </aside>
-
       <div class="flex-1 flex flex-col">
-        <!-- Header -->
-        <header
-          class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark flex items-center justify-between p-4 sticky top-0 z-10"
-        >
-          <div class="flex items-center gap-4">
-            <button class="lg:hidden">
-              <span class="material-symbols-outlined">menu</span>
-            </button>
-          </div>
-          <div class="flex items-center gap-4">
-            <div class="relative w-64 hidden md:block">
-              <span
-                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark"
-                >search</span
-              >
-              <input
-                class="w-full pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-transparent focus:border-primary focus:ring-1 focus:ring-primary text-sm placeholder-subtext-light dark:placeholder-subtext-dark"
-                placeholder="Buscar clientes, planos..."
-                type="text"
-                id="searchInput"
-              />
-            </div>
-            <button
-              class="relative text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark"
-            >
-              <span class="material-symbols-outlined">notifications</span>
-              <span
-                class="absolute top-0 right-0 block size-2 rounded-full bg-primary ring-2 ring-card-light dark:ring-card-dark"
-              ></span>
-            </button>
-            <div
-              class="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold"
-            >
-              A
-            </div>
-          </div>
-        </header>
-
         <!-- Main Content -->
         <main class="flex-1 p-1 bg-background-light dark:bg-background-dark">
           <div class="flex-1 space-y-2">
             <!-- Page Heading & Actions -->
             <div
-              class="flex flex-col md:flex-row justify-between items-start md:items-center gap-1"
-            >
+              class="flex flex-col md:flex-row justify-between items-start md:items-center gap-1">
               <div class="flex gap-1">
                 <button
-                  class="flex items-center justify-center gap-2 rounded-lg px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600"
-                >
-                  <span class="material-symbols-outlined text-base"
-                    >download</span
-                  >
+                  class="flex items-center justify-center gap-2 rounded-lg px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <span
+                    class="material-symbols-outlined text-base">download</span>
                   <span>Exportar .XLSX</span>
                 </button>
                 <button
-                  class="flex items-center justify-center gap-2 rounded-lg px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600"
-                >
-                  <span class="material-symbols-outlined text-base"
-                    >download</span
-                  >
+                  class="flex items-center justify-center gap-2 rounded-lg px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <span
+                    class="material-symbols-outlined text-base">download</span>
                   <span>Exportar .CSV</span>
                 </button>
               </div>
@@ -192,8 +82,7 @@
 
             <!-- Filter Bar Card -->
             <div
-              class="bg-card-light dark:bg-card-dark p-4 rounded-lg shadow-sm border border-border-light dark:border-border-dark"
-            >
+              class="bg-card-light dark:bg-card-dark p-4 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Coluna 1 -->
                 <div class="space-y-4">
@@ -203,16 +92,14 @@
                       class="form-input w-full flex flex-1 overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
                       placeholder="Selecionar período"
                       type="text"
-                      id="periodFilter"
-                    />
+                      id="periodFilter" />
                   </label>
                   <label class="flex flex-col">
                     <p class="text-sm font-medium pb-2">Status</p>
                     <select
                       class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
-                      id="statusFilter"
-                    >
-                      <option value="">Todos</option>
+                      id="statusFilter">
+                      <option value>Todos</option>
                       <option>Ativo</option>
                       <option>Pendente</option>
                       <option>Cancelado</option>
@@ -224,8 +111,7 @@
                       class="form-input w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
                       placeholder="ex: cliente@email.com"
                       type="text"
-                      id="emailFilter"
-                    />
+                      id="emailFilter" />
                   </label>
                 </div>
 
@@ -235,9 +121,8 @@
                     <p class="text-sm font-medium pb-2">Categoria do Plano</p>
                     <select
                       class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
-                      id="categoryFilter"
-                    >
-                      <option value="">Todos</option>
+                      id="categoryFilter">
+                      <option value>Todos</option>
                       <option>Plano de Saúde</option>
                       <option>Plano Odontológico</option>
                     </select>
@@ -248,16 +133,14 @@
                       class="form-input w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
                       placeholder="ex: João Silva"
                       type="text"
-                      id="clientNameFilter"
-                    />
+                      id="clientNameFilter" />
                   </label>
                   <label class="flex flex-col">
                     <p class="text-sm font-medium pb-2">Corretor</p>
                     <select
                       class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
-                      id="brokerFilter"
-                    >
-                      <option value="">Todos</option>
+                      id="brokerFilter">
+                      <option value>Todos</option>
                       <option>João Silva</option>
                       <option>Maria Santos</option>
                       <option>Pedro Oliveira</option>
@@ -271,9 +154,8 @@
                     <p class="text-sm font-medium pb-2">Origem</p>
                     <select
                       class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
-                      id="originFilter"
-                    >
-                      <option value="">Todas</option>
+                      id="originFilter">
+                      <option value>Todas</option>
                       <option>Online</option>
                       <option>Indicação</option>
                     </select>
@@ -284,22 +166,19 @@
                       class="form-input w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
                       placeholder="ex: C12345"
                       type="text"
-                      id="contractFilter"
-                    />
+                      id="contractFilter" />
                   </label>
                   <!-- Botões ocupando o mesmo espaço que os inputs acima -->
                   <div class="flex flex-col justify-end h-[42px]">
                     <div class="flex gap-2">
                       <button
                         class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-gray-200 dark:bg-gray-600 text-text-light dark:text-text-dark text-sm font-semibold leading-normal tracking-[0.015em] hover:bg-gray-300 dark:hover:bg-gray-500"
-                        id="clearFilters"
-                      >
+                        id="clearFilters">
                         <span class="truncate">Limpar Filtros</span>
                       </button>
                       <button
                         class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-primary text-white text-sm font-semibold leading-normal tracking-[0.015em] hover:bg-primary/90"
-                        id="applyFilters"
-                      >
+                        id="applyFilters">
                         <span class="truncate">Aplicar Filtros</span>
                       </button>
                     </div>
@@ -310,34 +189,28 @@
 
             <!-- Data Table Card -->
             <div
-              class="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-border-light dark:border-border-dark overflow-hidden"
-            >
+              class="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-border-light dark:border-border-dark overflow-hidden">
               <div
-                class="p-4 flex justify-between items-center border-b border-border-light dark:border-border-dark"
-              >
+                class="p-4 flex justify-between items-center border-b border-border-light dark:border-border-dark">
                 <label class="flex flex-col min-w-40 !h-10 max-w-sm">
                   <div
-                    class="flex w-full flex-1 items-stretch rounded-lg h-full"
-                  >
+                    class="flex w-full flex-1 items-stretch rounded-lg h-full">
                     <div
-                      class="text-gray-500 flex bg-gray-100 dark:bg-gray-700 items-center justify-center pl-3 rounded-l-lg border-r-0"
-                    >
+                      class="text-gray-500 flex bg-gray-100 dark:bg-gray-700 items-center justify-center pl-3 rounded-l-lg border-r-0">
                       <span class="material-symbols-outlined">search</span>
                     </div>
                     <input
                       class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-gray-100 dark:bg-gray-700 focus:border-none h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal"
                       placeholder="Buscar na tabela..."
-                      value=""
-                      id="tableSearch"
-                    />
+                      value
+                      id="tableSearch" />
                   </div>
                 </label>
               </div>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left">
                   <thead
-                    class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700/50"
-                  >
+                    class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700/50">
                     <tr>
                       <th class="px-6 py-3 font-semibold" scope="col">
                         Cliente
@@ -368,15 +241,12 @@
                 <div class="w-full text-center">
                   <span
                     class="text-gray-500 dark:text-gray-400 text-sm"
-                    id="paginationInfo"
-                    >Carregando...</span
-                  >
+                    id="paginationInfo">Carregando...</span>
                 </div>
                 <div class="w-full flex justify-center">
                   <div
                     class="inline-flex items-center -space-x-px"
-                    id="paginationContainer"
-                  >
+                    id="paginationContainer">
                     <!-- Paginação será gerada via JavaScript -->
                   </div>
                 </div>
@@ -388,15 +258,12 @@
         <!-- Client Details Drawer -->
         <div
           class="fixed inset-0 bg-black/30 z-20 hidden"
-          id="drawerOverlay"
-        ></div>
+          id="drawerOverlay"></div>
         <aside
           class="fixed top-0 right-0 h-full w-full max-w-md bg-card-light dark:bg-card-dark shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-30"
-          id="clientDrawer"
-        >
+          id="clientDrawer">
           <div
-            class="p-6 border-b border-border-light dark:border-border-dark flex justify-between items-center"
-          >
+            class="p-6 border-b border-border-light dark:border-border-dark flex justify-between items-center">
             <h2 class="text-xl font-semibold">Detalhes do Cliente</h2>
             <button id="closeDrawer">
               <span class="material-symbols-outlined">close</span>
