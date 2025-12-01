@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html class="light" lang="pt-BR">
 
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>HealthCRM Dashboard</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <style>
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>HealthCRM Dashboard</title>
+        <script
+            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+            rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet" />
+        <style>
         .material-symbols-outlined {
             font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
         }
@@ -34,9 +38,29 @@
             height: 300px;
             width: 100%;
         }
+
+        /* Estilo para links ativos */
+        .menu-item.active {
+            background-color: rgba(230, 121, 81, 0.1);
+            color: #e67951;
+            border-left: 3px solid #e67951;
+        }
+
+        .menu-item.active .material-symbols-outlined {
+            color: #e67951;
+        }
+
+        .submenu-item.active {
+            background-color: rgba(230, 121, 81, 0.08);
+            color: #e67951;
+        }
+
+        .submenu-item.active .material-symbols-outlined {
+            color: #e67951;
+        }
     </style>
 
-    <script id="tailwind-config">
+        <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -67,514 +91,670 @@
             },
         };
     </script>
+    </head>
 
-    <script>
+    <body class="bg-background-light dark:bg-background-dark font-display">
+        <div
+            class="relative flex h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-hidden"
+            style='font-family: Inter, "Noto Sans", sans-serif;'>
+            <div class="flex h-full grow flex-row">
+                <!-- SIDEBAR EXPANDIDO -->
+                <div id="expanded-sidebar"
+                    class="flex flex-col justify-between bg-sidebar-bg p-4 shadow-lg w-64 transition-all duration-300 ease-in-out">
+                    <!-- LOGO DO SISTEMA -->
+                    <div class="flex items-center gap-2 px-2 my-1 mb-3">
+                        <img src="/static/img/LOGO.png" class="w-64"
+                            alt="HealthCRM Logo" />
+                    </div>
+
+                    <!-- MENU COM ROLAGEM -->
+                    <div class="flex flex-col gap-1 overflow-y-auto mt-1">
+                        <div class="flex flex-col gap-1">
+                            <!-- MENU INÍCIO -->
+                            <button
+                                onclick="toggleSubmenu('dashboard-geral-menu')"
+                                class="menu-item flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-2xl">home</span>
+                                    <span
+                                        class="text-sm font-medium">Início</span>
+                                </div>
+                                <span id="icon-dashboard-geral-menu"
+                                    class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+                            </button>
+                            <div id="dashboard-geral-menu"
+                                class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('dashboard.html', 'Dashboard Geral', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">dashboard</span>
+                                    Dashboard Geral
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('executivo/geren_metas.html', 'Executivo', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">admin_panel_settings</span>
+                                    Executivo
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('kpi_dashboard.html', 'KPI Dashboard', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">dashboard</span>
+                                    KPI - Dashboard
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('financeiro/comissionamentos.html', 'Financeiro', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">finance_chip</span>
+                                    Financeiro
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('performance_times.html', 'Times', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">group</span>
+                                    Times
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('coordenador.html', 'Dashboard Coordenador', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">area_chart</span>
+                                    Dashboard Coordenador
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('executivo/geren_metas.html', 'Gerenciamento Metas', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">target</span>
+                                    Gerenciamento Metas
+                                </a>
+                            </div>
+
+                            <!-- MENU CLIENTES & LEADS -->
+                            <button
+                                onclick="toggleSubmenu('clientes-leads-menu')"
+                                class="menu-item flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-2xl">groups</span>
+                                    <span class="text-sm font-medium">Clientes &
+                                        Leads</span>
+                                </div>
+                                <span id="icon-clientes-leads-menu"
+                                    class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+                            </button>
+                            <div id="clientes-leads-menu"
+                                class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('leads/incluir_leads.html', 'Incluir Lead', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">person_add</span>
+                                    Incluir Lead
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('leads/atualizar_leads.html', 'Atualizar Leads', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">refresh</span>
+                                    Atualizar Leads
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('clients/base_clients.html', 'Base de Clientes', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">folder_managed</span>
+                                    Base de Clientes
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('leads/visao_geral.html', 'Detalhes de Contrato', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">article</span>
+                                    Detalhes de Contrato
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('chat/chat_corretores.html', 'Chat Corretores', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">forum</span>
+                                    Chat Corretores
+                                </a>
+                            </div>
+
+                            <!-- MENU FINANCEIRO -->
+                            <button onclick="toggleSubmenu('financeiro-menu')"
+                                class="menu-item flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-2xl">monetization_on</span>
+                                    <span
+                                        class="text-sm font-medium">Financeiro</span>
+                                </div>
+                                <span id="icon-financeiro-menu"
+                                    class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+                            </button>
+                            <div id="financeiro-menu"
+                                class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('financeiro/despesas.html', 'Despesas', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">receipt</span>
+                                    Despesas
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('financeiro/receitas.html', 'Receitas', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">trending_up</span>
+                                    Receitas
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('financeiro/livro_caixa.html', 'Livro Caixa', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">account_balance</span>
+                                    Livro Caixa
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('financeiro/propostas.html', 'Propostas', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">description</span>
+                                    Propostas
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('financeiro/comissionamentos.html', 'Comissionamento', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">request_quote</span>
+                                    Comissionamento
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('financeiro/requisicoes.html', 'Requisições', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">assignment</span>
+                                    Requisições
+                                </a>
+                                <a
+                                    class="submenu-item flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
+                                    href="javascript:void(0)"
+                                    onclick="loadPage('financeiro/aprovacoes.html', 'Aprovações', this)">
+                                    <span
+                                        class="material-symbols-outlined text-xs">approval</span>
+                                    Aprovações
+                                </a>
+                            </div>
+
+                            <!-- OUTROS MENUS (simplifiquei para exemplo) -->
+                            <button onclick="toggleSubmenu('operacoes-menu')"
+                                class="menu-item flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-2xl">business_center</span>
+                                    <span
+                                        class="text-sm font-medium">Operações</span>
+                                </div>
+                                <span id="icon-operacoes-menu"
+                                    class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+                            </button>
+
+                            <button
+                                onclick="toggleSubmenu('treinamento-rh-menu')"
+                                class="menu-item flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-2xl">psychology</span>
+                                    <span
+                                        class="text-sm font-medium">Treinamento
+                                        & RH</span>
+                                </div>
+                                <span id="icon-treinamento-rh-menu"
+                                    class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+                            </button>
+
+                            <button onclick="toggleSubmenu('marketing-menu')"
+                                class="menu-item flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="material-symbols-outlined text-2xl">trending_up</span>
+                                    <span
+                                        class="text-sm font-medium">Marketing</span>
+                                </div>
+                                <span id="icon-marketing-menu"
+                                    class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- RODAPÉ DO SIDEBAR -->
+                    <div class="flex flex-col gap-1 pt-1">
+                        <button onclick="toggleSidebar()"
+                            class="flex items-center justify-center gap-3 rounded-lg px-3 py-2 text-accent hover:bg-background-light">
+                            <span
+                                class="material-symbols-outlined text-2xl">chevron_left</span>
+                            <span class="text-sm font-medium">Recolher</span>
+                        </button>
+                        <a
+                            class="menu-item flex items-center gap-1 px-1 py-1 rounded-lg hover:bg-background-light text-accent"
+                            href="javascript:void(0)"
+                            onclick="loadPage('configuracoes.html', 'Configurações', this)">
+                            <span
+                                class="material-symbols-outlined text-2xl">settings</span>
+                            <span
+                                class="text-sm font-medium">Configurações</span>
+                        </a>
+                        <a
+                            class="menu-item flex items-center gap-1 px-1 py-1 rounded-lg hover:bg-background-light text-accent"
+                            href="javascript:void(0)" onclick="logout()">
+                            <span
+                                class="material-symbols-outlined text-2xl">logout</span>
+                            <span class="text-sm font-medium">LogOut</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- SIDEBAR RECOLHIDO -->
+                <div id="recolher-sidebar"
+                    class="hidden flex-col justify-between bg-sidebar-bg p-4 shadow-lg w-20 transition-all duration-300 ease-in-out items-center">
+                    <div class="flex flex-col gap-8">
+                        <div class="flex items-center justify-center pt-2">
+                            <img src="/static/img/LOGO_MENU.png"
+                                alt="HealthCRM Logo" class="w-12">
+                        </div>
+
+                        <div class="flex flex-col gap-4">
+                            <a
+                                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                                href="javascript:void(0)"
+                                title="Dashboard Geral"
+                                onclick="loadPage('dashboard.html', 'Dashboard Geral')">
+                                <span
+                                    class="material-symbols-outlined text-2xl">home</span>
+                            </a>
+                            <a
+                                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                                href="javascript:void(0)"
+                                title="Clientes & Leads"
+                                onclick="toggleSubmenu('clientes-leads-menu')">
+                                <span
+                                    class="material-symbols-outlined text-2xl">groups</span>
+                            </a>
+                            <a
+                                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                                href="javascript:void(0)" title="Financeiro"
+                                onclick="toggleSubmenu('financeiro-menu')">
+                                <span
+                                    class="material-symbols-outlined text-2xl">monetization_on</span>
+                            </a>
+                            <a
+                                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                                href="javascript:void(0)" title="Operações"
+                                onclick="toggleSubmenu('operacoes-menu')">
+                                <span
+                                    class="material-symbols-outlined text-2xl">business_center</span>
+                            </a>
+                            <a
+                                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                                href="javascript:void(0)"
+                                title="Treinamento & RH"
+                                onclick="toggleSubmenu('treinamento-rh-menu')">
+                                <span
+                                    class="material-symbols-outlined text-2xl">psychology</span>
+                            </a>
+                            <a
+                                class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                                href="javascript:void(0)" title="Marketing"
+                                onclick="toggleSubmenu('marketing-menu')">
+                                <span
+                                    class="material-symbols-outlined text-2xl">trending_up</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2 w-full">
+                        <button onclick="toggleSidebar()"
+                            class="flex items-center justify-center gap-3 rounded-lg px-3 py-2 text-accent hover:bg-background-light"
+                            title="Expand">
+                            <span
+                                class="material-symbols-outlined text-2xl">chevron_right</span>
+                        </button>
+                        <div
+                            class="border-t border-background-light my-2 w-full"></div>
+                        <a
+                            class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                            href="javascript:void(0)" title="Configurações"
+                            onclick="loadPage('configuracoes.html', 'Configurações')">
+                            <span
+                                class="material-symbols-outlined text-2xl">settings</span>
+                        </a>
+                        <a
+                            class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
+                            href="javascript:void(0)" title="Logout"
+                            onclick="logout()">
+                            <span
+                                class="material-symbols-outlined text-2xl">logout</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CONTEÚDO PRINCIPAL -->
+                <main id="main-content" class="flex-1 flex flex-col">
+                    <!-- HEADER FIXO -->
+                    <header
+                        class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark flex items-center justify-between p-4 sticky top-0 z-10">
+                        <div class="flex items-center gap-4">
+                            <button class="lg:hidden"
+                                onclick="toggleMobileMenu()">
+                                <span
+                                    class="material-symbols-outlined">menu</span>
+                            </button>
+                            <h1 id="page-title"
+                                class="text-xl font-semibold text-text-light dark:text-text-dark">
+                                Dashboard Geral
+                            </h1>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="relative w-64 hidden md:block">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark">search</span>
+                                <input
+                                    class="w-full pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-transparent focus:border-primary focus:ring-1 focus:ring-primary text-sm placeholder-subtext-light dark:placeholder-subtext-dark"
+                                    placeholder="Buscar..." type="text"
+                                    id="global-search">
+                            </div>
+                            <button
+                                class="relative text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark">
+                                <span
+                                    class="material-symbols-outlined">notifications</span>
+                            </button>
+                            <div
+                                class="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold cursor-pointer"
+                                onclick="loadPage('perfil.html', 'Perfil')">
+                                A
+                            </div>
+                        </div>
+                    </header>
+
+                    <!-- CONTEÚDO DO IFRAME -->
+                    <div class="flex-1 relative">
+                        <div id="frame-loading"
+                            class="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-800 z-10">
+                            <div class="text-center">
+                                <div
+                                    class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                                <p
+                                    class="mt-4 text-gray-600 dark:text-gray-300">Carregando...</p>
+                            </div>
+                        </div>
+
+                        <!-- IFRAME PRINCIPAL -->
+                        <iframe id="main-frame"
+                            src="/static/dashboards/dashboard.html"
+                            class="w-full h-full border-0"
+                            title="Conteúdo Principal"
+                            sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+                            loading="eager">
+                        </iframe>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- SCRIPT PRINCIPAL -->
+        <script>
+        // Configurações globais
+        const BASE_URL = window.location.origin;
+        let currentPage = 'dashboard.html';
+        let currentTitle = 'Dashboard Geral';
+
+        // Função para carregar página no iframe
+        function loadPage(pagePath, pageTitle, element = null) {
+            console.log(`📄 Carregando página: ${pagePath}, Título: ${pageTitle}`);
+
+            const iframe = document.getElementById('main-frame');
+            const loadingElement = document.getElementById('frame-loading');
+            const pageTitleElement = document.getElementById('page-title');
+
+            if (!iframe || !loadingElement || !pageTitleElement) {
+                console.error('❌ Elementos não encontrados!');
+                return;
+            }
+
+            // Define caminhos base
+            let fullPath = '';
+
+            if (pagePath.includes('dashboard')) {
+                fullPath = `/static/dashboards/${pagePath}`;
+            } else if (pagePath.includes('.html')) {
+                fullPath = `/static/pages/${pagePath}`;
+            } else {
+                fullPath = `/static/pages/${pagePath}.html`;
+            }
+
+            // Atualiza estado atual
+            currentPage = pagePath;
+            currentTitle = pageTitle;
+
+            // Mostra loading
+            loadingElement.style.display = 'flex';
+
+            // Atualiza título da página
+            pageTitleElement.textContent = pageTitle;
+
+            // Atualiza URL no navegador (sem recarregar a página)
+            history.pushState({ page: pagePath, title: pageTitle }, pageTitle, `/?page=${encodeURIComponent(pagePath)}`);
+
+            // Marca item ativo no menu
+            setActiveMenuItem(element);
+
+            // Carrega a página no iframe
+            iframe.src = fullPath;
+
+            // Quando o iframe carregar, esconde o loading
+            iframe.onload = function () {
+                setTimeout(() => {
+                    loadingElement.style.display = 'none';
+
+                    // Ajusta altura do iframe se necessário
+                    try {
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        iframe.style.height = iframeDoc.body.scrollHeight + 'px';
+                    } catch (e) {
+                        // Ignora erros de cross-origin
+                    }
+                }, 300);
+            };
+
+            // Tratamento de erro
+            iframe.onerror = function () {
+                loadingElement.style.display = 'none';
+                console.error(`❌ Erro ao carregar: ${fullPath}`);
+
+                // Fallback para página de erro
+                iframe.srcdoc = `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <style>
+                            body { 
+                                font-family: Arial, sans-serif; 
+                                padding: 40px; 
+                                text-align: center; 
+                                background: #f8f6f6;
+                            }
+                            .error-container { 
+                                background: white; 
+                                padding: 40px; 
+                                border-radius: 10px; 
+                                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                            }
+                            h1 { color: #e67951; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="error-container">
+                            <h1>⚠️ Página não encontrada</h1>
+                            <p>A página <strong>${pagePath}</strong> não pôde ser carregada.</p>
+                            <p>Verifique se o arquivo existe no servidor.</p>
+                            <button onclick="window.parent.loadPage('dashboard.html', 'Dashboard Geral')" 
+                                    style="background: #e67951; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">
+                                Voltar para Dashboard
+                            </button>
+                        </div>
+                    </body>
+                    </html>
+                `;
+            };
+        }
+
+        // Função para marcar item ativo no menu
+        function setActiveMenuItem(element) {
+            // Remove classe ativa de todos os itens
+            document.querySelectorAll('.menu-item.active, .submenu-item.active').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Adiciona classe ativa ao elemento clicado
+            if (element) {
+                element.classList.add('active');
+
+                // Também marca o menu pai como ativo
+                const parentMenu = element.closest('.menu-item');
+                if (parentMenu) {
+                    parentMenu.classList.add('active');
+                }
+            }
+        }
+
         // Função para expandir/colapsar submenus
         function toggleSubmenu(id) {
             const submenu = document.getElementById(id);
             const icon = document.getElementById(`icon-${id}`);
+
+            if (!submenu || !icon) return;
+
             if (submenu.classList.contains('hidden')) {
-                // Expandir
                 submenu.classList.remove('hidden');
                 icon.classList.add('rotate-180');
             } else {
-                // Colapsar
                 submenu.classList.add('hidden');
                 icon.classList.remove('rotate-180');
             }
         }
 
-        // Função para colapsar/expandir o sidebar principal
+        // Função para colapsar/expandir sidebar
         function toggleSidebar() {
             const expandedSidebar = document.getElementById('expanded-sidebar');
             const recolherSidebar = document.getElementById('recolher-sidebar');
-            const mainContent = document.getElementById('main-content');
+
+            if (!expandedSidebar || !recolherSidebar) return;
 
             expandedSidebar.classList.toggle('hidden');
             recolherSidebar.classList.toggle('hidden');
         }
-    </script>
-</head>
 
-<body class="bg-background-light dark:bg-background-dark font-display">
-    <div class="relative flex h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-hidden"
-        style='font-family: Inter, "Noto Sans", sans-serif;'>
-        <div class="flex h-full grow flex-row">
-            <div id="expanded-sidebar"
-                class="flex flex-col justify-between bg-sidebar-bg p-4 shadow-lg w-64 transition-all duration-300 ease-in-out">
-                <!-- LOGO DO SISTEMA -->
-                <div class="flex items-center gap-2 px-2 my-1 mb-3">
-                    <img src="/static/img/LOGO.png" class="w-64" alt="HealthCRM Logo" />
-                </div>
-                <!-- INÍCIO DO MENU COM ROLAGEM -->
-                <div class="flex flex-col gap-1 overflow-y-auto mt-1">
-                    <div class="flex flex-col gap-1">
-                        <button onclick="toggleSubmenu('dashboard-geral-menu')"
-                            class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-2xl text-primary">home</span>
-                                <span class="text-sm font-medium">Início</span>
-                            </div>
-                            <span id="icon-dashboard-geral-menu"
-                                class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
-                        </button>
-                        <div id="dashboard-geral-menu"
-                            class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">dashboard</span>
-                                Dashboard Geral
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">admin_panel_settings</span>
-                                Executivo
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">dashboard</span>
-                                KPI - Dashboard
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">finance_chip</span>
-                                Financeiro
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">group</span>
-                                Times
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">area_chart</span>
-                                Dashboard Coordenador
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">target</span>
-                                Gerenciamento Metas
-                            </a>
-                        </div>
-
-                        <button onclick="toggleSubmenu('clientes-leads-menu')"
-                            class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-2xl text-primary">groups</span>
-                                <span class="text-sm font-medium">Clientes & Leads</span>
-                            </div>
-                            <span id="icon-clientes-leads-menu"
-                                class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
-                        </button>
-                        <div id="clientes-leads-menu"
-                            class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="javascript:void(0)"
-                                onclick="loadDashboard('../static/pages/leads/incluir_leads.html')">
-                                <span class="material-symbols-outlined text-xs text-primary">person_add</span>
-                                Incluir Lead
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="javascript:void(0)"
-                                onclick="loadDashboard('../static/pages/leads/atualizar_leads.html')">
-                                <span class="material-symbols-outlined text-xs text-primary">refresh</span>
-                                Atualizar Leads
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="javascript:void(0)"
-                                onclick="loadDashboard('../static/pages/clients/base_clients.html')">
-                                <span class="material-symbols-outlined text-xs text-primary">folder_managed</span>
-                                Base de Clientes / Banco de Dados
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="javascript:void(0)"
-                                onclick="loadDashboard('../static/pages/leads/visao_geral.html')">
-                                <span class="material-symbols-outlined text-xs text-primary">article</span>
-                                Detalhes de Contrato
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="javascript:void(0)"
-                                onclick="loadDashboard('../static/pages/chat/chat_corretores.html')">
-                                <span class="material-symbols-outlined text-xs text-primary">forum</span>
-                                Chat Corretores
-                            </a>
-                        </div>
-
-                        <button onclick="toggleSubmenu('financeiro-menu')"
-                            class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-2xl text-primary">monetization_on</span>
-                                <span class="text-sm font-medium">Financeiro</span>
-                            </div>
-                            <span id="icon-financeiro-menu"
-                                class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
-                        </button>
-                        <div id="financeiro-menu" class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">receipt</span>
-                                Despesas
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-2xs text-primary">trending_up</span>
-                                Receitas
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">account_balance</span>
-                                Livro Caixa
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">description</span>
-                                Propostas
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">request_quote</span>
-                                Comissionamento
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">assignment</span>
-                                Requisições
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">approval</span>
-                                Aprovações
-                            </a>
-                        </div>
-
-                        <button onclick="toggleSubmenu('operacoes-menu')"
-                            class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-2xl text-primary">business_center</span>
-                                <span class="text-sm font-medium">Operações</span>
-                            </div>
-                            <span id="icon-operacoes-menu"
-                                class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
-                        </button>
-                        <div id="operacoes-menu" class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">library_books</span>
-                                Gerenciador de Catálogo
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">query_stats</span>
-                                Analítico
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">manage_accounts</span>
-                                Configurações de Usuários e Hierarquia
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">admin_panel_settings</span>
-                            Admin Chat
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#">
-                                <span class="material-symbols-outlined text-xs text-primary">privacy</span>
-                                Reclamações Anônimas
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">calendar_month</span>
-                            Calendário Geral
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">folder_supervised</span>
-                            Banco de Documentos
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">real_estate_agent</span>
-                            Banco de Corretores
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">supervisor_account</span>
-                            Gerenciamento de Corretores
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">group_work</span>
-                            Gerenciamento de Equipes
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">manage_accounts</span>
-                            Configurações Corretores
-                            </a>
-                        </div>
-
-                        <button onclick="toggleSubmenu('treinamento-rh-menu')"
-                            class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-2xl text-primary">psychology</span>
-                                <span class="text-sm font-medium">Treinamento
-                                    & RH</span>
-                            </div>
-                            <span id="icon-treinamento-rh-menu"
-                                class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
-                        </button>
-                        <div id="treinamento-rh-menu"
-                            class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">work</span>
-                            HR Page (Central de RH)
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">school</span>
-                            Página de Treinamento
-                            </a>
-                        </div>
-
-                        <button onclick="toggleSubmenu('marketing-menu')"
-                            class="flex items-center justify-between px-3 py-2 rounded-lg text-accent hover:bg-background-light w-full">
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-2xl text-primary">trending_up</span>
-                                <span class="text-sm font-medium">Marketing</span>
-                            </div>
-                            <span id="icon-marketing-menu"
-                                class="material-symbols-outlined text-lg transition-transform duration-300">expand_more</span>
-                        </button>
-                        <div id="marketing-menu" class="flex flex-col gap-1 ml-4 border-l border-gray-200 pl-2 hidden">
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">rule_settings</span>
-                            KPI
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">campaign</span>
-                            Campanhas
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">settings</span>
-                            Gerenciamento
-                            </a>
-                            <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-background-light text-accent text-sm"
-                                href="#"></a>
-                            <span class="material-symbols-outlined text-xs text-primary">analytics</span>
-                            Analítico
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-1 pt-1">
-                    <button onclick="toggleSidebar()"
-                        class="flex items-center justify-center gap-3 rounded-lg px-3 py-2 text-accent hover:bg-background-light">
-                        <span class="material-symbols-outlined text-2xl">chevron_left</span>
-                        <span class="text-sm font-medium">Recolher</span>
-                    </button>
-                    <a class="flex items-center gap-1 px-1 py-1 rounded-lg hover:bg-background-light text-accent"
-                        href="#">
-                        <span class="material-symbols-outlined text-2xl text-primary">settings</span>
-                        <span class="text-sm font-medium">Configurações</span>
-                    </a>
-
-                    <a class="flex items-center gap-1 px-1 py-1 rounded-lg hover:bg-background-light text-accent"
-                        href="#">
-                        <span class="material-symbols-outlined text-2xl text-primary">logout</span>
-                        <span class="text-sm font-medium">LogOut</span>
-                    </a>
-                </div>
-            </div>
-
-            <div id="recolher-sidebar"
-                class="hidden flex-col justify-between bg-sidebar-bg p-4 shadow-lg w-20 transition-all duration-300 ease-in-out items-center">
-                <div class="flex flex-col gap-8">
-                    <div class="flex items-center justify-center pt-2">
-                        <img src="/static/img/LOGO_MENU.png" alt="HealthCRM Logo">
-                    </div>
-
-                    <div class="flex flex-col gap-4">
-                        <a class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
-                            href="#" title="Dashboard Geral">
-                            <span class="material-symbols-outlined text-2xl">home</span>
-                        </a>
-                        <a class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
-                            href="#" title="Clientes & Leads">
-                            <span class="material-symbols-outlined text-2xl">groups</span>
-                        </a>
-                        <a class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
-                            href="#" title="Financeiro">
-                            <span class="material-symbols-outlined text-2xl">monetization_on</span>
-                        </a>
-                        <a class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
-                            href="#" title="Operações">
-                            <span class="material-symbols-outlined text-2xl">business_center</span>
-                        </a>
-                        <a class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
-                            href="#" title="Treinamento & RH">
-                            <span class="material-symbols-outlined text-2xl">psychology</span>
-                        </a>
-                        <a class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
-                            href="#" title="Marketing">
-                            <span class="material-symbols-outlined text-2xl">trending_up</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-2 w-full">
-                    <button onclick="toggleSidebar()"
-                        class="flex items-center justify-center gap-3 rounded-lg px-3 py-2 text-accent hover:bg-background-light"
-                        title="Expand">
-                        <span class="material-symbols-outlined text-2xl">chevron_right</span>
-                    </button>
-                    <div class="border-t border-background-light my-2 w-full"></div>
-                    <a class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
-                        href="#" title="Configurações">
-                        <span class="material-symbols-outlined text-2xl">settings</span>
-                    </a>
-                    <a class="flex items-center justify-center px-3 py-2 rounded-lg hover:bg-background-light text-accent"
-                        href="#" title="Logout">
-                        <span class="material-symbols-outlined text-2xl">logout</span>
-                    </a>
-                </div>
-            </div>
-
-            <main id="main-content" class="flex-1">
-                <!-- Header FIXO -->
-                <header
-                    class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark flex items-center justify-between p-4 sticky top-0 z-10">
-                    <div class="flex items-center gap-4">
-                        <button class="lg:hidden">
-                            <span class="material-symbols-outlined">menu</span>
-                        </button>
-                        <h1 id="page-title" class="text-xl font-semibold text-text-light dark:text-text-dark">Dashboard
-                            Geral</h1>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="relative w-64 hidden md:block">
-                            <span
-                                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-subtext-light dark:text-subtext-dark">search</span>
-                            <input
-                                class="w-full pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-transparent focus:border-primary focus:ring-1 focus:ring-primary text-sm placeholder-subtext-light dark:placeholder-subtext-dark"
-                                placeholder="Buscar..." type="text">
-                        </div>
-                        <button
-                            class="relative text-subtext-light dark:text-subtext-dark hover:text-text-light dark:hover:text-text-dark">
-                            <span class="material-symbols-outlined">notifications</span>
-                        </button>
-                        <div
-                            class="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
-                            A</div>
-                    </div>
-                </header>
-
-                <!-- CONTEÚDO DO DASHBOARD VIA IFRAME -->
-                <div class="flex-1 relative h-full">
-                    <div id="frame-loading"
-                        class="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-800 z-10">
-                        <div class="text-center">
-                            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-                            <p class="mt-4 text-gray-600 dark:text-gray-300">Carregando dashboard...</p>
-                        </div>
-                    </div>
-
-                    <!-- Iframe com dashboard principal -->
-                    <iframe id="dashboard-frame" src="http://localhost:8000/static/dashboards/dashboard.html"
-                        onload="hideLoading()" style="width: 100%; height: 100%; border: none;"
-                        title="Dashboard Principal"
-                        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals" loading="lazy">
-                    </iframe>
-                </div>
-
-
-            </main>
-        </div>
-    </div>
-
-    <script>
-        // Função para ocultar o loading quando o iframe carregar
-        function hideLoading() {
-            const loadingElement = document.getElementById('frame-loading');
-            if (loadingElement) {
-                loadingElement.style.display = 'none';
+        // Função para menu mobile
+        function toggleMobileMenu() {
+            const expandedSidebar = document.getElementById('expanded-sidebar');
+            if (expandedSidebar) {
+                expandedSidebar.classList.toggle('hidden');
+                expandedSidebar.classList.toggle('fixed');
+                expandedSidebar.classList.toggle('inset-y-0');
+                expandedSidebar.classList.toggle('left-0');
+                expandedSidebar.classList.toggle('z-50');
             }
         }
 
-        // Função para carregar diferentes dashboards no iframe
-        function loadDashboard(url) {
-            const iframe = document.getElementById('dashboard-frame');
-            const loadingElement = document.getElementById('frame-loading');
-
-            if (iframe && loadingElement) {
-                // Mostra o loading
-                loadingElement.style.display = 'flex';
-
-                // Atualiza o título da página baseado na URL
-                updatePageTitle(url);
-
-                // Carrega o novo conteúdo (usando caminho absoluto para evitar loops)
-                iframe.src = `http://localhost:8000${url}`;
+        // Função de logout
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                window.location.href = '/static/pages/auth/login.html';
             }
         }
 
-        // Função para atualizar o título da página
-        function updatePageTitle(url) {
-            const titleElement = document.getElementById('page-title');
-            if (!titleElement) return;
+        // Função para carregar página da URL
+        function loadPageFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = urlParams.get('page');
 
-            const pageTitles = {
-                'incluir_leads.html': 'Incluir Leads',
-                'atualizar_leads.html': 'Atualizar Leads',
-                'base_clients.html': 'Base de Clientes',
-                'visao_geral.html': 'Visão Geral de Leads',
-                'chat_corretores.html': 'Chat Corretores',
-                'dashboard.html': 'Dashboard Geral'
-            };
+            if (page) {
+                // Decodifica o nome da página
+                const decodedPage = decodeURIComponent(page);
+                const pageName = decodedPage.split('/').pop().replace('.html', '');
+                const pageTitle = pageName.split('_').map(word =>
+                    word.charAt(0).toUpperCase() + word.slice(1)
+                ).join(' ');
 
-            // Extrai o nome do arquivo da URL
-            const fileName = url.split('/').pop();
-
-            // Atualiza o título se estiver no mapeamento
-            if (pageTitles[fileName]) {
-                titleElement.textContent = pageTitles[fileName];
+                loadPage(decodedPage, pageTitle);
+            } else {
+                // Carrega dashboard por padrão
+                loadPage('dashboard.html', 'Dashboard Geral');
             }
         }
 
-        // Esconde o loading se o iframe já estiver carregado
+        // Inicialização
         document.addEventListener('DOMContentLoaded', function () {
-            const iframe = document.getElementById('dashboard-frame');
-            if (iframe) {
-                // Verifica se já está carregado
-                iframe.onload = hideLoading;
+            console.log('🚀 HealthCRM inicializado!');
 
-                // Força um reload se já estiver carregado para garantir
-                if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
-                    hideLoading();
-                }
-            }
+            // Carrega página da URL ou dashboard por padrão
+            loadPageFromURL();
 
-            // Adiciona event listeners para os links do menu
-            document.querySelectorAll('a[onclick^="loadDashboard"]').forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const onclickContent = this.getAttribute('onclick');
-                    const match = onclickContent.match(/'([^']+)'/);
-                    if (match) {
-                        const url = match[1];
-                        loadDashboard(url);
+            // Configura busca global
+            const searchInput = document.getElementById('global-search');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        alert(`Buscar por: ${this.value}`);
+                        // Aqui você pode implementar a lógica de busca
                     }
                 });
+            }
+
+            // Trata navegação do browser (back/forward)
+            window.addEventListener('popstate', function (event) {
+                if (event.state && event.state.page) {
+                    loadPage(event.state.page, event.state.title);
+                }
+            });
+
+            // Fecha menu mobile ao clicar fora
+            document.addEventListener('click', function (event) {
+                const expandedSidebar = document.getElementById('expanded-sidebar');
+                if (expandedSidebar && expandedSidebar.classList.contains('fixed') &&
+                    !expandedSidebar.contains(event.target) &&
+                    !event.target.closest('.lg\\:hidden')) {
+                    expandedSidebar.classList.add('hidden');
+                }
             });
         });
     </script>
-
-</body>
-
+    </body>
 
 </html>
