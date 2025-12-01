@@ -754,6 +754,19 @@
                 }
             });
         });
+
+
+        // Salva qual página está aberta
+        localStorage.setItem('lastPage', currentPage);
+        localStorage.setItem('lastTitle', currentTitle);
+
+        // Ao recarregar a página:
+        window.addEventListener('load', () => {
+            const lastPage = localStorage.getItem('lastPage');
+            if (lastPage) {
+                loadPage(lastPage, localStorage.getItem('lastTitle'));
+            }
+        });
     </script>
     </body>
 
