@@ -1,197 +1,221 @@
 <!DOCTYPE html>
 <html class="light" lang="pt-BR">
-    <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>HealthCRM Dashboard</title>
-        <script
-            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-            rel="stylesheet" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-            rel="stylesheet" />
-        <style>
-      .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-      }
-      .progress-bar {
-        transition: width 0.8s ease-in-out;
-      }
-      .kpi-card:hover {
-        transform: translateY(-2px);
-        transition: transform 0.2s ease;
-      }
-      .loading {
-        opacity: 0.6;
-        pointer-events: none;
-      }
-      .chart-container {
-        position: relative;
-        height: 300px;
-        width: 100%;
-      }
-    </style>
 
-        <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#e67951",
-              "background-light": "#f8f6f6",
-              "background-dark": "#211511",
-              "card-light": "#ffffff",
-              "card-dark": "#2a1a14",
-              "text-light": "#1c1c1c",
-              "text-dark": "#f5f5f5",
-              "subtext-light": "#876d64",
-              "subtext-dark": "#a18a82",
-              "border-light": "#e5dedc",
-              "border-dark": "#40312c",
-            },
-            fontFamily: {
-              display: ["Inter", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.5rem",
-              lg: "1rem",
-              xl: "1.5rem",
-              full: "9999px",
-            },
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Health CRM as SaaS</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#d48262",
+            "background-light": "#f5f5f5",
+            "background-dark": "#211511",
+            "accent": "#1c1c1c",
+            "sidebar-bg": "#ffffff"
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
           },
         },
-      };
-    </script>
-    </head>
-    <body class="bg-background-light dark:bg-background-dark font-display">
-        <div class="flex min-h-screen">
-            <!-- Main Content -->
-            <main class="flex-1 p-6 lg:p-10">
-<!-- PageHeading -->
-<div class="flex flex-wrap justify-between gap-3 mb-6">
-<p class="text-text-light dark:text-text-dark text-3xl font-black leading-tight tracking-[-0.033em] min-w-72">Financial Approvals Queue</p>
-</div>
-<!-- SearchBar and Chips -->
-<div class="flex flex-col md:flex-row gap-4 mb-6">
-<div class="flex-grow">
-<label class="flex flex-col min-w-40 h-12 w-full">
-<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
-<div class="text-gray-500 dark:text-gray-400 flex border-none bg-card-light dark:bg-card-dark items-center justify-center pl-4 rounded-l-lg border-r-0">
-<span class="material-symbols-outlined">search</span>
-</div>
-<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-card-light dark:bg-card-dark h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 pl-2 text-base font-normal leading-normal" placeholder="Search by requestor name..." value=""/>
-</div>
-</label>
-</div>
-<div class="flex gap-3 overflow-x-auto pb-2">
-<button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark pl-4 pr-3 text-text-light dark:text-text-dark shadow-sm">
-<p class="text-sm font-medium leading-normal">All Types</p>
-<span class="material-symbols-outlined text-gray-500">expand_more</span>
-</button>
-<button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-white pl-4 pr-3 shadow-sm">
-<p class="text-sm font-medium leading-normal">Expense</p>
-</button>
-<button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark pl-4 pr-3 text-text-light dark:text-text-dark shadow-sm">
-<p class="text-sm font-medium leading-normal">Purchase</p>
-</button>
-<button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark pl-4 pr-3 text-text-light dark:text-text-dark shadow-sm">
-<p class="text-sm font-medium leading-normal">Disbursement</p>
-</button>
-</div>
-</div>
-<!-- Approval Request Cards -->
-<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-<!-- Card 1 -->
-<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
-<div>
-<div class="flex justify-between items-start mb-4">
-<div>
-<h3 class="font-bold text-lg text-text-light dark:text-text-dark">Expense Report - John Doe</h3>
-<p class="text-sm text-gray-500 dark:text-gray-400">Submitted on 2023-10-26</p>
-</div>
-<span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-600 bg-yellow-200">
-                                        Pending
-                                    </span>
-</div>
-<p class="text-3xl font-bold text-primary mb-4">$1,250.75</p>
-<p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Q3 Marketing Campaign Expenses.</p>
-</div>
-<div class="flex flex-col gap-2">
-<div class="flex items-center justify-end gap-2">
-<button class="text-xs text-gray-500 dark:text-gray-400 hover:underline">View Audit Trail</button>
-</div>
-<div class="flex gap-2">
-<button class="w-full h-10 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors">Approve</button>
-<button class="w-full h-10 px-4 py-2 text-sm font-semibold text-red-600 bg-red-100 dark:bg-red-900/50 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/70 transition-colors">Reject</button>
-<button class="h-10 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Info</button>
-</div>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
-<div>
-<div class="flex justify-between items-start mb-4">
-<div>
-<h3 class="font-bold text-lg text-text-light dark:text-text-dark">New Laptop Purchase</h3>
-<p class="text-sm text-gray-500 dark:text-gray-400">Submitted on 2023-10-25</p>
-</div>
-<span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-600 bg-yellow-200">
-                                        Pending
-                                    </span>
-</div>
-<p class="text-3xl font-bold text-primary mb-4">$2,199.00</p>
-<p class="text-sm text-gray-600 dark:text-gray-300 mb-4">For new Senior Developer hire.</p>
-</div>
-<div class="flex flex-col gap-2">
-<div class="flex items-center justify-end gap-2">
-<button class="text-xs text-gray-500 dark:text-gray-400 hover:underline">View Audit Trail</button>
-</div>
-<div class="flex gap-2">
-<button class="w-full h-10 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors">Approve</button>
-<button class="w-full h-10 px-4 py-2 text-sm font-semibold text-red-600 bg-red-100 dark:bg-red-900/50 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/70 transition-colors">Reject</button>
-<button class="h-10 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Info</button>
-</div>
-</div>
-</div>
-<!-- Card 3 -->
-<div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
-<div>
-<div class="flex justify-between items-start mb-4">
-<div>
-<h3 class="font-bold text-lg text-text-light dark:text-text-dark">Office Supplies</h3>
-<p class="text-sm text-gray-500 dark:text-gray-400">Submitted by Jane Smith on 2023-10-24</p>
-</div>
-<span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-200">
-                                        Approved
-                                    </span>
-</div>
-<p class="text-3xl font-bold text-gray-500 dark:text-gray-400 mb-4">$345.50</p>
-<p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Quarterly restock of office supplies.</p>
-</div>
-<div class="flex flex-col gap-2">
-<div class="flex items-center justify-end gap-2">
-<button class="text-xs text-gray-500 dark:text-gray-400 hover:underline">View Audit Trail</button>
-</div>
-<div class="flex gap-2">
-<button class="w-full h-10 px-4 py-2 text-sm font-semibold text-gray-500 bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-lg cursor-not-allowed" disabled="">Approve</button>
-<button class="w-full h-10 px-4 py-2 text-sm font-semibold text-gray-500 bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-lg cursor-not-allowed" disabled="">Reject</button>
-<button class="h-10 px-4 py-2 text-sm font-semibold text-gray-500 bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-lg cursor-not-allowed" disabled="">Info</button>
-</div>
-</div>
-</div>
-<!-- Empty State Card -->
-<div class="lg:col-span-2 xl:col-span-3 bg-card-light dark:bg-card-dark p-10 rounded-xl shadow-md flex flex-col items-center justify-center text-center border-2 border-dashed border-border-light dark:border-border-dark">
-<span class="material-symbols-outlined text-6xl text-gray-400 mb-4">inbox</span>
-<h3 class="font-bold text-xl text-text-light dark:text-text-dark">All Caught Up!</h3>
-<p class="text-gray-500 dark:text-gray-400 mt-2">There are no pending financial approvals in your queue.</p>
-</div>
-</div>
-</main>
-</div>
-</div>
-</div>
-</body></html>
+      },
+    }
+  </script>
+  <script>
+    // Função para expandir/colapsar submenus
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      const icon = document.getElementById(`icon-${id}`);
+      if (submenu.classList.contains('hidden')) {
+        // Expandir
+        submenu.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        // Colapsar
+        submenu.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    // Função para colapsar/expandir o sidebar principal
+    function toggleSidebar() {
+      const expandedSidebar = document.getElementById('expanded-sidebar');
+      const recolherSidebar = document.getElementById('recolher-sidebar');
+      const mainContent = document.getElementById('main-content');
+
+      expandedSidebar.classList.toggle('hidden');
+      recolherSidebar.classList.toggle('hidden');
+    }
+  </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+
+  <div class="flex min-h-screen">
+    <!-- Main Content -->
+    <main class="flex-1 p-6 lg:p-10">
+      <!-- PageHeading -->
+      <div class="flex flex-wrap justify-between gap-3 mb-6">
+        <p class="text-text-light dark:text-text-dark text-3xl font-black leading-tight tracking-[-0.033em] min-w-72">
+          Financial Approvals Queue</p>
+      </div>
+      <!-- SearchBar and Chips -->
+      <div class="flex flex-col md:flex-row gap-4 mb-6">
+        <div class="flex-grow">
+          <label class="flex flex-col min-w-40 h-12 w-full">
+            <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+              <div
+                class="text-gray-500 dark:text-gray-400 flex border-none bg-card-light dark:bg-card-dark items-center justify-center pl-4 rounded-l-lg border-r-0">
+                <span class="material-symbols-outlined">search</span>
+              </div>
+              <input
+                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-card-light dark:bg-card-dark h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 pl-2 text-base font-normal leading-normal"
+                placeholder="Search by requestor name..." value="" />
+            </div>
+          </label>
+        </div>
+        <div class="flex gap-3 overflow-x-auto pb-2">
+          <button
+            class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark pl-4 pr-3 text-text-light dark:text-text-dark shadow-sm">
+            <p class="text-sm font-medium leading-normal">All Types</p>
+            <span class="material-symbols-outlined text-gray-500">expand_more</span>
+          </button>
+          <button
+            class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-white pl-4 pr-3 shadow-sm">
+            <p class="text-sm font-medium leading-normal">Expense</p>
+          </button>
+          <button
+            class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark pl-4 pr-3 text-text-light dark:text-text-dark shadow-sm">
+            <p class="text-sm font-medium leading-normal">Purchase</p>
+          </button>
+          <button
+            class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark pl-4 pr-3 text-text-light dark:text-text-dark shadow-sm">
+            <p class="text-sm font-medium leading-normal">Disbursement</p>
+          </button>
+        </div>
+      </div>
+      <!-- Approval Request Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div
+          class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Expense Report - John Doe</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Submitted on 2023-10-26</p>
+              </div>
+              <span
+                class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-600 bg-yellow-200">
+                Pending
+              </span>
+            </div>
+            <p class="text-3xl font-bold text-primary mb-4">$1,250.75</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Q3 Marketing Campaign Expenses.</p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-end gap-2">
+              <button class="text-xs text-gray-500 dark:text-gray-400 hover:underline">View Audit Trail</button>
+            </div>
+            <div class="flex gap-2">
+              <button
+                class="w-full h-10 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors">Approve</button>
+              <button
+                class="w-full h-10 px-4 py-2 text-sm font-semibold text-red-600 bg-red-100 dark:bg-red-900/50 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/70 transition-colors">Reject</button>
+              <button
+                class="h-10 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Info</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div
+          class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="font-bold text-lg text-text-light dark:text-text-dark">New Laptop Purchase</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Submitted on 2023-10-25</p>
+              </div>
+              <span
+                class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-600 bg-yellow-200">
+                Pending
+              </span>
+            </div>
+            <p class="text-3xl font-bold text-primary mb-4">$2,199.00</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">For new Senior Developer hire.</p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-end gap-2">
+              <button class="text-xs text-gray-500 dark:text-gray-400 hover:underline">View Audit Trail</button>
+            </div>
+            <div class="flex gap-2">
+              <button
+                class="w-full h-10 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors">Approve</button>
+              <button
+                class="w-full h-10 px-4 py-2 text-sm font-semibold text-red-600 bg-red-100 dark:bg-red-900/50 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/70 transition-colors">Reject</button>
+              <button
+                class="h-10 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Info</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div
+          class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Office Supplies</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Submitted by Jane Smith on 2023-10-24</p>
+              </div>
+              <span
+                class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-200">
+                Approved
+              </span>
+            </div>
+            <p class="text-3xl font-bold text-gray-500 dark:text-gray-400 mb-4">$345.50</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Quarterly restock of office supplies.</p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-end gap-2">
+              <button class="text-xs text-gray-500 dark:text-gray-400 hover:underline">View Audit Trail</button>
+            </div>
+            <div class="flex gap-2">
+              <button
+                class="w-full h-10 px-4 py-2 text-sm font-semibold text-gray-500 bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-lg cursor-not-allowed"
+                disabled="">Approve</button>
+              <button
+                class="w-full h-10 px-4 py-2 text-sm font-semibold text-gray-500 bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-lg cursor-not-allowed"
+                disabled="">Reject</button>
+              <button
+                class="h-10 px-4 py-2 text-sm font-semibold text-gray-500 bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-lg cursor-not-allowed"
+                disabled="">Info</button>
+            </div>
+          </div>
+        </div>
+        <!-- Empty State Card -->
+        <div
+          class="lg:col-span-2 xl:col-span-3 bg-card-light dark:bg-card-dark p-10 rounded-xl shadow-md flex flex-col items-center justify-center text-center border-2 border-dashed border-border-light dark:border-border-dark">
+          <span class="material-symbols-outlined text-6xl text-gray-400 mb-4">inbox</span>
+          <h3 class="font-bold text-xl text-text-light dark:text-text-dark">All Caught Up!</h3>
+          <p class="text-gray-500 dark:text-gray-400 mt-2">There are no pending financial approvals in your queue.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+  </div>
+  </div>
+</body>
+
+</html>

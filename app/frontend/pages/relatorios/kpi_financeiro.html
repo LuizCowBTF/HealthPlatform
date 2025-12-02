@@ -1,175 +1,186 @@
 <!DOCTYPE html>
 <html class="light" lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>HealthCRM Dashboard</title>
-    <script
-      src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-      rel="stylesheet" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-      rel="stylesheet" />
-    <style>
-      .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-      }
-      .progress-bar {
-        transition: width 0.8s ease-in-out;
-      }
-      .kpi-card:hover {
-        transform: translateY(-2px);
-        transition: transform 0.2s ease;
-      }
-      .loading {
-        opacity: 0.6;
-        pointer-events: none;
-      }
-      .chart-container {
-        position: relative;
-        height: 300px;
-        width: 100%;
-      }
-    </style>
 
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#e67951",
-              "background-light": "#f8f6f6",
-              "background-dark": "#211511",
-              "card-light": "#ffffff",
-              "card-dark": "#2a1a14",
-              "text-light": "#1c1c1c",
-              "text-dark": "#f5f5f5",
-              "subtext-light": "#876d64",
-              "subtext-dark": "#a18a82",
-              "border-light": "#e5dedc",
-              "border-dark": "#40312c",
-            },
-            fontFamily: {
-              display: ["Inter", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.5rem",
-              lg: "1rem",
-              xl: "1.5rem",
-              full: "9999px",
-            },
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Health CRM as SaaS</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#d48262",
+            "background-light": "#f5f5f5",
+            "background-dark": "#211511",
+            "accent": "#1c1c1c",
+            "sidebar-bg": "#ffffff"
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
           },
         },
-      };
-    </script>
-  </head>
-  <body class="bg-background-light dark:bg-background-dark font-display">
-    <div class="flex min-h-screen">
-        <!-- Main Content -->
-<div class="flex-1 p-8">
-<!-- PageHeading -->
-<div class="flex flex-wrap justify-between items-center gap-4 mb-8">
-<div class="flex flex-col gap-1">
-<p class="text-text-light dark:text-text-dark text-3xl font-bold tracking-tight">Financial KPI</p>
-<p class="text-gray-500 dark:text-gray-400 text-base font-normal">A comprehensive overview of key financial metrics</p>
-</div>
-<div class="flex items-center gap-2">
-<label class="flex items-center cursor-pointer" for="accounting-sync">
-<span class="mr-3 text-sm font-medium text-text-light dark:text-text-dark">Sync with Accounting</span>
-<div class="relative">
-<input class="sr-only peer" id="accounting-sync" type="checkbox"/>
-<div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
-</div>
-</label>
-</div>
-</div>
-<!-- Stats -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#2a201c] shadow-sm">
-<p class="text-gray-500 dark:text-gray-400 text-base font-medium">Total Commission Paid</p>
-<p class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold">R$ 1.2M</p>
-</div>
-<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#2a201c] shadow-sm">
-<p class="text-gray-500 dark:text-gray-400 text-base font-medium">Total IOF</p>
-<p class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold">R$ 150K</p>
-</div>
-<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#2a201c] shadow-sm">
-<p class="text-gray-500 dark:text-gray-400 text-base font-medium">Total Taxas Adm</p>
-<p class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold">R$ 75K</p>
-</div>
-<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#2a201c] shadow-sm">
-<p class="text-gray-500 dark:text-gray-400 text-base font-medium">Total Liquido</p>
-<p class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold">R$ 975K</p>
-</div>
-</div>
-<!-- Chart Section -->
-<div class="bg-white dark:bg-[#2a201c] rounded-xl p-6 shadow-sm">
-<div class="flex flex-wrap justify-between items-center gap-4 mb-6">
-<!-- Chips / Filters -->
-<div class="flex gap-3 flex-wrap">
-<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 pl-4 pr-3 text-primary">
-<p class="text-sm font-semibold">Broker</p>
-<span class="material-symbols-outlined text-base">expand_more</span>
-</button>
-<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-background-dark pl-4 pr-3 text-text-light dark:text-text-dark hover:bg-gray-200 dark:hover:bg-gray-700">
-<p class="text-sm font-medium">Month</p>
-<span class="material-symbols-outlined text-base">expand_more</span>
-</button>
-<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-background-dark pl-4 pr-3 text-text-light dark:text-text-dark hover:bg-gray-200 dark:hover:bg-gray-700">
-<p class="text-sm font-medium">Product</p>
-<span class="material-symbols-outlined text-base">expand_more</span>
-</button>
-</div>
-<div class="flex gap-3">
-<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2a201c] px-4 text-text-light dark:text-text-dark hover:bg-gray-50 dark:hover:bg-gray-800">
-<span class="material-symbols-outlined text-base">download</span>
-<p class="text-sm font-medium">Export to XLSX</p>
-</button>
-<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2a201c] px-4 text-text-light dark:text-text-dark hover:bg-gray-50 dark:hover:bg-gray-800">
-<span class="material-symbols-outlined text-base">picture_as_pdf</span>
-<p class="text-sm font-medium">Export to PDF</p>
-</button>
-</div>
-</div>
-<!-- Bar Chart -->
-<div class="h-96 flex items-end gap-4 px-4">
-<div class="flex flex-col items-center gap-2 h-full flex-1">
-<div class="w-full h-3/4 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary" style="height: 75%"></div>
-<p class="text-xs text-gray-500 dark:text-gray-400">Broker A</p>
-</div>
-<div class="flex flex-col items-center gap-2 h-full flex-1">
-<div class="w-full h-1/2 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary" style="height: 50%"></div>
-<p class="text-xs text-gray-500 dark:text-gray-400">Broker B</p>
-</div>
-<div class="flex flex-col items-center gap-2 h-full flex-1">
-<div class="w-full h-5/6 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary" style="height: 83.33%"></div>
-<p class="text-xs text-gray-500 dark:text-gray-400">Broker C</p>
-</div>
-<div class="flex flex-col items-center gap-2 h-full flex-1">
-<div class="w-full h-2/5 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary" style="height: 40%"></div>
-<p class="text-xs text-gray-500 dark:text-gray-400">Broker D</p>
-</div>
-<div class="flex flex-col items-center gap-2 h-full flex-1">
-<div class="w-full h-2/3 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary" style="height: 66.67%"></div>
-<p class="text-xs text-gray-500 dark:text-gray-400">Broker E</p>
-</div>
-<div class="flex flex-col items-center gap-2 h-full flex-1">
-<div class="w-full h-1/3 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary" style="height: 33.33%"></div>
-<p class="text-xs text-gray-500 dark:text-gray-400">Broker F</p>
-</div>
-<div class="flex flex-col items-center gap-2 h-full flex-1">
-<div class="w-full h-4/5 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary" style="height: 80%"></div>
-<p class="text-xs text-gray-500 dark:text-gray-400">Broker G</p>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
-</div>
+      },
+    }
+  </script>
+  <script>
+    // Função para expandir/colapsar submenus
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      const icon = document.getElementById(`icon-${id}`);
+      if (submenu.classList.contains('hidden')) {
+        // Expandir
+        submenu.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        // Colapsar
+        submenu.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    // Função para colapsar/expandir o sidebar principal
+    function toggleSidebar() {
+      const expandedSidebar = document.getElementById('expanded-sidebar');
+      const recolherSidebar = document.getElementById('recolher-sidebar');
+      const mainContent = document.getElementById('main-content');
+
+      expandedSidebar.classList.toggle('hidden');
+      recolherSidebar.classList.toggle('hidden');
+    }
+  </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+
+  <div class="flex min-h-screen">
+    <!-- Main Content -->
+    <div class="flex-1 p-8">
+      <!-- PageHeading -->
+      <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+        <div class="flex flex-col gap-1">
+          <p class="text-text-light dark:text-text-dark text-3xl font-bold tracking-tight">Financial KPI</p>
+          <p class="text-gray-500 dark:text-gray-400 text-base font-normal">A comprehensive overview of key financial
+            metrics</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="flex items-center cursor-pointer" for="accounting-sync">
+            <span class="mr-3 text-sm font-medium text-text-light dark:text-text-dark">Sync with Accounting</span>
+            <div class="relative">
+              <input class="sr-only peer" id="accounting-sync" type="checkbox" />
+              <div
+                class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#2a201c] shadow-sm">
+          <p class="text-gray-500 dark:text-gray-400 text-base font-medium">Total Commission Paid</p>
+          <p class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold">R$ 1.2M</p>
+        </div>
+        <div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#2a201c] shadow-sm">
+          <p class="text-gray-500 dark:text-gray-400 text-base font-medium">Total IOF</p>
+          <p class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold">R$ 150K</p>
+        </div>
+        <div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#2a201c] shadow-sm">
+          <p class="text-gray-500 dark:text-gray-400 text-base font-medium">Total Taxas Adm</p>
+          <p class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold">R$ 75K</p>
+        </div>
+        <div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-[#2a201c] shadow-sm">
+          <p class="text-gray-500 dark:text-gray-400 text-base font-medium">Total Liquido</p>
+          <p class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold">R$ 975K</p>
+        </div>
+      </div>
+      <!-- Chart Section -->
+      <div class="bg-white dark:bg-[#2a201c] rounded-xl p-6 shadow-sm">
+        <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+          <!-- Chips / Filters -->
+          <div class="flex gap-3 flex-wrap">
+            <button
+              class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary/20 pl-4 pr-3 text-primary">
+              <p class="text-sm font-semibold">Broker</p>
+              <span class="material-symbols-outlined text-base">expand_more</span>
+            </button>
+            <button
+              class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-background-dark pl-4 pr-3 text-text-light dark:text-text-dark hover:bg-gray-200 dark:hover:bg-gray-700">
+              <p class="text-sm font-medium">Month</p>
+              <span class="material-symbols-outlined text-base">expand_more</span>
+            </button>
+            <button
+              class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-background-dark pl-4 pr-3 text-text-light dark:text-text-dark hover:bg-gray-200 dark:hover:bg-gray-700">
+              <p class="text-sm font-medium">Product</p>
+              <span class="material-symbols-outlined text-base">expand_more</span>
+            </button>
+          </div>
+          <div class="flex gap-3">
+            <button
+              class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2a201c] px-4 text-text-light dark:text-text-dark hover:bg-gray-50 dark:hover:bg-gray-800">
+              <span class="material-symbols-outlined text-base">download</span>
+              <p class="text-sm font-medium">Export to XLSX</p>
+            </button>
+            <button
+              class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#2a201c] px-4 text-text-light dark:text-text-dark hover:bg-gray-50 dark:hover:bg-gray-800">
+              <span class="material-symbols-outlined text-base">picture_as_pdf</span>
+              <p class="text-sm font-medium">Export to PDF</p>
+            </button>
+          </div>
+        </div>
+        <!-- Bar Chart -->
+        <div class="h-96 flex items-end gap-4 px-4">
+          <div class="flex flex-col items-center gap-2 h-full flex-1">
+            <div class="w-full h-3/4 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary"
+              style="height: 75%"></div>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Broker A</p>
+          </div>
+          <div class="flex flex-col items-center gap-2 h-full flex-1">
+            <div class="w-full h-1/2 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary"
+              style="height: 50%"></div>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Broker B</p>
+          </div>
+          <div class="flex flex-col items-center gap-2 h-full flex-1">
+            <div class="w-full h-5/6 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary"
+              style="height: 83.33%"></div>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Broker C</p>
+          </div>
+          <div class="flex flex-col items-center gap-2 h-full flex-1">
+            <div class="w-full h-2/5 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary"
+              style="height: 40%"></div>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Broker D</p>
+          </div>
+          <div class="flex flex-col items-center gap-2 h-full flex-1">
+            <div class="w-full h-2/3 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary"
+              style="height: 66.67%"></div>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Broker E</p>
+          </div>
+          <div class="flex flex-col items-center gap-2 h-full flex-1">
+            <div class="w-full h-1/3 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary"
+              style="height: 33.33%"></div>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Broker F</p>
+          </div>
+          <div class="flex flex-col items-center gap-2 h-full flex-1">
+            <div class="w-full h-4/5 bg-primary/30 dark:bg-primary/50 rounded-lg transition-all hover:bg-primary"
+              style="height: 80%"></div>
+            <p class="text-xs text-gray-500 dark:text-gray-400">Broker G</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </main>
+  </div>
+  </div>
 </body>
+
 </html>

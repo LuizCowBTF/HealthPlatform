@@ -3,71 +3,69 @@
     <head>
         <meta charset="utf-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>HealthCRM Dashboard</title>
+        <title>Health CRM as SaaS</title>
         <script
             src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-            rel="stylesheet" />
         <link
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
             rel="stylesheet" />
-        <style>
-      .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-      }
-      .progress-bar {
-        transition: width 0.8s ease-in-out;
-      }
-      .kpi-card:hover {
-        transform: translateY(-2px);
-        transition: transform 0.2s ease;
-      }
-      .loading {
-        opacity: 0.6;
-        pointer-events: none;
-      }
-      .chart-container {
-        position: relative;
-        height: 300px;
-        width: 100%;
-      }
-    </style>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet" />
+        <script>
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						colors: {
+							"primary": "#d48262",
+							"background-light": "#f5f5f5",
+							"background-dark": "#211511",
+							"accent": "#1c1c1c",
+							"sidebar-bg": "#ffffff"
+						},
+						fontFamily: {
+							"display": ["Inter", "sans-serif"]
+						},
+						borderRadius: {
+							"DEFAULT": "0.5rem",
+							"lg": "1rem",
+							"xl": "1.5rem",
+							"full": "9999px"
+						},
+					},
+				},
+			}
+		</script>
+        <script>
+			// Função para expandir/colapsar submenus
+			function toggleSubmenu(id) {
+				const submenu = document.getElementById(id);
+				const icon = document.getElementById(`icon-${id}`);
+				if (submenu.classList.contains('hidden')) {
+					// Expandir
+					submenu.classList.remove('hidden');
+					icon.classList.add('rotate-180');
+				} else {
+					// Colapsar
+					submenu.classList.add('hidden');
+					icon.classList.remove('rotate-180');
+				}
+			}
 
-        <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#e67951",
-              "background-light": "#f8f6f6",
-              "background-dark": "#211511",
-              "card-light": "#ffffff",
-              "card-dark": "#2a1a14",
-              "text-light": "#1c1c1c",
-              "text-dark": "#f5f5f5",
-              "subtext-light": "#876d64",
-              "subtext-dark": "#a18a82",
-              "border-light": "#e5dedc",
-              "border-dark": "#40312c",
-            },
-            fontFamily: {
-              display: ["Inter", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.5rem",
-              lg: "1rem",
-              xl: "1.5rem",
-              full: "9999px",
-            },
-          },
-        },
-      };
-    </script>
+			// Função para colapsar/expandir o sidebar principal
+			function toggleSidebar() {
+				const expandedSidebar = document.getElementById('expanded-sidebar');
+				const recolherSidebar = document.getElementById('recolher-sidebar');
+				const mainContent = document.getElementById('main-content');
+				
+				expandedSidebar.classList.toggle('hidden');
+				recolherSidebar.classList.toggle('hidden');
+			}
+		</script>
     </head>
     <body class="bg-background-light dark:bg-background-dark font-display">
+
         <div
             class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
             <div class="layout-container flex h-full grow flex-col">

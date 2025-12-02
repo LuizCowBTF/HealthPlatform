@@ -1,335 +1,279 @@
 <!DOCTYPE html>
 <html class="light" lang="pt-BR">
-    <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>HealthCRM Dashboard</title>
-        <script
-            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-            rel="stylesheet" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-            rel="stylesheet" />
-        <style>
-      .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-      }
-      .progress-bar {
-        transition: width 0.8s ease-in-out;
-      }
-      .kpi-card:hover {
-        transform: translateY(-2px);
-        transition: transform 0.2s ease;
-      }
-      .loading {
-        opacity: 0.6;
-        pointer-events: none;
-      }
-      .chart-container {
-        position: relative;
-        height: 300px;
-        width: 100%;
-      }
-    </style>
 
-        <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#e67951",
-              "background-light": "#f8f6f6",
-              "background-dark": "#211511",
-              "card-light": "#ffffff",
-              "card-dark": "#2a1a14",
-              "text-light": "#1c1c1c",
-              "text-dark": "#f5f5f5",
-              "subtext-light": "#876d64",
-              "subtext-dark": "#a18a82",
-              "border-light": "#e5dedc",
-              "border-dark": "#40312c",
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Health CRM as SaaS</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d48262",
+                        "background-light": "#f5f5f5",
+                        "background-dark": "#211511",
+                        "accent": "#1c1c1c",
+                        "sidebar-bg": "#ffffff"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
             },
-            fontFamily: {
-              display: ["Inter", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.5rem",
-              lg: "1rem",
-              xl: "1.5rem",
-              full: "9999px",
-            },
-          },
-        },
-      };
+        }
     </script>
-    </head>
-    <body class="bg-background-light dark:bg-background-dark font-display">
-        <div class="flex min-h-screen">
-            <!-- Main Content -->
-            <main class="flex-1 p-6 lg:p-8">
-                <!-- Page Header -->
-                <div
-                    class="flex flex-wrap justify-between items-center gap-4 mb-8">
-                    <div class="flex flex-col">
-                        <h1
-                            class="text-accent dark:text-white text-3xl font-bold font-display">Teams
-                            Overview</h1>
-                        <p
-                            class="text-subtle-gray text-base font-normal font-body">View
-                            and compare the performance of all sales teams.</p>
-                    </div>
-                    <button
-                        class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold font-body leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
-                        <span
-                            class="material-symbols-outlined text-base">add</span>
-                        <span class="truncate">Add New Team</span>
-                    </button>
+    <script>
+        // Função para expandir/colapsar submenus
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            const icon = document.getElementById(`icon-${id}`);
+            if (submenu.classList.contains('hidden')) {
+                // Expandir
+                submenu.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                // Colapsar
+                submenu.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // Função para colapsar/expandir o sidebar principal
+        function toggleSidebar() {
+            const expandedSidebar = document.getElementById('expanded-sidebar');
+            const recolherSidebar = document.getElementById('recolher-sidebar');
+            const mainContent = document.getElementById('main-content');
+
+            expandedSidebar.classList.toggle('hidden');
+            recolherSidebar.classList.toggle('hidden');
+        }
+    </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display">
+
+    <div class="flex min-h-screen">
+        <!-- Main Content -->
+        <main class="flex-1 p-6 lg:p-8">
+            <!-- Page Header -->
+            <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+                <div class="flex flex-col">
+                    <h1 class="text-accent dark:text-white text-3xl font-bold font-display">Teams
+                        Overview</h1>
+                    <p class="text-subtle-gray text-base font-normal font-body">View
+                        and compare the performance of all sales teams.</p>
                 </div>
-                <!-- KPI Cards -->
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                    <div
-                        class="flex flex-col gap-2 rounded-xl p-6 bg-secondary dark:bg-accent/10 shadow-soft">
-                        <p
-                            class="text-subtle-gray text-sm font-medium font-body">Total
-                            Active Teams</p>
-                        <p
-                            class="text-accent dark:text-white text-3xl font-bold font-display">3</p>
-                        <p
-                            class="text-green-500 text-sm font-medium font-body flex items-center gap-1"><span
-                                class="material-symbols-outlined text-base">trending_up</span>+5%</p>
-                    </div>
-                    <div
-                        class="flex flex-col gap-2 rounded-xl p-6 bg-secondary dark:bg-accent/10 shadow-soft">
-                        <p
-                            class="text-subtle-gray text-sm font-medium font-body">Total
-                            Leads (All Teams)</p>
-                        <p
-                            class="text-accent dark:text-white text-3xl font-bold font-display">1,234</p>
-                        <p
-                            class="text-green-500 text-sm font-medium font-body flex items-center gap-1"><span
-                                class="material-symbols-outlined text-base">trending_up</span>+12%</p>
-                    </div>
-                    <div
-                        class="flex flex-col gap-2 rounded-xl p-6 bg-secondary dark:bg-accent/10 shadow-soft">
-                        <p
-                            class="text-subtle-gray text-sm font-medium font-body">Total
-                            Revenue (All Teams)</p>
-                        <p
-                            class="text-accent dark:text-white text-3xl font-bold font-display">$543,210</p>
-                        <p
-                            class="text-green-500 text-sm font-medium font-body flex items-center gap-1"><span
-                                class="material-symbols-outlined text-base">trending_up</span>+8%</p>
+                <button
+                    class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold font-body leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
+                    <span class="material-symbols-outlined text-base">add</span>
+                    <span class="truncate">Add New Team</span>
+                </button>
+            </div>
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <div class="flex flex-col gap-2 rounded-xl p-6 bg-secondary dark:bg-accent/10 shadow-soft">
+                    <p class="text-subtle-gray text-sm font-medium font-body">Total
+                        Active Teams</p>
+                    <p class="text-accent dark:text-white text-3xl font-bold font-display">3</p>
+                    <p class="text-green-500 text-sm font-medium font-body flex items-center gap-1"><span
+                            class="material-symbols-outlined text-base">trending_up</span>+5%</p>
+                </div>
+                <div class="flex flex-col gap-2 rounded-xl p-6 bg-secondary dark:bg-accent/10 shadow-soft">
+                    <p class="text-subtle-gray text-sm font-medium font-body">Total
+                        Leads (All Teams)</p>
+                    <p class="text-accent dark:text-white text-3xl font-bold font-display">1,234</p>
+                    <p class="text-green-500 text-sm font-medium font-body flex items-center gap-1"><span
+                            class="material-symbols-outlined text-base">trending_up</span>+12%</p>
+                </div>
+                <div class="flex flex-col gap-2 rounded-xl p-6 bg-secondary dark:bg-accent/10 shadow-soft">
+                    <p class="text-subtle-gray text-sm font-medium font-body">Total
+                        Revenue (All Teams)</p>
+                    <p class="text-accent dark:text-white text-3xl font-bold font-display">$543,210</p>
+                    <p class="text-green-500 text-sm font-medium font-body flex items-center gap-1"><span
+                            class="material-symbols-outlined text-base">trending_up</span>+8%</p>
+                </div>
+            </div>
+            <!-- Team Performance Section -->
+            <div class="bg-secondary dark:bg-accent/10 rounded-xl shadow-soft p-6">
+                <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+                    <h2 class="text-xl font-bold font-display text-accent dark:text-white">Team
+                        Performance</h2>
+                    <div class="flex gap-2">
+                        <button
+                            class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-accent/20 px-3">
+                            <p class="text-accent dark:text-white text-xs font-medium font-body">Sort
+                                by: Name</p>
+                            <span class="material-symbols-outlined text-subtle-gray text-base">expand_more</span>
+                        </button>
+                        <button
+                            class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-accent/20 px-3">
+                            <p class="text-accent dark:text-white text-xs font-medium font-body">Filter:
+                                Last 30 Days</p>
+                            <span class="material-symbols-outlined text-subtle-gray text-base">expand_more</span>
+                        </button>
                     </div>
                 </div>
-                <!-- Team Performance Section -->
-                <div
-                    class="bg-secondary dark:bg-accent/10 rounded-xl shadow-soft p-6">
-                    <div
-                        class="flex flex-wrap justify-between items-center gap-4 mb-4">
-                        <h2
-                            class="text-xl font-bold font-display text-accent dark:text-white">Team
-                            Performance</h2>
-                        <div class="flex gap-2">
-                            <button
-                                class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-accent/20 px-3">
-                                <p
-                                    class="text-accent dark:text-white text-xs font-medium font-body">Sort
-                                    by: Name</p>
-                                <span
-                                    class="material-symbols-outlined text-subtle-gray text-base">expand_more</span>
-                            </button>
-                            <button
-                                class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-accent/20 px-3">
-                                <p
-                                    class="text-accent dark:text-white text-xs font-medium font-body">Filter:
-                                    Last 30 Days</p>
-                                <span
-                                    class="material-symbols-outlined text-subtle-gray text-base">expand_more</span>
-                            </button>
+                <!-- Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left font-body">
+                        <thead>
+                            <tr class="border-b border-gray-200 dark:border-gray-800">
+                                <th class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider">Team
+                                </th>
+                                <th class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider">Status
+                                </th>
+                                <th
+                                    class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider text-right">
+                                    Leads</th>
+                                <th
+                                    class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider text-right">
+                                    Closed
+                                    Plans</th>
+                                <th class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider">
+                                    Conversion
+                                    %</th>
+                                <th
+                                    class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider text-right">
+                                    Revenue</th>
+                                <th class="p-4"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                class="border-b border-gray-200 dark:border-gray-800 hover:bg-background-light dark:hover:bg-accent/20 transition-colors">
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3"><span
+                                            class="material-symbols-outlined text-primary p-2 bg-primary/10 rounded-full">shield</span><span
+                                            class="font-semibold text-accent dark:text-white">Eagles</span></div>
+                                </td>
+                                <td class="p-4"><span
+                                        class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Active</span>
+                                </td>
+                                <td class="p-4 text-right text-accent dark:text-white font-medium">450</td>
+                                <td class="p-4 text-right text-accent dark:text-white font-medium">90</td>
+                                <td class="p-4">
+                                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 20%"></div>
+                                    </div>
+                                    <span class="text-xs text-subtle-gray mt-1 block text-right">20%</span>
+                                </td>
+                                <td class="p-4 text-right text-accent dark:text-white font-semibold">$210,500</td>
+                                <td class="p-4 text-right"><button
+                                        class="text-primary text-sm font-bold hover:underline">View
+                                        Details</button></td>
+                            </tr>
+                            <tr
+                                class="border-b border-gray-200 dark:border-gray-800 hover:bg-background-light dark:hover:bg-accent/20 transition-colors">
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3"><span
+                                            class="material-symbols-outlined text-blue-500 p-2 bg-blue-100 rounded-full">raven</span><span
+                                            class="font-semibold text-accent dark:text-white">Falcons</span></div>
+                                </td>
+                                <td class="p-4"><span
+                                        class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Active</span>
+                                </td>
+                                <td class="p-4 text-right text-accent dark:text-white font-medium">512</td>
+                                <td class="p-4 text-right text-accent dark:text-white font-medium">128</td>
+                                <td class="p-4">
+                                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 25%"></div>
+                                    </div>
+                                    <span class="text-xs text-subtle-gray mt-1 block text-right">25%</span>
+                                </td>
+                                <td class="p-4 text-right text-accent dark:text-white font-semibold">$250,110</td>
+                                <td class="p-4 text-right"><button
+                                        class="text-primary text-sm font-bold hover:underline">View
+                                        Details</button></td>
+                            </tr>
+                            <tr class="hover:bg-background-light dark:hover:bg-accent/20 transition-colors">
+                                <td class="p-4">
+                                    <div class="flex items-center gap-3"><span
+                                            class="material-symbols-outlined text-red-500 p-2 bg-red-100 rounded-full">skull</span><span
+                                            class="font-semibold text-accent dark:text-white">Raptors</span></div>
+                                </td>
+                                <td class="p-4"><span
+                                        class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Active</span>
+                                </td>
+                                <td class="p-4 text-right text-accent dark:text-white font-medium">272</td>
+                                <td class="p-4 text-right text-accent dark:text-white font-medium">34</td>
+                                <td class="p-4">
+                                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div class="bg-primary h-2 rounded-full" style="width: 12.5%"></div>
+                                    </div>
+                                    <span class="text-xs text-subtle-gray mt-1 block text-right">12.5%</span>
+                                </td>
+                                <td class="p-4 text-right text-accent dark:text-white font-semibold">$82,600</td>
+                                <td class="p-4 text-right"><button
+                                        class="text-primary text-sm font-bold hover:underline">View
+                                        Details</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Data Visualization -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+                <div class="bg-secondary dark:bg-accent/10 rounded-xl shadow-soft p-6">
+                    <h3 class="font-bold text-lg font-display text-accent dark:text-white mb-4">Revenue
+                        by Team (This Quarter)</h3>
+                    <div class="h-64 flex items-end gap-4">
+                        <div class="flex flex-col items-center flex-1 h-full justify-end">
+                            <div class="w-full bg-primary/20 rounded-t-lg" style="height: 80%">
+                                <div class="bg-primary h-full w-full rounded-t-lg"></div>
+                            </div>
+                            <span class="text-xs font-medium text-subtle-gray mt-2">Eagles</span>
                         </div>
-                    </div>
-                    <!-- Table -->
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left font-body">
-                            <thead>
-                                <tr
-                                    class="border-b border-gray-200 dark:border-gray-800">
-                                    <th
-                                        class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider">Team</th>
-                                    <th
-                                        class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider">Status</th>
-                                    <th
-                                        class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider text-right">Leads</th>
-                                    <th
-                                        class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider text-right">Closed
-                                        Plans</th>
-                                    <th
-                                        class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider">Conversion
-                                        %</th>
-                                    <th
-                                        class="p-4 text-xs font-semibold text-subtle-gray uppercase tracking-wider text-right">Revenue</th>
-                                    <th class="p-4"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    class="border-b border-gray-200 dark:border-gray-800 hover:bg-background-light dark:hover:bg-accent/20 transition-colors">
-                                    <td class="p-4"><div
-                                            class="flex items-center gap-3"><span
-                                                class="material-symbols-outlined text-primary p-2 bg-primary/10 rounded-full">shield</span><span
-                                                class="font-semibold text-accent dark:text-white">Eagles</span></div></td>
-                                    <td class="p-4"><span
-                                            class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Active</span></td>
-                                    <td
-                                        class="p-4 text-right text-accent dark:text-white font-medium">450</td>
-                                    <td
-                                        class="p-4 text-right text-accent dark:text-white font-medium">90</td>
-                                    <td class="p-4">
-                                        <div
-                                            class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                            <div
-                                                class="bg-primary h-2 rounded-full"
-                                                style="width: 20%"></div>
-                                        </div>
-                                        <span
-                                            class="text-xs text-subtle-gray mt-1 block text-right">20%</span>
-                                    </td>
-                                    <td
-                                        class="p-4 text-right text-accent dark:text-white font-semibold">$210,500</td>
-                                    <td class="p-4 text-right"><button
-                                            class="text-primary text-sm font-bold hover:underline">View
-                                            Details</button></td>
-                                </tr>
-                                <tr
-                                    class="border-b border-gray-200 dark:border-gray-800 hover:bg-background-light dark:hover:bg-accent/20 transition-colors">
-                                    <td class="p-4"><div
-                                            class="flex items-center gap-3"><span
-                                                class="material-symbols-outlined text-blue-500 p-2 bg-blue-100 rounded-full">raven</span><span
-                                                class="font-semibold text-accent dark:text-white">Falcons</span></div></td>
-                                    <td class="p-4"><span
-                                            class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Active</span></td>
-                                    <td
-                                        class="p-4 text-right text-accent dark:text-white font-medium">512</td>
-                                    <td
-                                        class="p-4 text-right text-accent dark:text-white font-medium">128</td>
-                                    <td class="p-4">
-                                        <div
-                                            class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                            <div
-                                                class="bg-primary h-2 rounded-full"
-                                                style="width: 25%"></div>
-                                        </div>
-                                        <span
-                                            class="text-xs text-subtle-gray mt-1 block text-right">25%</span>
-                                    </td>
-                                    <td
-                                        class="p-4 text-right text-accent dark:text-white font-semibold">$250,110</td>
-                                    <td class="p-4 text-right"><button
-                                            class="text-primary text-sm font-bold hover:underline">View
-                                            Details</button></td>
-                                </tr>
-                                <tr
-                                    class="hover:bg-background-light dark:hover:bg-accent/20 transition-colors">
-                                    <td class="p-4"><div
-                                            class="flex items-center gap-3"><span
-                                                class="material-symbols-outlined text-red-500 p-2 bg-red-100 rounded-full">skull</span><span
-                                                class="font-semibold text-accent dark:text-white">Raptors</span></div></td>
-                                    <td class="p-4"><span
-                                            class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Active</span></td>
-                                    <td
-                                        class="p-4 text-right text-accent dark:text-white font-medium">272</td>
-                                    <td
-                                        class="p-4 text-right text-accent dark:text-white font-medium">34</td>
-                                    <td class="p-4">
-                                        <div
-                                            class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                                            <div
-                                                class="bg-primary h-2 rounded-full"
-                                                style="width: 12.5%"></div>
-                                        </div>
-                                        <span
-                                            class="text-xs text-subtle-gray mt-1 block text-right">12.5%</span>
-                                    </td>
-                                    <td
-                                        class="p-4 text-right text-accent dark:text-white font-semibold">$82,600</td>
-                                    <td class="p-4 text-right"><button
-                                            class="text-primary text-sm font-bold hover:underline">View
-                                            Details</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- Data Visualization -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-                    <div
-                        class="bg-secondary dark:bg-accent/10 rounded-xl shadow-soft p-6">
-                        <h3
-                            class="font-bold text-lg font-display text-accent dark:text-white mb-4">Revenue
-                            by Team (This Quarter)</h3>
-                        <div class="h-64 flex items-end gap-4">
-                            <div
-                                class="flex flex-col items-center flex-1 h-full justify-end">
-                                <div class="w-full bg-primary/20 rounded-t-lg"
-                                    style="height: 80%"><div
-                                        class="bg-primary h-full w-full rounded-t-lg"></div></div>
-                                <span
-                                    class="text-xs font-medium text-subtle-gray mt-2">Eagles</span>
+                        <div class="flex flex-col items-center flex-1 h-full justify-end">
+                            <div class="w-full bg-primary/20 rounded-t-lg" style="height: 100%">
+                                <div class="bg-primary h-full w-full rounded-t-lg"></div>
                             </div>
-                            <div
-                                class="flex flex-col items-center flex-1 h-full justify-end">
-                                <div class="w-full bg-primary/20 rounded-t-lg"
-                                    style="height: 100%"><div
-                                        class="bg-primary h-full w-full rounded-t-lg"></div></div>
-                                <span
-                                    class="text-xs font-medium text-subtle-gray mt-2">Falcons</span>
-                            </div>
-                            <div
-                                class="flex flex-col items-center flex-1 h-full justify-end">
-                                <div class="w-full bg-primary/20 rounded-t-lg"
-                                    style="height: 35%"><div
-                                        class="bg-primary h-full w-full rounded-t-lg"></div></div>
-                                <span
-                                    class="text-xs font-medium text-subtle-gray mt-2">Raptors</span>
-                            </div>
+                            <span class="text-xs font-medium text-subtle-gray mt-2">Falcons</span>
                         </div>
-                    </div>
-                    <div
-                        class="bg-secondary dark:bg-accent/10 rounded-xl shadow-soft p-6">
-                        <h3
-                            class="font-bold text-lg font-display text-accent dark:text-white mb-4">Lead
-                            Generation Trend (Last 6 Months)</h3>
-                        <div class="h-64 relative">
-                            <div class="absolute inset-0 grid grid-rows-4">
-                                <div
-                                    class="border-b border-dashed border-gray-200 dark:border-gray-800"></div>
-                                <div
-                                    class="border-b border-dashed border-gray-200 dark:border-gray-800"></div>
-                                <div
-                                    class="border-b border-dashed border-gray-200 dark:border-gray-800"></div>
-                                <div></div>
+                        <div class="flex flex-col items-center flex-1 h-full justify-end">
+                            <div class="w-full bg-primary/20 rounded-t-lg" style="height: 35%">
+                                <div class="bg-primary h-full w-full rounded-t-lg"></div>
                             </div>
-                            <svg class="absolute inset-0 w-full h-full"
-                                fill="none" viewbox="0 0 300 150">
-                                <polyline class="stroke-primary"
-                                    points="0,120 50,90 100,100 150,60 200,70 250,40 300,50"
-                                    stroke-width="2"></polyline>
-                                <polyline class="stroke-blue-500"
-                                    points="0,140 50,130 100,125 150,110 200,115 250,90 300,100"
-                                    stroke-width="2"></polyline>
-                                <polyline class="stroke-red-500"
-                                    points="0,145 50,140 100,142 150,135 200,130 250,120 300,125"
-                                    stroke-width="2"></polyline>
-                            </svg>
+                            <span class="text-xs font-medium text-subtle-gray mt-2">Raptors</span>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
+                <div class="bg-secondary dark:bg-accent/10 rounded-xl shadow-soft p-6">
+                    <h3 class="font-bold text-lg font-display text-accent dark:text-white mb-4">Lead
+                        Generation Trend (Last 6 Months)</h3>
+                    <div class="h-64 relative">
+                        <div class="absolute inset-0 grid grid-rows-4">
+                            <div class="border-b border-dashed border-gray-200 dark:border-gray-800"></div>
+                            <div class="border-b border-dashed border-gray-200 dark:border-gray-800"></div>
+                            <div class="border-b border-dashed border-gray-200 dark:border-gray-800"></div>
+                            <div></div>
+                        </div>
+                        <svg class="absolute inset-0 w-full h-full" fill="none" viewbox="0 0 300 150">
+                            <polyline class="stroke-primary" points="0,120 50,90 100,100 150,60 200,70 250,40 300,50"
+                                stroke-width="2"></polyline>
+                            <polyline class="stroke-blue-500"
+                                points="0,140 50,130 100,125 150,110 200,115 250,90 300,100" stroke-width="2">
+                            </polyline>
+                            <polyline class="stroke-red-500"
+                                points="0,145 50,140 100,142 150,135 200,130 250,120 300,125" stroke-width="2">
+                            </polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-</body></html>
+    </div>
+</body>
+
+</html>

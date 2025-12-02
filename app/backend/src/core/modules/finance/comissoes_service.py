@@ -1,99 +1,123 @@
-# app/backend/src/core/modules/finance/comissoes_service.py
-from typing import Dict, List, Optional
-from datetime import datetime, timedelta
-from sqlalchemy.orm import Session
-import logging
-
-logger = logging.getLogger(__name__)
+# app/backend/src/core/modules/finance/comissoes_service.py - VERSÃO SIMPLIFICADA
+import aiosqlite
+from datetime import datetime
+from typing import List, Dict, Optional
+from ...database import DATABASE_PATH
 
 class ComissoesService:
-    def __init__(self, db: Session):
-        self.db = db
+    def __init__(self, db_path=None):
+        self.db_path = db_path or DATABASE_PATH
     
-    async def calcular_comissao_venda(self, venda_data: Dict) -> Dict:
-        """Calcula comissão para uma venda específica"""
+    async def initialize(self):
+        """Inicializa o serviço de comissões"""
         try:
-            # Regras de comissão por tipo de plano
-            regras_comissao = {
-                "INDIVIDUAL": 15.0,  # 15%
-                "FAMILIAR": 12.0,    # 12%  
-                "EMPRESARIAL": 10.0, # 10%
-                "VIP": 8.0           # 8%
-            }
-            
-            plano = venda_data.get("plano_vendido", "INDIVIDUAL")
-            valor_venda = venda_data.get("valor_venda", 0)
-            percentual_corretor = venda_data.get("percentual_corretor", regras_comissao.get(plano, 10.0))
-            
-            # Calcular comissão
-            valor_comissao = (valor_venda * percentual_corretor) / 100
-            
-            logger.info(f"💰 Comissão calculada: {plano} - R$ {valor_venda} -> R$ {valor_comissao} ({percentual_corretor}%)")
-            
-            return {
-                "valor_comissao": round(valor_comissao, 2),
-                "percentual_comissao": percentual_corretor,
-                "plano": plano,
-                "valor_venda": valor_venda
-            }
-            
+            async with aiosqlite.connect(self.db_path) as db:
+                await db.execute("SELECT 1")
+            print("✅ Comissões Service inicializado")
+            return True
         except Exception as e:
-            logger.error(f"❌ Erro ao calcular comissão: {e}")
-            return {"valor_comissao": 0, "percentual_comissao": 0}
+            print(f"❌ Comissões Service: {e}")
+            return False
     
-    async def registrar_venda(self, venda_data: Dict) -> Dict:
-        """Registra uma nova venda e calcula comissão"""
+    async def get_comissoes(self, corretor_id: int = None, status: str = None) -> List[Dict]:
+        """Lista comissões com filtros"""
+        query = """
+        SELECT 
+            c.*,
+            v.valor_total,
+            v.produto,
+            u.nome as corretor_nome
+        FROM comissoes c
+        LEFT JOIN vendas v ON c.venda_id = v.id
+        LEFT JOIN usuarios u ON c.corretor_id = u.id
+        WHERE 1=1
+        """
+        params = []
+        
+        if corretor_id:
+            query += " AND c.corretor_id = ?"
+            params.append(corretor_id)
+        
+        if status:
+            query += " AND c.status = ?"
+            params.append(status)
+        
+        query += " ORDER BY c.data_calculo DESC"
+        
         try:
-            # Calcular comissão
-            comissao_calculada = await self.calcular_comissao_venda(venda_data)
-            
-            # Aqui você registraria no database
-            venda_registrada = {
-                "id": 1,  # Simulado - em produção viria do DB
-                **venda_data,
-                **comissao_calculada,
-                "data_venda": datetime.utcnow().isoformat(),
-                "status": "pendente"
-            }
-            
-            logger.info(f"✅ Venda registrada: Corretor {venda_data.get('corretor_id')} - R$ {comissao_calculada['valor_comissao']}")
-            
-            return venda_registrada
-            
+            async with aiosqlite.connect(self.db_path) as db:
+                db.row_factory = aiosqlite.Row
+                cursor = await db.execute(query, params)
+                rows = await cursor.fetchall()
+                return [dict(row) for row in rows]
         except Exception as e:
-            logger.error(f"❌ Erro ao registrar venda: {e}")
-            return {}
+            print(f"Erro ao buscar comissões: {e}")
+            return []
     
-    async def calcular_comissoes_mes(self, corretor_id: int, mes_referencia: str = None) -> Dict:
-        """Calcula comissões totais do mês para um corretor"""
-        if not mes_referencia:
-            mes_referencia = datetime.utcnow().strftime("%Y-%m")
-        
-        # Simulação - em produção buscaria do database
-        comissoes_mes = {
-            "corretor_id": corretor_id,
-            "mes_referencia": mes_referencia,
-            "total_vendas": 15000.00,
-            "total_comissao": 1800.00,
-            "quantidade_vendas": 8,
-            "vendas": [
-                {"plano": "FAMILIAR", "valor": 2000.00, "comissao": 240.00},
-                {"plano": "EMPRESARIAL", "valor": 5000.00, "comissao": 500.00},
-                {"plano": "VIP", "valor": 3000.00, "comissao": 240.00},
-            ]
-        }
-        
-        logger.info(f"📊 Comissões do mês {mes_referencia}: R$ {comissoes_mes['total_comissao']}")
-        
-        return comissoes_mes
-    
-    async def listar_corretores(self) -> List[Dict]:
-        """Lista todos os corretores ativos"""
-        # Simulação - em produção buscaria da tabela brokers
-        corretores = [
-            {"id": 1, "nome": "Bruna Mamedes", "percentual_comissao": 12.0, "ativo": True},
-            {"id": 2, "nome": "Maiara Andrade", "percentual_comissao": 10.0, "ativo": True},
-            {"id": 3, "nome": "Fernando Diamantino", "percentual_comissao": 15.0, "ativo": True},
-        ]
-        
-        return corretores
+    async def calcular_comissoes_mes(self, mes_ano: str) -> Dict:
+        """Calcula comissões para um mês específico"""
+        try:
+            async with aiosqlite.connect(self.db_path) as db:
+                # Buscar vendas do mês
+                query_vendas = """
+                SELECT 
+                    v.id as venda_id,
+                    v.corretor_id,
+                    v.valor_total,
+                    v.comissao_percentual,
+                    u.nome as corretor_nome
+                FROM vendas v
+                LEFT JOIN usuarios u ON v.corretor_id = u.id
+                WHERE strftime('%Y-%m', v.data_venda) = ?
+                AND v.status = 'pago'
+                """
+                
+                cursor = await db.execute(query_vendas, (mes_ano,))
+                vendas = await cursor.fetchall()
+                
+                resultados = []
+                total_comissoes = 0
+                
+                for venda in vendas:
+                    venda_id = venda[0]
+                    corretor_id = venda[1]
+                    valor_total = venda[2]
+                    percentual = venda[3] or 10.0  # Default 10%
+                    corretor_nome = venda[4]
+                    
+                    valor_comissao = valor_total * (percentual / 100)
+                    total_comissoes += valor_comissao
+                    
+                    # Verificar se comissão já existe
+                    query_existe = "SELECT id FROM comissoes WHERE venda_id = ?"
+                    cursor_existe = await db.execute(query_existe, (venda_id,))
+                    existe = await cursor_existe.fetchone()
+                    
+                    if not existe:
+                        # Inserir nova comissão
+                        query_inserir = """
+                        INSERT INTO comissoes (venda_id, corretor_id, valor_comissao, status)
+                        VALUES (?, ?, ?, 'pendente')
+                        """
+                        await db.execute(query_inserir, (venda_id, corretor_id, valor_comissao))
+                    
+                    resultados.append({
+                        "venda_id": venda_id,
+                        "corretor_nome": corretor_nome,
+                        "valor_venda": valor_total,
+                        "percentual": percentual,
+                        "valor_comissao": valor_comissao
+                    })
+                
+                await db.commit()
+                
+                return {
+                    "mes": mes_ano,
+                    "vendas_processadas": len(vendas),
+                    "total_comissoes": total_comissoes,
+                    "detalhes": resultados
+                }
+                
+        except Exception as e:
+            print(f"Erro ao calcular comissões: {e}")
+            return {"error": str(e)}
