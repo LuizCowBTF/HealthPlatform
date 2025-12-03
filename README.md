@@ -305,6 +305,9 @@ HealthPlatform/
 
 # Estrutura completa que vou criar:
 HealthPlatform/
+├── .github/
+│   ├── workflows/
+│   │   └── test.yml
 ├── app/
 │   ├── backend/
 │   │   ├── __pycache__/
@@ -332,8 +335,10 @@ HealthPlatform/
 │   │   │   │   ├── services/                           # Módulos dos Serviços
 │   │   │   │   │   │   ├── __pycache__/
 │   │   │   │   │   │   └── orchestration_service.py
+│   │   │   │   ├── auth.py
 │   │   │   │   ├── config.py
-│   │   │   │   └── database.py
+│   │   │   │   ├── database.py
+│   │   │   │   └── monitoring.py
 │   │   │   ├── routes/                                 # Módulos de Rotas
 │   │   │   │   │   ├── __pycache__/
 │   │   │   │   │   ├── comissoes_routes.py
@@ -345,6 +350,7 @@ HealthPlatform/
 │   │   │   │   ├── __pycache__/
 │   │   │   │   ├── crm_service.py
 │   │   │   │   └── whatsapp_service.py
+│   │   │   ├── config.py
 │   │   │   └── main.py
 │   ├── frontend/
 │   │   │   ├── css/

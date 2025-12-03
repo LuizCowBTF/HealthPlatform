@@ -1,85 +1,14 @@
-# docker-compose.yml
 version: '3.8'
 
 services:
-  # 🏥 APLICAÇÃO PRINCIPAL
   healthplatform:
     build: .
-    container_name: healthplatform_app
-    restart: unless-stopped
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_PATH=/data/health_platform.db
-      - HOST=0.0.0.0
-      - PORT=8000
-      - PYTHONUNBUFFERED=1
+      - DATABASE_URL=sqlite:///health_platform.db
+      - APP_ENV=production
     volumes:
-      # 📁 Persistir banco de dados
-      - healthplatform_data:/data
-      # 🔧 Hot-reload para desenvolvimento (opcional)
-      - ./app:/app/app:ro
-    networks:
-      - healthplatform_network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-
-  # 📊 BANCO DE DADOS SEPARADO (OPCIONAL - se quiser PostgreSQL)
-  postgres:
-    image: postgres:15-alpine
-    container_name: healthplatform_db
+      - ./health_platform.db:/app/health_platform.db
+      - ./app/frontend:/app/app/frontend
     restart: unless-stopped
-    environment:
-      POSTGRES_DB: healthplatform
-      POSTGRES_USER: healthuser
-      POSTGRES_PASSWORD: secure_password_123
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - healthplatform_network
-    ports:
-      - "5432:5432"  # Apenas para desenvolvimento
-
-  # 📈 MONITORAMENTO (OPCIONAL - Prometheus + Grafana)
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: healthplatform_prometheus
-    volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    networks:
-      - healthplatform_network
-    ports:
-      - "9090:9090"
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: healthplatform_grafana
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    volumes:
-      - grafana_data:/var/lib/grafana
-    networks:
-      - healthplatform_network
-    ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
-
-networks:
-  healthplatform_network:
-    driver: bridge
-
-volumes:
-  healthplatform_data:
-    driver: local
-  postgres_data:
-    driver: local
-  prometheus_data:
-    driver: local
-  grafana_data:
-    driver: local

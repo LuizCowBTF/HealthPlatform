@@ -1,25 +1,16 @@
-// HealthPlatform - SPA Controller
+// HealthPlatform - SPA Controller CORRIGIDO
 // Arquivo: /app/frontend/js/main.js
-// Responsável por gerenciar toda a navegação SPA
+// Versão: FINAL FUNCIONAL
 
 // ============================================
-// CONFIGURAÇÕES GLOBAIS
+// CONFIGURAÇÕES GLOBAIS ATUALIZADAS
 // ============================================
 const APP_CONFIG = {
     baseURL: window.location.origin,
-    endpoints: {
-        dashboard: '/api/v1/crm/dashboard/completo',
-        dashboardAvancado: '/api/v1/crm/dashboard/avancado',
-        leads: '/api/v1/crm/leads',
-        comissoes: '/api/v1/finance/comissoes'
-    },
     paths: {
-        dashboards: '/dashboards/',
-        pages: '/pages/',
-        auth: '/pages/auth/',
-        css: '/css/',
-        js: '/js/',
-        img: '/img/'
+        dashboards: '/static/dashboards/',
+        pages: '/static/pges/',
+        auth: '/static/pges/auth/'
     }
 };
 
@@ -27,248 +18,178 @@ const APP_CONFIG = {
 let appState = {
     currentPage: 'dashboard.html',
     currentTitle: 'Dashboard Geral',
-    lastError: null,
-    user: null,
-    sidebarExpanded: true
+    isLoading: false
 };
 
 // ============================================
-// FUNÇÕES DE NAVEGAÇÃO PRINCIPAIS
+// FUNÇÃO PRINCIPAL LOADPAGE - VERSÃO FINAL CORRIGIDA
 // ============================================
 
-/**
- * Carrega uma página no iframe principal
- * @param {string} pagePath - Caminho da página
- * @param {string} pageTitle - Título da página
- * @param {HTMLElement} element - Elemento clicado (para highlight)
- */
 function loadPage(pagePath, pageTitle, element = null) {
-    console.log(`📄 [loadPage] Carregando: ${pagePath}`);
+    console.log(`📄 [SPA] Carregando: ${pagePath}`);
+
+    // Prevenir múltiplos cliques
+    if (appState.isLoading) {
+        console.log('⏳ Já carregando, aguarde...');
+        return;
+    }
+
+    // Se já está na mesma página, não faz nada
+    if (appState.currentPage === pagePath) {
+        console.log('✅ Já está nesta página');
+        return;
+    }
 
     const iframe = document.getElementById('main-frame');
     const loadingElement = document.getElementById('frame-loading');
 
     if (!iframe || !loadingElement) {
         console.error('❌ Elementos não encontrados!');
-        showError('Erro: Elementos da página não encontrados');
         return;
     }
 
-    // DEFINIR CAMINHO CORRETO BASEADO NO TIPO DE PÁGINA
-    let fullPath = getPageFullPath(pagePath);
+    // Iniciar loading
+    appState.isLoading = true;
+    loadingElement.style.display = 'flex';
+
+    // DETERMINAR CAMINHO CORRETO - LÓGICA SIMPLIFICADA
+    let fullPath = '';
+
+    // Lista de dashboards (arquivos diretos na pasta dashboards)
+    const dashboardFiles = [
+        'dashboard.html',
+        'coordenador.html',
+        'kpi_dashboard.html',
+        'comissoes.html',
+        'teste_ia.html',
+        'clientes.html',
+        'leads.html',
+        'relatorios.html'
+    ];
+
+    // Verificar se é um dashboard
+    if (dashboardFiles.includes(pagePath) ||
+        pagePath.includes('dashboard') ||
+        pagePath.endsWith('coordenador.html') ||
+        pagePath.endsWith('comissoes.html') ||
+        pagePath.endsWith('teste_ia.html')) {
+
+        // Dashboards principais
+        fullPath = `${APP_CONFIG.paths.dashboards}${pagePath}`;
+    }
+    // Verificar se é uma subpasta de dashboards (ex: leads/)
+    else if (pagePath.startsWith('leads/')) {
+        fullPath = `${APP_CONFIG.paths.dashboards}${pagePath}`;
+    }
+    // Todas as outras páginas estão em /static/pges/
+    else {
+        fullPath = `${APP_CONFIG.paths.pages}${pagePath}`;
+    }
+
     console.log(`📍 Caminho final: ${fullPath}`);
 
     // Atualizar estado
     appState.currentPage = pagePath;
     appState.currentTitle = pageTitle;
-    appState.lastError = null;
 
-    // Mostrar loading
-    showLoading(true);
-
-    // Atualizar título na UI
+    // Atualizar título
     updatePageTitle(pageTitle);
 
-    // Atualizar URL no histórico (sem recarregar)
-    updateBrowserHistory(pagePath, pageTitle);
+    // Marcar item ativo
+    if (element) {
+        setActiveMenuItem(element);
+    }
 
-    // Marcar item ativo no menu
-    setActiveMenuItem(element);
-
-    // Carregar página no iframe
+    // Carregar no iframe
     iframe.src = fullPath;
 
-    // Configurar eventos do iframe
-    setupIframeEvents(iframe, loadingElement);
-}
-
-/**
- * Retorna o caminho completo baseado no tipo de página
- * @param {string} pagePath - Caminho relativo
- * @returns {string} Caminho completo
- */
-function getPageFullPath(pagePath) {
-    // Dashboard principal e derivados
-    if (pagePath.includes('dashboard') ||
-        pagePath.includes('comissoes') ||
-        pagePath.includes('coordenador') ||
-        pagePath.includes('kpi') ||
-        pagePath.includes('leads') ||
-        pagePath.includes('relatorios') ||
-        pagePath.includes('clientes') ||
-        pagePath.includes('teste_ia')) {
-        return `${APP_CONFIG.paths.dashboards}${pagePath}`;
-    }
-
-    // Páginas de autenticação
-    else if (pagePath.includes('login') ||
-        pagePath.includes('register') ||
-        pagePath.includes('forgot_password')) {
-        return `${APP_CONFIG.paths.auth}${pagePath}`;
-    }
-
-    // Outras páginas (remover prefixos se existirem)
-    else {
-        let cleanPath = pagePath;
-
-        // Remover prefixos comuns
-        const prefixes = ['pages/', 'pges/', '../', './'];
-        prefixes.forEach(prefix => {
-            if (cleanPath.startsWith(prefix)) {
-                cleanPath = cleanPath.substring(prefix.length);
-            }
-        });
-
-        // Garantir que tenha .html
-        if (!cleanPath.endsWith('.html')) {
-            cleanPath += '.html';
-        }
-
-        return `${APP_CONFIG.paths.pages}${cleanPath}`;
-    }
-}
-
-/**
- * Configura os eventos do iframe
- */
-function setupIframeEvents(iframe, loadingElement) {
-    // Evento de sucesso no carregamento
+    // Configurar eventos do iframe UMA VEZ
     iframe.onload = function () {
         console.log('✅ Iframe carregado com sucesso');
 
         setTimeout(() => {
-            showLoading(false);
+            loadingElement.style.display = 'none';
+            appState.isLoading = false;
+
+            // Ajustar altura
             adjustIframeHeight(iframe);
 
-            // Notificar o conteúdo carregado que está em um iframe
-            try {
-                const iframeWindow = iframe.contentWindow;
-                iframeWindow.postMessage({
-                    type: 'parent-loaded',
-                    page: appState.currentPage
-                }, '*');
-            } catch (e) {
-                // Ignorar erros de cross-origin
-            }
-        }, 500);
+            // Atualizar histórico
+            updateBrowserHistory(pagePath, pageTitle);
+        }, 300);
     };
 
-    // Evento de erro
     iframe.onerror = function () {
-        console.error(`❌ Erro ao carregar iframe`);
-        showLoading(false);
-        showError(`Não foi possível carregar: ${appState.currentPage}`);
+        console.error('❌ Erro ao carregar iframe:', fullPath);
+
+        loadingElement.style.display = 'none';
+        appState.isLoading = false;
 
         // Fallback para dashboard
-        setTimeout(() => {
-            loadPage('dashboard.html', 'Dashboard Geral');
-        }, 2000);
+        if (pagePath !== 'dashboard.html') {
+            console.log('🔄 Voltando para dashboard...');
+            appState.currentPage = 'dashboard.html';
+            appState.currentTitle = 'Dashboard Geral';
+            iframe.src = `${APP_CONFIG.paths.dashboards}dashboard.html`;
+        }
     };
 }
 
-/**
- * Ajusta a altura do iframe baseado no conteúdo
- */
-function adjustIframeHeight(iframe) {
-    try {
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-
-        // Esperar um pouco para o conteúdo renderizar
-        setTimeout(() => {
-            const bodyHeight = iframeDoc.body.scrollHeight;
-            const htmlHeight = iframeDoc.documentElement.scrollHeight;
-            const contentHeight = Math.max(bodyHeight, htmlHeight, 600); // Mínimo 600px
-
-            iframe.style.height = `${contentHeight}px`;
-            console.log(`📏 Altura ajustada para: ${contentHeight}px`);
-        }, 100);
-    } catch (e) {
-        // Erros de cross-origin são normais
-        console.log('⚠️ Não foi possível ajustar altura (cross-origin)');
-        iframe.style.height = '100%';
-    }
-}
-
 // ============================================
-// FUNÇÕES DE UI/UX
+// FUNÇÕES AUXILIARES (mantenha estas)
 // ============================================
 
-/**
- * Mostra/esconde o loading
- */
-function showLoading(show) {
-    const loadingElement = document.getElementById('frame-loading');
-    if (loadingElement) {
-        loadingElement.style.display = show ? 'flex' : 'none';
-    }
-}
-
-/**
- * Mostra mensagem de erro
- */
-function showError(message) {
-    appState.lastError = message;
-    console.error(`❌ Erro: ${message}`);
-
-    // Pode implementar um toast/snackbar aqui
-    alert(`Erro: ${message}`);
-}
-
-/**
- * Atualiza o título da página
- */
 function updatePageTitle(title) {
     const titleElement = document.getElementById('page-title');
     if (titleElement) {
         titleElement.textContent = title;
     }
-
-    // Atualizar título da aba do navegador
-    document.title = `${title} - Health CRM`;
 }
 
-/**
- * Marca item ativo no menu
- */
 function setActiveMenuItem(element) {
     // Remover classe ativa de todos
-    document.querySelectorAll('.menu-item, .submenu-item').forEach(item => {
-        item.classList.remove('active');
-        item.classList.remove('bg-primary');
-        item.classList.remove('text-white');
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('bg-primary', 'text-white');
         item.classList.add('text-primary');
     });
 
     // Adicionar ao elemento clicado
     if (element) {
-        element.classList.add('active');
-        element.classList.add('bg-primary');
-        element.classList.add('text-white');
+        element.classList.add('bg-primary', 'text-white');
         element.classList.remove('text-primary');
-
-        // Também marcar o menu pai
-        const parentMenu = element.closest('.menu-parent');
-        if (parentMenu) {
-            parentMenu.classList.add('active');
-        }
     }
 }
 
-// ============================================
-// FUNÇÕES DO SIDEBAR
-// ============================================
+function adjustIframeHeight(iframe) {
+    try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const bodyHeight = iframeDoc.body.scrollHeight;
+        const htmlHeight = iframeDoc.documentElement.scrollHeight;
+        const newHeight = Math.max(bodyHeight, htmlHeight, 600);
 
-/**
- * Alterna submenu
- */
+        iframe.style.height = newHeight + 'px';
+    } catch (e) {
+        // Erros de cross-origin são normais
+        iframe.style.height = '100%';
+    }
+}
+
+function updateBrowserHistory(pagePath, pageTitle) {
+    try {
+        history.pushState({
+            page: pagePath,
+            title: pageTitle
+        }, pageTitle, `/?page=${encodeURIComponent(pagePath)}`);
+    } catch (e) {
+        console.log('⚠️ Histórico não atualizado:', e.message);
+    }
+}
+
 function toggleSubmenu(id) {
     const submenu = document.getElementById(id);
     const icon = document.getElementById(`icon-${id}`);
 
-    if (!submenu || !icon) {
-        console.error(`Submenu ${id} não encontrado`);
-        return;
-    }
+    if (!submenu || !icon) return;
 
     if (submenu.classList.contains('hidden')) {
         submenu.classList.remove('hidden');
@@ -279,234 +200,100 @@ function toggleSubmenu(id) {
     }
 }
 
-/**
- * Alterna sidebar expandida/recolhida
- */
 function toggleSidebar() {
     const expanded = document.getElementById('expanded-sidebar');
-    const collapsed = document.getElementById('recolher-sidebar');
+    const recolher = document.getElementById('recolher-sidebar');
 
-    if (!expanded || !collapsed) return;
+    if (!expanded || !recolher) return;
 
     expanded.classList.toggle('hidden');
-    collapsed.classList.toggle('hidden');
-
-    appState.sidebarExpanded = !appState.sidebarExpanded;
+    recolher.classList.toggle('hidden');
 
     // Salvar preferência
-    localStorage.setItem('sidebarExpanded', appState.sidebarExpanded);
+    localStorage.setItem('sidebarExpanded', expanded.classList.contains('hidden') ? 'false' : 'true');
 }
 
-// ============================================
-// FUNÇÕES DE HISTÓRICO E URL
-// ============================================
-
-/**
- * Atualiza o histórico do navegador
- */
-function updateBrowserHistory(pagePath, pageTitle) {
-    const url = new URL(window.location);
-    url.searchParams.set('page', encodeURIComponent(pagePath));
-    url.searchParams.set('title', encodeURIComponent(pageTitle));
-
-    history.pushState({
-        page: pagePath,
-        title: pageTitle,
-        timestamp: Date.now()
-    }, pageTitle, url.toString());
-}
-
-/**
- * Carrega página da URL atual
- */
-function loadPageFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const page = urlParams.get('page');
-    const title = urlParams.get('title');
-
-    if (page && title) {
-        const decodedPage = decodeURIComponent(page);
-        const decodedTitle = decodeURIComponent(title);
-        loadPage(decodedPage, decodedTitle);
-    } else {
-        // Carregar última página ou dashboard padrão
-        const lastPage = localStorage.getItem('lastPage') || 'dashboard.html';
-        const lastTitle = localStorage.getItem('lastTitle') || 'Dashboard Geral';
-        loadPage(lastPage, lastTitle);
+function logout() {
+    if (confirm('Tem certeza que deseja sair?')) {
+        localStorage.clear();
+        window.location.href = '/';
     }
 }
 
 // ============================================
-// FUNÇÕES DE BUSCA E NOTIFICAÇÕES
+// CONFIGURAÇÃO DE BUSCA (simplificada)
 // ============================================
 
-/**
- * Configura a busca global
- */
 function setupGlobalSearch() {
     const searchInput = document.getElementById('global-search');
-    if (!searchInput) return;
-
-    searchInput.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter' && this.value.trim()) {
-            performSearch(this.value.trim());
-        }
-    });
-
-    // Botão de busca (se existir)
     const searchBtn = document.getElementById('search-btn');
+
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && this.value.trim()) {
+                console.log('🔍 Buscando:', this.value);
+                alert(`Busca por: ${this.value}\n\n(Implementar integração com backend)`);
+            }
+        });
+    }
+
     if (searchBtn) {
-        searchBtn.addEventListener('click', () => {
-            if (searchInput.value.trim()) {
-                performSearch(searchInput.value.trim());
+        searchBtn.addEventListener('click', function () {
+            const searchInput = document.getElementById('global-search');
+            if (searchInput && searchInput.value.trim()) {
+                console.log('🔍 Buscando:', searchInput.value);
+                alert(`Busca por: ${searchInput.value}`);
             }
         });
     }
 }
 
-/**
- * Executa busca
- */
-function performSearch(query) {
-    console.log(`🔍 Buscando: ${query}`);
-    // Implementar lógica de busca aqui
-    alert(`Busca por: ${query}\n\n(Implementar integração com backend)`);
-}
-
 // ============================================
-// FUNÇÕES DE AUTENTICAÇÃO
+// INICIALIZAÇÃO SIMPLIFICADA
 // ============================================
 
-/**
- * Realiza logout
- */
-function logout() {
-    if (confirm('Tem certeza que deseja sair?')) {
-        // Limpar estado
-        appState.user = null;
-        localStorage.removeItem('userToken');
-        localStorage.removeItem('lastPage');
-        localStorage.removeItem('lastTitle');
-
-        // Redirecionar para login
-        loadPage('auth/login.html', 'Login');
-    }
-}
-
-/**
- * Verifica autenticação
- */
-async function checkAuth() {
-    const token = localStorage.getItem('userToken');
-
-    if (!token && !window.location.pathname.includes('login')) {
-        // Redirecionar para login se não estiver autenticado
-        loadPage('auth/login.html', 'Login');
-        return false;
-    }
-
-    // Validar token com API (implementar depois)
-    return true;
-}
-
-// ============================================
-// COMUNICAÇÃO ENTRE IFRAMES
-// ============================================
-
-/**
- * Configura listener para mensagens
- */
-function setupMessageListener() {
-    window.addEventListener('message', function (event) {
-        console.log('📩 Mensagem recebida:', event.data);
-
-        // Mensagens do iframe para o parent
-        if (event.data && event.data.type) {
-            switch (event.data.type) {
-                case 'dashboard-loaded':
-                    console.log('✅ Dashboard carregado no iframe');
-                    break;
-
-                case 'navigate-to':
-                    if (event.data.page && event.data.title) {
-                        loadPage(event.data.page, event.data.title);
-                    }
-                    break;
-
-                case 'show-error':
-                    showError(event.data.message);
-                    break;
-            }
-        }
-    });
-}
-
-// ============================================
-// INICIALIZAÇÃO DA APLICAÇÃO
-// ============================================
-
-/**
- * Inicializa a aplicação
- */
 function initializeApp() {
     console.log('🚀 HealthCRM SPA - Inicializando...');
 
-    // 1. Restaurar preferências
+    // Restaurar sidebar
     const savedSidebar = localStorage.getItem('sidebarExpanded');
     if (savedSidebar === 'false') {
-        toggleSidebar(); // Começar recolhido
+        toggleSidebar();
     }
 
-    // 2. Configurar listeners
-    setupMessageListener();
+    // Configurar busca
     setupGlobalSearch();
 
-    // 3. Configurar eventos de navegação
-    window.addEventListener('popstate', function (event) {
-        if (event.state && event.state.page) {
-            loadPage(event.state.page, event.state.title);
-        }
-    });
+    // Carregar página da URL ou dashboard padrão
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageParam = urlParams.get('page');
 
-    // 4. Fechar menu mobile ao clicar fora
-    document.addEventListener('click', function (event) {
-        const expandedSidebar = document.getElementById('expanded-sidebar');
-        const mobileToggle = document.querySelector('[onclick*="toggleMobileMenu"]');
+    if (pageParam) {
+        const decodedPage = decodeURIComponent(pageParam);
+        console.log('📖 Carregando da URL:', decodedPage);
 
-        if (expandedSidebar &&
-            expandedSidebar.classList.contains('fixed') &&
-            !expandedSidebar.contains(event.target) &&
-            event.target !== mobileToggle &&
-            !mobileToggle.contains(event.target)) {
-            expandedSidebar.classList.add('hidden');
-        }
-    });
+        // Pequeno delay para garantir que tudo está carregado
+        setTimeout(() => {
+            loadPage(decodedPage, 'Página Carregada');
+        }, 500);
+    } else {
+        // Carregar dashboard inicial
+        setTimeout(() => {
+            loadPage('dashboard.html', 'Dashboard Geral');
+        }, 300);
+    }
 
-    // 5. Verificar autenticação
-    checkAuth().then(isAuthenticated => {
-        if (isAuthenticated) {
-            // 6. Carregar página inicial
-            loadPageFromURL();
-
-            console.log('✅ HealthCRM SPA - Inicializado com sucesso!');
-        }
-    });
-
-    // 7. Salvar última página ao sair
-    window.addEventListener('beforeunload', function () {
-        localStorage.setItem('lastPage', appState.currentPage);
-        localStorage.setItem('lastTitle', appState.currentTitle);
-    });
+    console.log('✅ Sistema pronto!');
 }
 
 // ============================================
 // EXPORTAR FUNÇÕES PARA HTML
 // ============================================
-// Torna as funções disponíveis globalmente
 window.loadPage = loadPage;
 window.toggleSubmenu = toggleSubmenu;
 window.toggleSidebar = toggleSidebar;
 window.logout = logout;
+window.initializeApp = initializeApp;
 
-// Inicializar quando o DOM carregar
+// Inicializar automaticamente
 document.addEventListener('DOMContentLoaded', initializeApp);

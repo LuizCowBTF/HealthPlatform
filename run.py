@@ -1,52 +1,68 @@
 #!/usr/bin/env python3
 """
-HealthPlatform SaaS - Runner Principal
-Execute este arquivo para iniciar o sistema completo.
+HealthPlatform SaaS v3.0 - Runner Principal
+Sistema completo com todos os módulos integrados
 """
 
 import sys
 import os
 from pathlib import Path
 
-# Adicionar o diretório do projeto ao path
+# Configurar paths
 PROJECT_ROOT = Path(__file__).parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-def main():
-    """Função principal para iniciar o sistema"""
+def print_banner():
+    """Imprime banner do sistema"""
+    print("\n" + "=" * 70)
+    print("🏥 HEALTHPLATFORM SAAS v3.0")
+    print("=" * 70)
+    print("Sistema Completo: CRM + WhatsApp + IA + Financeiro + Comissões")
+    print("=" * 70)
+
+def check_environment():
+    """Verifica ambiente e dependências"""
+    print("\n🔍 Verificando ambiente...")
     
-    print("=" * 60)
-    print("🚀 HEALTHPLATFORM SAAS - SISTEMA COMPLETO")
-    print("=" * 60)
-    
-    # Verificar se o main.py existe
+    # Verificar se main.py existe
     main_py = PROJECT_ROOT / "app" / "backend" / "src" / "main.py"
-    main_fixed = PROJECT_ROOT / "app" / "backend" / "src" / "main_fixed.py"
+    if not main_py.exists():
+        print("❌ Arquivo principal não encontrado:", main_py)
+        return False
     
-    if main_py.exists():
-        print(f"✅ Usando versão principal: {main_py.name}")
-        target = "app.backend.src.main"
-    elif main_fixed.exists():
-        print(f"⚠️  Usando versão alternativa: {main_fixed.name}")
-        target = "app.backend.src.main_fixed"
-    else:
-        print("❌ Nenhum arquivo principal encontrado!")
+    # Verificar frontend
+    frontend = PROJECT_ROOT / "app" / "frontend"
+    if not frontend.exists():
+        print("❌ Frontend não encontrado:", frontend)
+        return False
+    
+    print("✅ Ambiente verificado")
+    return True
+
+def main():
+    """Função principal"""
+    print_banner()
+    
+    if not check_environment():
+        print("\n❌ Não foi possível iniciar o sistema")
         return 1
     
     # Iniciar servidor
-    print("\n" + "=" * 60)
-    print("🔥 INICIANDO SERVIDOR...")
-    print("=" * 60)
+    print("\n🚀 Iniciando servidor...")
+    print("=" * 70)
     
     try:
         import uvicorn
         uvicorn.run(
-            f"{target}:app",
+            "app.backend.src.main:app",
             host="0.0.0.0",
             port=8000,
             reload=True,
             log_level="info",
-            reload_dirs=[str(PROJECT_ROOT / "app" / "backend" / "src")]
+            reload_dirs=[
+                str(PROJECT_ROOT / "app" / "backend" / "src"),
+                str(PROJECT_ROOT / "app" / "frontend")
+            ]
         )
     except KeyboardInterrupt:
         print("\n\n🛑 Servidor interrompido pelo usuário")
