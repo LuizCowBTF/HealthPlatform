@@ -25,7 +25,7 @@ DATABASE_PATH = PROJECT_ROOT / "health_platform.db"
 # Mapeamento: rota → pasta (ajuste conforme sua estrutura real)
 STATIC_MAPPING = [
     ("/dashboards", "dashboards"),
-    ("/pages", "pges"),      # ⚠️ Rota "/pages" aponta para pasta "pges"
+    ("/pages", "pages"),      # ⚠️ Rota "/pages" aponta para pasta "pages"
     ("/css", "css"),
     ("/js", "js"),
     ("/img", "img"),
@@ -52,7 +52,7 @@ def validate_structure():
     required = [
         ("Frontend", FRONTEND_ROOT),
         ("Dashboards", FRONTEND_ROOT / "dashboards"),
-        ("Pages", FRONTEND_ROOT / "pges"),
+        ("Pages", FRONTEND_ROOT / "pages"),
         ("Index", FRONTEND_ROOT / "index.html"),
     ]
     

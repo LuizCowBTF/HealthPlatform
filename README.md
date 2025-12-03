@@ -368,8 +368,9 @@ HealthPlatform/
 │   │   │   │   ├── LOGO_MENU.png
 │   │   │   │   └── LOGO.png
 │   │   │   ├── js/
-│   │   │   │   └── charts.js
-│   │   │   ├── pges/
+│   │   │   │   ├── charts.js
+│   │   │   │   └── main.js
+│   │   │   ├── pages/
 │   │   │   │   ├── auth/
 │   │   │   │   │   ├── forgot_password.html
 │   │   │   │   │   ├── login.html
