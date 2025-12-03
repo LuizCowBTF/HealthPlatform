@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>Health CRM as SaaS</title>
+        <script
+            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet" />
+        <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#d48262",
+            "background-light": "#f5f5f5",
+            "background-dark": "#211511",
+            "accent": "#1c1c1c",
+            "sidebar-bg": "#ffffff"
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+        <script>
+    // Função para expandir/colapsar submenus
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      const icon = document.getElementById(`icon-${id}`);
+      if (submenu.classList.contains('hidden')) {
+        // Expandir
+        submenu.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        // Colapsar
+        submenu.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    // Função para colapsar/expandir o sidebar principal
+    function toggleSidebar() {
+      const expandedSidebar = document.getElementById('expanded-sidebar');
+      const recolherSidebar = document.getElementById('recolher-sidebar');
+      const mainContent = document.getElementById('main-content');
+
+      expandedSidebar.classList.toggle('hidden');
+      recolherSidebar.classList.toggle('hidden');
+    }
+  </script>
+    </head>
+
+    <body class="bg-background-light dark:bg-background-dark font-display">
+
+        <div class="flex min-h-screen">
+            <!-- Main Content -->
+            <main class="flex-1 p-6 lg:p-10">
+            </main>
+        </div>
+    </body>
+
+</html>
