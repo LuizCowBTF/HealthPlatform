@@ -132,18 +132,23 @@
                     loading.style.display = 'none';
                     isLoading = false;
 
-                    // Ajustar altura
+                    // Ajustar altura do IFRAME para caber TODO o conteúdo
                     try {
                         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                        const height = Math.max(
-                            iframeDoc.body.scrollHeight,
-                            iframeDoc.documentElement.scrollHeight,
-                            600
-                        );
-                        iframe.style.height = height + 'px';
+                        const bodyHeight = iframeDoc.body.scrollHeight;
+                        const htmlHeight = iframeDoc.documentElement.scrollHeight;
+
+                        // Usar a MAIOR altura
+                        const totalHeight = Math.max(bodyHeight, htmlHeight, 800);
+
+                        // Definir altura do iframe
+                        iframe.style.height = totalHeight + 'px';
+
+                        console.log(`📏 Altura do conteúdo: ${totalHeight}px`);
                     } catch (e) {
-                        // Cross-origin é normal
-                        iframe.style.height = '100%';
+                        // Erro de cross-origin - usar altura padrão
+                        console.log('⚠️ Cross-origin, usando altura padrão');
+                        iframe.style.height = '100vh'; // Altura total da viewport
                     }
 
                     // Atualizar histórico
@@ -319,7 +324,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const pageParam = urlParams.get('page');
             if (pageParam) {
-                loadPage(decodeURIComponent(pageParam), 'Página Carregada');
+                loadPage(decodeURIComponent(pageParam), 'Sistema Atualizado - Dashboard');
             }
         });
 
@@ -365,6 +370,44 @@
         .loading-spinner {
             animation: spin 1s linear infinite;
         }
+
+
+        /* ESTILOS PARA O IFRAME ROLÁVEL */
+        #iframe-container {
+        flex: 1;
+        position: relative;
+        overflow-y: auto; /* Habilita rolagem no CONTAINER do iframe */
+        width: 100%;
+        }
+
+        /* Barra de rolagem LARGA para o container do iframe */
+        #iframe-container::-webkit-scrollbar {
+        width: 24px;
+        }
+
+        #iframe-container::-webkit-scrollbar-track {
+        background: #f8f9fa;
+        border-radius: 12px;
+        border: 3px solid #ffffff;
+        }
+
+        #iframe-container::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #d48262, #b86a50);
+        border-radius: 12px;
+        border: 4px solid #f8f9fa;
+        }
+
+        #iframe-container::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #b86a50, #9c533d);
+        }
+
+        /* Remove a barra de rolagem do iframe em si (mantém do container) */
+        #iframe-container iframe {
+        border: none;
+        width: 100%;
+        min-height: 100%; /* Garante que o iframe ocupe altura mínima */
+        display: block;
+        }
     </style>
     </head>
 
@@ -374,7 +417,7 @@
             <div class="flex h-full grow flex-row">
                 <!-- SIDEBAR EXPANDIDO -->
                 <div id="expanded-sidebar"
-                    class="flex flex-col justify-between bg-sidebar-bg p-4shadow-lg w-64">
+                    class="flex flex-col justify-between bg-sidebar-bg p-4 shadow-lg w-64">
                     <!-- LOGO -->
                     <div class="flex items-center gap-2 px-2 mt-3 mb-4">
                         <a href="./index.html" alt="Início">
@@ -867,7 +910,7 @@
                     </header>
 
                     <!-- CONTEÚDO DO IFRAME -->
-                    <div class="flex-1 relative">
+                    <div id="iframe-container" class="flex-1 relative">
                         <!-- LOADING -->
                         <div id="frame-loading"
                             class="absolute inset-0 flex items-center justify-center bg-white z-10"
@@ -882,8 +925,9 @@
                         <!-- IFRAME PRINCIPAL -->
                         <iframe id="main-frame" src
                             class="w-full h-full border-0"
-                            title="Conteúdo Principal"></iframe>
+                            title="Dashboard Principal"></iframe>
                     </div>
+
                 </main>
             </div>
         </div>

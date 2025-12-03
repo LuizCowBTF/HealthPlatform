@@ -1,64 +1,152 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Dashboard Geral - HealthCRM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
       rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#e67951",
+            "background-light": "#f8f6f6",
+            "background-dark": "#211511",
+            "card-light": "#ffffff",
+            "card-dark": "#2a1a14",
+            "text-light": "#1c1c1c",
+            "text-dark": "#f5f5f5",
+            "subtext-light": "#876d64",
+            "subtext-dark": "#a18a82",
+            "border-light": "#e5dedc",
+            "border-dark": "#40312c",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
     <style>
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-        }
-        .kpi-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #d48262;
-        }
-        .kpi-label {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        .progress-bar {
-            height: 8px;
-            border-radius: 4px;
-            background: #e5e7eb;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #d48262, #f0a087);
-            border-radius: 4px;
-        }
-    </style>
+    /* ESTILOS GERAIS */
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .kpi-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #d48262;
+    }
+
+    .kpi-label {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .progress-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #d48262, #f0a087);
+      border-radius: 4px;
+    }
+
+    /* GARANTIR QUE O CONTEÚDO TENHA ALTURA SUFICIENTE */
+    body {
+      min-height: 100vh;
+      /* Isso é importante */
+    }
+
+    .max-w-7xl {
+      padding-bottom: 50px;
+      /* Espaço extra no final */
+    }
+  </style>
   </head>
-  <body class="bg-gray-50 p-4 md:p-6">
+
+  <body class="bg-gray-50 p-4 md:p-6 overflow-always">
     <div class="max-w-7xl mx-auto">
-      <!-- CABEÇALHO -->
-      <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-800">📊 Dashboard Geral</h1>
-        <p class="text-gray-600">Visão completa do desempenho do sistema</p>
-        <div class="flex gap-4 mt-4">
-          <button onclick="fetchDashboardData()"
-            class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90">
-            Atualizar Dados
-          </button>
-          <button onclick="testAPI()"
-            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
-            Testar API
-          </button>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+        <!-- KPI Cards -->
+        <div
+          class="bg-card-light dark:bg-card-dark p-6 pb-8 rounded-xl shadow-sm col-span-1 md:col-span-2 xl:col-span-4">
+          <div class="flex flex-col gap-3">
+            <div class="flex gap-6 justify-between">
+              <p
+                class="text-text-light dark:text-text-dark text-base font-medium">Meta
+                Mensal</p>
+              <p class="text-primary text-sm font-bold">65%</p>
+            </div>
+            <div
+              class="rounded-full bg-background-light dark:bg-background-dark h-2.5">
+              <div class="h-2.5 rounded-full bg-primary"
+                style="width: 65%;"></div>
+            </div>
+            <p
+              class="text-subtext-light dark:text-subtext-dark text-sm font-normal">R$
+              32,500.00 / R$ 50,000.00</p>
+          </div>
+        </div>
+        <div
+          class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm">
+          <p
+            class="text-text-light dark:text-text-dark text-base font-medium">Planos
+            Fechados</p>
+          <p class="text-primary tracking-tight text-4xl font-bold">15</p>
+        </div>
+        <div
+          class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm">
+          <p
+            class="text-text-light dark:text-text-dark text-base font-medium">Vidas
+            Cobertas</p>
+          <p class="text-primary tracking-tight text-4xl font-bold">42</p>
+        </div>
+        <div
+          class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm">
+          <p
+            class="text-text-light dark:text-text-dark text-base font-medium">Taxa
+            de Converção</p>
+          <p class="text-primary tracking-tight text-4xl font-bold">25%</p>
+        </div>
+        <div
+          class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark shadow-sm">
+          <p
+            class="text-text-light dark:text-text-dark text-base font-medium">Receita
+            Atual</p>
+          <p class="text-primary tracking-tight text-4xl font-bold">R$32,500</p>
         </div>
       </div>
 
@@ -122,6 +210,161 @@
       </div>
 
       <!-- GRÁFICOS E TABELAS -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+        <!-- Chart Cards -->
+        <div
+          class="lg:col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <h3
+              class="text-text-light dark:text-text-dark text-lg font-semibold">Sales
+              by Category</h3>
+            <p class="text-subtext-light dark:text-subtext-dark text-sm">This
+              Month</p>
+          </div>
+          <div class="flex items-center justify-center h-64">
+            <div class="relative w-48 h-48">
+              <svg class="w-full h-full" viewbox="0 0 36 36">
+                <path
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#e67951" stroke-dasharray="60, 100"
+                  stroke-width="4"></path>
+                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                  fill="none" stroke="#f4a261"
+                  stroke-dasharray="30, 100" stroke-dashoffset="-60"
+                  stroke-width="4"></path>
+                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                  fill="none" stroke="#2a9d8f"
+                  stroke-dasharray="10, 100" stroke-dashoffset="-90"
+                  stroke-width="4"></path>
+              </svg>
+            </div>
+            <div class="flex flex-col gap-4 ml-8">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full"
+                  style="background-color: #e67951;"></span>
+                <span class="text-text-light dark:text-text-dark text-sm">PME
+                  (60%)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full"
+                  style="background-color: #f4a261;"></span>
+                <span class="text-text-light dark:text-text-dark text-sm">PF
+                  (30%)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full"
+                  style="background-color: #2a9d8f;"></span>
+                <span class="text-text-light dark:text-text-dark text-sm">Adesão
+                  (10%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-4">
+          <h3
+            class="text-text-light dark:text-text-dark text-lg font-semibold">Top
+            Sellers / Teams</h3>
+          <ul class="space-y-4">
+            <li class="flex items-center gap-4">
+              <img class="w-10 h-10 rounded-full"
+                data-alt="Avatar of Maria Silva"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaBOEI7mRhIoRWRejxqNbCX0mVL_PSusY7QBshzIKMto2GC8NLRmCNGPohCR10E7aLCBpB0t7_YE_ON8ZcNgsnbW5PjeRZzXAP8QysEZfuo5JlQKKJDblb5Xa0Fqp8DX350UwM1741nDpwpQnOXEm1omRt3dVrU5JdOkGtgeLPEK9T_yY7SgyTsPHD32fDSkc0XyxCDrYGbSmq2VS6xZVBEzFBU69kvljLMAKGXsU_yDLZXVRfwKqIhAJnBxIBmPJhu7qI24xQcEY" />
+              <div>
+                <p class="font-medium text-text-light dark:text-text-dark">Maria
+                  Silva</p>
+                <p class="text-sm text-subtext-light dark:text-subtext-dark">R$
+                  12,300.00</p>
+              </div>
+            </li>
+            <li class="flex items-center gap-4">
+              <img class="w-10 h-10 rounded-full"
+                data-alt="Avatar of Carlos Souza"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRbo1g2PWkgTdncCx_EZOQ--TwUAWZ7xeyO1iA8fL2_Y3gvJosvLqiO4ChO3jVUlYGGlC5AJe735gHnraLYZ8DKZTSrt8WWtt2-UJBkHX_psnNg1-P83ID7xV-BYiFfwjSGePHUrnnsHN7_bNXSFuarucnFbiVMEmMhA0rsmI25IIl_rx9fXcPBobThbCrqEKcYxYTtVPW3kdjrceBjVZ74BtnqKA2ARXCF9fAvcWWFlQWHN4BCpmfpzu3tE_JkeGWgoq0qaB6nqc" />
+              <div>
+                <p
+                  class="font-medium text-text-light dark:text-text-dark">Carlos
+                  Souza</p>
+                <p class="text-sm text-subtext-light dark:text-subtext-dark">R$
+                  9,800.00</p>
+              </div>
+            </li>
+            <li class="flex items-center gap-4">
+              <img class="w-10 h-10 rounded-full"
+                data-alt="Avatar of Equipe Alpha"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnI-5BHDZe6iVk7pkidnCwwRJ0ZcmBa6bUtLD0ZxGU_OOH3mT-OP48cKh7keTNqT1_LDKq84OoxefPrHCQGmosrjYXFzDO8pluhNPUKWaYYx5gijRIxBkP2B4FOcburVmO3UYd6zspleYieP8E1KqMjlzDQDw6HG7BDO8Mo_DTTXKcjWcGEHEn_M7nV-xrVKQ_lNRlhmrCnXEVq8OHLOFoyIK7l1GI1QG1MghJu9nloMhj7ybieA0W7oYcB9qNmHtnEAAmcTqGVjU" />
+              <div>
+                <p
+                  class="font-medium text-text-light dark:text-text-dark">Equipe
+                  Alpha</p>
+                <p class="text-sm text-subtext-light dark:text-subtext-dark">R$
+                  8,500.00</p>
+              </div>
+            </li>
+            <li class="flex items-center gap-4">
+              <img class="w-10 h-10 rounded-full"
+                data-alt="Avatar of Ana Pereira"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPUFxHa0mjKX4zYM67z1vQziGQH4mr9NSZwE0VtIT4pzZ6_1eJyIWas8n5-x46o0IU69SuOPKnQ7RlZPjgVUOwbbWxGMoYk5N0OF_IW-USGCoJ506xkJCm953NGuXSGtCyiKNGMNseLTArFsKM83WQJCPd4joFegj6JSPhrenV02xHpypiKsYe2BbRhaYk2wxKD5ANCdboLcE7pdApD8fHHjzJdbB6_5p-4BgCwWs9lmzD6H2ehKf1rnkt8PT0HRgZMoM0WPmj9Z0" />
+              <div>
+                <p class="font-medium text-text-light dark:text-text-dark">Ana
+                  Pereira</p>
+                <p class="text-sm text-subtext-light dark:text-subtext-dark">R$
+                  7,250.00</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="mt-6 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3
+            class="text-text-light dark:text-text-dark text-lg font-semibold">Revenue
+            by Plan/Operator</h3>
+          <p class="text-subtext-light dark:text-subtext-dark text-sm">This
+            Month</p>
+        </div>
+        <div class="space-y-4">
+          <div class="grid gap-2 items-center"
+            style="grid-template-columns: 100px 1fr;">
+            <p
+              class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">Amil</p>
+            <div
+              class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
+              <div class="bg-primary h-4 rounded-full" style="width: 70%"></div>
+            </div>
+          </div>
+          <div class="grid gap-2 items-center"
+            style="grid-template-columns: 100px 1fr;">
+            <p
+              class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">Bradesco</p>
+            <div
+              class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
+              <div class="bg-primary h-4 rounded-full" style="width: 40%"></div>
+            </div>
+          </div>
+          <div class="grid gap-2 items-center"
+            style="grid-template-columns: 100px 1fr;">
+            <p
+              class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">SulAmérica</p>
+            <div
+              class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
+              <div class="bg-primary h-4 rounded-full" style="width: 65%"></div>
+            </div>
+          </div>
+          <div class="grid gap-2 items-center"
+            style="grid-template-columns: 100px 1fr;">
+            <p
+              class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">NotreDame</p>
+            <div
+              class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
+              <div class="bg-primary h-4 rounded-full" style="width: 55%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <!-- GRÁFICO 1 -->
         <div class="card">
@@ -205,128 +448,138 @@
           </div>
         </div>
       </div>
+
+      <!-- ESPAÇO EXTRA PARA GARANTIR ROLAGEM -->
+      <div class="h-20"></div>
     </div>
 
     <!-- JAVASCRIPT DO DASHBOARD -->
     <script>
-        console.log('📊 Dashboard carregado');
-        
-        // Inicializar gráficos
-        let salesChart, leadsChart;
-        
-        document.addEventListener('DOMContentLoaded', async () => {
-            console.log('🚀 Inicializando dashboard...');
-            initCharts();
-            await fetchDashboardData();
-        });
-        
-        function initCharts() {
-            // Gráfico de vendas
-            const salesCtx = document.getElementById('salesChart').getContext('2d');
-            salesChart = new Chart(salesCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-                    datasets: [{
-                        label: 'Vendas',
-                        data: [28, 32, 38, 42, 48, 52],
-                        borderColor: '#d48262',
-                        backgroundColor: 'rgba(212, 130, 98, 0.1)',
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-            
-            // Gráfico de leads
-            const leadsCtx = document.getElementById('leadsChart').getContext('2d');
-            leadsChart = new Chart(leadsCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Novo', 'Contatado', 'Qualificado', 'Fechado'],
-                    datasets: [{
-                        data: [45, 38, 32, 42],
-                        backgroundColor: ['#3B82F6', '#F59E0B', '#10B981', '#EF4444']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
+    console.log('📊 Dashboard carregado');
+
+    // Inicializar gráficos
+    let salesChart, leadsChart;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('🚀 Inicializando dashboard...');
+      initCharts();
+      await fetchDashboardData();
+
+      // FORÇAR barra de rolagem sempre visível (técnica adicional)
+      document.documentElement.style.overflowY = 'scroll';
+      document.body.style.overflowY = 'scroll';
+
+      // Adicionar altura extra para garantir rolagem
+      document.body.style.minHeight = 'calc(100vh + 1px)';
+    });
+
+    function initCharts() {
+      // Gráfico de vendas
+      const salesCtx = document.getElementById('salesChart').getContext('2d');
+      salesChart = new Chart(salesCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+          datasets: [{
+            label: 'Vendas',
+            data: [28, 32, 38, 42, 48, 52],
+            borderColor: '#d48262',
+            backgroundColor: 'rgba(212, 130, 98, 0.1)',
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
         }
-        
-        async function fetchDashboardData() {
-            console.log('🔍 Buscando dados do dashboard...');
-            
-            try {
-                // Buscar dados da API principal
-                const response = await fetch('/api/v1/crm/dashboard');
-                const result = await response.json();
-                
-                if (result.success && result.data) {
-                    updateDashboard(result.data);
-                    console.log('✅ Dados atualizados com sucesso');
-                } else {
-                    console.log('⚠️ Usando dados locais');
-                }
-            } catch (error) {
-                console.error('❌ Erro ao buscar dados:', error);
-                alert('Não foi possível conectar ao servidor. Usando dados locais.');
-            }
+      });
+
+      // Gráfico de leads
+      const leadsCtx = document.getElementById('leadsChart').getContext('2d');
+      leadsChart = new Chart(leadsCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Novo', 'Contatado', 'Qualificado', 'Fechado'],
+          datasets: [{
+            data: [45, 38, 32, 42],
+            backgroundColor: ['#3B82F6', '#F59E0B', '#10B981', '#EF4444']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false
         }
-        
-        function updateDashboard(data) {
-            // Atualizar KPIs
-            if (data.metricas_principais) {
-                const metricas = data.metricas_principais;
-                
-                // Faturamento
-                const faturamentoEl = document.querySelector('[data-kpi="faturamento"]');
-                if (faturamentoEl) {
-                    faturamentoEl.textContent = formatCurrency(metricas.faturamento_total);
-                }
-                
-                // Leads
-                const leadsEl = document.querySelector('[data-kpi="leads"]');
-                if (leadsEl) {
-                    leadsEl.textContent = metricas.leads_novos;
-                }
-                
-                // Conversão
-                const conversaoEl = document.querySelector('[data-kpi="conversao"]');
-                if (conversaoEl) {
-                    conversaoEl.textContent = `${metricas.taxa_conversao}%`;
-                }
-                
-                // Progresso da meta
-                const progressBar = document.querySelector('.progress-fill');
-                if (progressBar && metricas.progresso_meta) {
-                    progressBar.style.width = `${metricas.progresso_meta}%`;
-                    document.querySelector('.text-xs.text-gray-500').textContent = 
-                        `${metricas.progresso_meta}% da meta`;
-                }
-            }
-            
-            // Atualizar tabela de corretores
-            if (data.top_corretores) {
-                updateCorretoresTable(data.top_corretores);
-            }
+      });
+    }
+
+    async function fetchDashboardData() {
+      console.log('🔍 Buscando dados do dashboard...');
+
+      try {
+        // Buscar dados da API principal
+        const response = await fetch('/api/v1/crm/dashboard');
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          updateDashboard(result.data);
+          console.log('✅ Dados atualizados com sucesso');
+        } else {
+          console.log('⚠️ Usando dados locais');
         }
-        
-        function updateCorretoresTable(corretores) {
-            const tbody = document.getElementById('corretores-table');
-            if (!tbody) return;
-            
-            tbody.innerHTML = '';
-            
-            corretores.forEach(corretor => {
-                const row = document.createElement('tr');
-                row.className = 'border-b';
-                row.innerHTML = `
+      } catch (error) {
+        console.error('❌ Erro ao buscar dados:', error);
+        alert('Não foi possível conectar ao servidor. Usando dados locais.');
+      }
+    }
+
+    function updateDashboard(data) {
+      // Atualizar KPIs
+      if (data.metricas_principais) {
+        const metricas = data.metricas_principais;
+
+        // Faturamento
+        const faturamentoEl = document.querySelector('[data-kpi="faturamento"]');
+        if (faturamentoEl) {
+          faturamentoEl.textContent = formatCurrency(metricas.faturamento_total);
+        }
+
+        // Leads
+        const leadsEl = document.querySelector('[data-kpi="leads"]');
+        if (leadsEl) {
+          leadsEl.textContent = metricas.leads_novos;
+        }
+
+        // Conversão
+        const conversaoEl = document.querySelector('[data-kpi="conversao"]');
+        if (conversaoEl) {
+          conversaoEl.textContent = `${metricas.taxa_conversao}%`;
+        }
+
+        // Progresso da meta
+        const progressBar = document.querySelector('.progress-fill');
+        if (progressBar && metricas.progresso_meta) {
+          progressBar.style.width = `${metricas.progresso_meta}%`;
+          document.querySelector('.text-xs.text-gray-500').textContent =
+            `${metricas.progresso_meta}% da meta`;
+        }
+      }
+
+      // Atualizar tabela de corretores
+      if (data.top_corretores) {
+        updateCorretoresTable(data.top_corretores);
+      }
+    }
+
+    function updateCorretoresTable(corretores) {
+      const tbody = document.getElementById('corretores-table');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+
+      corretores.forEach(corretor => {
+        const row = document.createElement('tr');
+        row.className = 'border-b';
+        row.innerHTML = `
                     <td class="py-3 px-4">${corretor.nome}</td>
                     <td class="py-3 px-4">${corretor.vendas}</td>
                     <td class="py-3 px-4">${formatCurrency(corretor.comissao || 0)}</td>
@@ -340,34 +593,67 @@
                         <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Ativo</span>
                     </td>
                 `;
-                tbody.appendChild(row);
-            });
-        }
-        
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(value);
-        }
-        
-        async function testAPI() {
-            console.log('🧪 Testando conexão com API...');
-            
-            try {
-                const response = await fetch('/api/health');
-                const data = await response.json();
-                
-                alert(`✅ API Funcionando!\n\nStatus: ${data.status}\nVersão: ${data.version}`);
-                console.log('✅ API OK:', data);
-            } catch (error) {
-                alert('❌ Erro ao conectar com API\n\nVerifique se o servidor está rodando.');
-                console.error('❌ API Error:', error);
-            }
-        }
-        
-        // Atualizar dados a cada 30 segundos
-        setInterval(fetchDashboardData, 30000);
-    </script>
+        tbody.appendChild(row);
+      });
+    }
+
+    function formatCurrency(value) {
+      return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).format(value);
+    }
+
+    async function testAPI() {
+      console.log('🧪 Testando conexão com API...');
+
+      try {
+        const response = await fetch('/api/health');
+        const data = await response.json();
+
+        alert(`✅ API Funcionando!\n\nStatus: ${data.status}\nVersão: ${data.version}`);
+        console.log('✅ API OK:', data);
+      } catch (error) {
+        alert('❌ Erro ao conectar com API\n\nVerifique se o servidor está rodando.');
+        console.error('❌ API Error:', error);
+      }
+    }
+
+    // Função para ajustar altura quando carregado no iframe
+    function adjustForIframe() {
+      // Verificar se está dentro de um iframe
+      if (window.self !== window.top) {
+        console.log('📊 Dashboard carregado em iframe - ajustando layout');
+
+        // Remover qualquer overflow do body
+        document.body.style.overflow = 'visible';
+        document.documentElement.style.overflow = 'visible';
+
+        // Garantir que o conteúdo tenha altura suficiente
+        document.body.style.minHeight = 'auto';
+
+        // Avisar o parent que o conteúdo carregou
+        setTimeout(() => {
+          try {
+            window.parent.postMessage({
+              type: 'iframeLoaded',
+              height: document.documentElement.scrollHeight,
+              url: window.location.href
+            }, '*');
+          } catch (e) {
+            console.log('⚠️ Não foi possível comunicar com parent');
+          }
+        }, 500);
+      }
+    }
+
+    // Executar quando carregar
+    document.addEventListener('DOMContentLoaded', adjustForIframe);
+    window.addEventListener('load', adjustForIframe);
+
+    // Atualizar dados a cada 30 segundos
+    setInterval(fetchDashboardData, 30000);
+  </script>
   </body>
+
 </html>
