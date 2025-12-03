@@ -297,7 +297,7 @@ HealthPlatform/
 <br><br><br>
 
 
-## 🏗️ Estrutura do Projeto
+## 🏗️ Estrutura de Pastas e Arquivos
 
 <br>
 
@@ -355,6 +355,7 @@ HealthPlatform/
 │   ├── frontend/
 │   │   │   ├── css/
 │   │   │   │   ├── style.css
+│   │   │   │   └── dashboard.css
 │   │   │   ├── dashboards/
 │   │   │   │   ├── clientes.html
 │   │   │   │   ├── comissoes.html
@@ -382,9 +383,12 @@ HealthPlatform/
 │   │   │   │   ├── executivo/
 │   │   │   │   │   └── geren_metas.html
 │   │   │   │   ├── financeiro/
+│   │   │   │   │   ├── aprovacoes_financeiras.html
 │   │   │   │   │   ├── aprovacoes.html
 │   │   │   │   │   ├── comissionamentos.html
 │   │   │   │   │   ├── despesas.html
+│   │   │   │   │   ├── fluxo_caixa.html
+│   │   │   │   │   ├── governanca.html
 │   │   │   │   │   ├── livro_caixa.html
 │   │   │   │   │   ├── propostas.html
 │   │   │   │   │   ├── receitas.html
@@ -401,8 +405,7 @@ HealthPlatform/
 │   │   │   │   │   └── KPI.html
 │   │   │   │   ├── operacoes/
 │   │   │   │   │   ├── admin_chat.py
-│   │   │   │   │   ├── analiticos.html
-│   │   │   │   │   ├── comissoes_routes.html
+│   │   │   │   │   ├── analitico.html
 │   │   │   │   │   ├── banco_corretores.html
 │   │   │   │   │   ├── banco_documentos.html
 │   │   │   │   │   ├── calendario_geral.html
