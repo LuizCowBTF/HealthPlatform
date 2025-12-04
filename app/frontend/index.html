@@ -15,372 +15,399 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
             rel="stylesheet" />
 
-        <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#d48262",
-                        "background-light": "#f5f5f5",
-                        "background-dark": "#211511",
-                        "sidebar-bg": "#ffffff"
+        <script id="tailwind-config">
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "primary": "#d48262",
+                            "primary-dark": "#b86a50",
+                            "secondary": "#4299e1",
+                            "success": "#48bb78",
+                            "warning": "#ed8936",
+                            "danger": "#f56565",
+                            "background-light": "#f5f5f5",
+                            "background-dark": "#1a202c",
+                            "card-light": "#ffffff",
+                            "card-dark": "#2d3748",
+                            "text-light": "#2d3748",
+                            "text-dark": "#f7fafc"
+                        },
+                        fontFamily: {
+                            "sans": ["Inter", "system-ui", "sans-serif"],
+                            "display": ["Inter", "sans-serif"]
+                        },
+                        borderRadius: {
+                            "xl": "1rem",
+                            "2xl": "1.5rem"
+                        },
                     },
-                    fontFamily: {
-                        "display": ["Inter", "sans-serif"]
-                    }
-                }
+                },
             }
-        }
-    </script>
+        </script>
 
         <!-- SISTEMA DE NAVEGAÇÃO 100% FUNCIONAL -->
         <script>
-        // ============================================
-        // SISTEMA SPA - VERSÃO DEFINITIVA
-        // ============================================
+            // ============================================
+            // SISTEMA SPA - VERSÃO DEFINITIVA
+            // ============================================
 
-        let currentPage = '';
-        let isLoading = false;
+            let currentPage = '';
+            let isLoading = false;
 
-        // FUNÇÃO PRINCIPAL - CARREGAR PÁGINA
-        window.loadPage = function (pagePath, pageTitle, element = null) {
-            console.log(`📄 [SPA] Carregando: ${pagePath}`);
+            // FUNÇÃO PRINCIPAL - CARREGAR PÁGINA
+            window.loadPage = function (pagePath, pageTitle, element = null) {
+                console.log(`📄 [SPA] Carregando: ${pagePath}`);
 
-            // Prevenir múltiplos cliques
-            if (isLoading) {
-                console.log('⏳ Aguarde... já carregando');
-                return;
-            }
-
-            if (currentPage === pagePath) {
-                console.log('✅ Já está nesta página');
-                return;
-            }
-
-            const iframe = document.getElementById('main-frame');
-            const loading = document.getElementById('frame-loading');
-
-            if (!iframe || !loading) {
-                console.error('❌ Elementos não encontrados');
-                return;
-            }
-
-            // Iniciar loading
-            isLoading = true;
-            loading.style.display = 'flex';
-
-            // DETERMINAR CAMINHO CORRETO - LÓGICA SIMPLES
-            let fullPath = '';
-
-            // 1. Se já é um caminho completo
-            if (pagePath.startsWith('http://') || pagePath.startsWith('https://') || pagePath.startsWith('/')) {
-                fullPath = pagePath;
-            }
-            // 2. Se é um DASHBOARD (está na pasta /dashboards/)
-            else if (
-                pagePath === 'dashboard.html' ||
-                pagePath === 'coordenador.html' ||
-                pagePath === 'kpi_dashboard.html' ||
-                pagePath === 'comissoes.html' ||
-                pagePath === 'teste_ia.html' ||
-                pagePath === 'clientes.html' ||
-                pagePath === 'leads.html' ||
-                pagePath === 'relatorios.html' ||
-                pagePath.includes('dashboard')
-            ) {
-                fullPath = `/static/dashboards/${pagePath}`;
-            }
-            // 3. TODAS AS OUTRAS PÁGINAS estão em /pages/
-            else {
-                // Garantir que tem .html
-                if (!pagePath.endsWith('.html')) {
-                    pagePath = pagePath + '.html';
+                // Prevenir múltiplos cliques
+                if (isLoading) {
+                    console.log('⏳ Aguarde... já carregando');
+                    return;
                 }
-                fullPath = `/static/pages/${pagePath}`;
-            }
 
-            console.log(`📍 Caminho final: ${fullPath}`);
+                if (currentPage === pagePath) {
+                    console.log('✅ Já está nesta página');
+                    return;
+                }
 
-            // Atualizar estado
-            currentPage = pagePath;
+                const iframe = document.getElementById('main-frame');
+                const loading = document.getElementById('frame-loading');
 
-            // Atualizar título
-            const titleElement = document.getElementById('page-title');
-            if (titleElement) {
-                titleElement.textContent = pageTitle;
-            }
+                if (!iframe || !loading) {
+                    console.error('❌ Elementos não encontrados');
+                    return;
+                }
 
-            // Marcar item ativo no menu
-            if (element) {
-                // Remover ativo de todos
-                document.querySelectorAll('.menu-item').forEach(item => {
-                    item.classList.remove('bg-primary', 'text-white');
-                    item.classList.add('text-primary');
-                });
-                // Adicionar ativo
-                element.classList.add('bg-primary', 'text-white');
-                element.classList.remove('text-primary');
-            }
+                // Iniciar loading
+                isLoading = true;
+                loading.style.display = 'flex';
 
-            // Configurar iframe
-            iframe.onload = function () {
-                console.log('✅ Página carregada com sucesso');
+                // DETERMINAR CAMINHO CORRETO - LÓGICA SIMPLES
+                let fullPath = '';
 
-                setTimeout(() => {
+                // 1. Se já é um caminho completo
+                if (pagePath.startsWith('http://') || pagePath.startsWith('https://') || pagePath.startsWith('/')) {
+                    fullPath = pagePath;
+                }
+                // 2. Se é um DASHBOARD (está na pasta /dashboards/)
+                else if (
+                    pagePath === 'dashboard.html' ||
+                    pagePath === 'coordenador.html' ||
+                    pagePath === 'kpi_dashboard.html' ||
+                    pagePath === 'comissoes.html' ||
+                    pagePath === 'teste_ia.html' ||
+                    pagePath === 'clientes.html' ||
+                    pagePath === 'leads.html' ||
+                    pagePath === 'relatorios.html' ||
+                    pagePath.includes('dashboard')
+                ) {
+                    fullPath = `/static/dashboards/${pagePath}`;
+                }
+                // 3. TODAS AS OUTRAS PÁGINAS estão em /pages/
+                else {
+                    // Garantir que tem .html
+                    if (!pagePath.endsWith('.html')) {
+                        pagePath = pagePath + '.html';
+                    }
+                    fullPath = `/static/pages/${pagePath}`;
+                }
+
+                console.log(`📍 Caminho final: ${fullPath}`);
+
+                // Atualizar estado
+                currentPage = pagePath;
+
+                // Atualizar título
+                const titleElement = document.getElementById('page-title');
+                if (titleElement) {
+                    titleElement.textContent = pageTitle;
+                }
+
+                // Marcar item ativo no menu
+                if (element) {
+                    // Remover ativo de todos
+                    document.querySelectorAll('.menu-item').forEach(item => {
+                        item.classList.remove('bg-primary', 'text-white');
+                        item.classList.add('text-primary');
+                    });
+                    // Adicionar ativo
+                    element.classList.add('bg-primary', 'text-white');
+                    element.classList.remove('text-primary');
+                }
+
+                // Configurar iframe
+                iframe.onload = function () {
+                    console.log('✅ Página carregada com sucesso');
+
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                        isLoading = false;
+
+                        // Ajustar altura do iframe para 100% da viewport
+                        // Isso permite que a página INTERNA tenha sua própria rolagem
+                        iframe.style.height = '100vh'; // Altura total da janela
+
+                        // Dar um pequeno delay e ajustar novamente se necessário
+                        setTimeout(() => {
+                            try {
+                                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                                const contentHeight = Math.max(
+                                    iframeDoc.body.scrollHeight,
+                                    iframeDoc.documentElement.scrollHeight
+                                );
+
+                                // Se o conteúdo for MAIOR que a viewport, manter 100vh
+                                // Se for MENOR, ajustar para o tamanho exato
+                                const viewportHeight = window.innerHeight;
+
+                                if (contentHeight < viewportHeight) {
+                                    iframe.style.height = contentHeight + 'px';
+                                } else {
+                                    iframe.style.height = '100vh';
+                                }
+
+                                console.log(`📏 Conteúdo: ${contentHeight}px | Viewport: ${viewportHeight}px`);
+                            } catch (e) {
+                                // Cross-origin - manter 100vh
+                                iframe.style.height = '100vh';
+                            }
+                        }, 100);
+
+                        // Atualizar histórico
+                        updateBrowserHistory(pagePath, pageTitle);
+                    }, 300);
+                };
+
+                iframe.onerror = function () {
+                    console.error(`❌ Erro ao carregar: ${fullPath}`);
+
                     loading.style.display = 'none';
                     isLoading = false;
 
-                    // Ajustar altura do iframe para 100% da viewport
-                    // Isso permite que a página INTERNA tenha sua própria rolagem
-                    iframe.style.height = '100vh'; // Altura total da janela
+                    // Mostrar erro amigável
+                    showPageError(pageTitle, fullPath, pagePath);
+                };
 
-                    // Dar um pequeno delay e ajustar novamente se necessário
-                    setTimeout(() => {
-                        try {
-                            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                            const contentHeight = Math.max(
-                                iframeDoc.body.scrollHeight,
-                                iframeDoc.documentElement.scrollHeight
-                            );
+                // Carregar a página
+                iframe.src = fullPath;
+            };
 
-                            // Se o conteúdo for MAIOR que a viewport, manter 100vh
-                            // Se for MENOR, ajustar para o tamanho exato
-                            const viewportHeight = window.innerHeight;
+            // ============================================
+            // FUNÇÕES AUXILIARES
+            // ============================================
 
-                            if (contentHeight < viewportHeight) {
-                                iframe.style.height = contentHeight + 'px';
-                            } else {
-                                iframe.style.height = '100vh';
-                            }
+            function updateBrowserHistory(pagePath, pageTitle) {
+                try {
+                    history.pushState(
+                        { page: pagePath, title: pageTitle },
+                        pageTitle,
+                        `/?page=${encodeURIComponent(pagePath)}`
+                    );
+                } catch (e) {
+                    console.log('⚠️ Histórico não atualizado');
+                }
+            }
 
-                            console.log(`📏 Conteúdo: ${contentHeight}px | Viewport: ${viewportHeight}px`);
-                        } catch (e) {
-                            // Cross-origin - manter 100vh
-                            iframe.style.height = '100vh';
+            function showPageError(pageTitle, fullPath, pagePath) {
+                const iframe = document.getElementById('main-frame');
+                if (iframe) {
+                    iframe.srcdoc = `
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <style>
+                                body {
+                                    font-family: 'Segoe UI', sans-serif;
+                                    background: #f5f5f5;
+                                    padding: 40px;
+                                    text-align: center;
+                                }
+                                .error-box {
+                                    background: white;
+                                    padding: 30px;
+                                    border-radius: 10px;
+                                    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                                    max-width: 600px;
+                                    margin: 0 auto;
+                                }
+                                h2 {
+                                    color: #d48262;
+                                    margin-bottom: 20px;
+                                }
+                                .info {
+                                    background: #f8f9fa;
+                                    padding: 15px;
+                                    border-radius: 5px;
+                                    margin: 20px 0;
+                                    text-align: left;
+                                    font-family: monospace;
+                                    font-size: 12px;
+                                    word-break: break-all;
+                                }
+                                .suggestion {
+                                    background: #e8f4fd;
+                                    padding: 15px;
+                                    border-radius: 5px;
+                                    margin: 20px 0;
+                                    text-align: left;
+                                    font-size: 14px;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="error-box">
+                                <h2>⚠️ Página não encontrada</h2>
+                                <p><strong>${pageTitle}</strong></p>
+                                
+                                <div class="info">
+                                    <strong>Arquivo solicitado:</strong><br>
+                                    ${pagePath}<br><br>
+                                    <strong>Caminho completo:</strong><br>
+                                    ${fullPath}
+                                </div>
+                                
+                                <div class="suggestion">
+                                    <strong>Sugestões:</strong><br>
+                                    1. Verifique se o arquivo existe no servidor<br>
+                                    2. Dashboards devem estar em: /app/frontend/dashboards/<br>
+                                    3. Outras páginas em: /app/frontend/pages/
+                                </div>
+                                
+                                <button onclick="window.parent.loadPage('dashboard.html', 'Dashboard Geral')"
+                                        style="background: #d48262; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                                    Voltar para Dashboard
+                                </button>
+                            </div>
+                        </body>
+                        </html>
+                    `;
+                }
+            }
+
+            // FUNÇÕES DO MENU
+            window.toggleSubmenu = function (id) {
+                const submenu = document.getElementById(id);
+                const icon = document.getElementById(`icon-${id}`);
+                if (submenu.classList.contains('hidden')) {
+                    submenu.classList.remove('hidden');
+                    icon.classList.add('rotate-180');
+                } else {
+                    submenu.classList.add('hidden');
+                    icon.classList.remove('rotate-180');
+                }
+            };
+
+            window.toggleSidebar = function () {
+                const expanded = document.getElementById('expanded-sidebar');
+                const recolher = document.getElementById('recolher-sidebar');
+                expanded.classList.toggle('hidden');
+                recolher.classList.toggle('hidden');
+
+                // Salvar preferência
+                localStorage.setItem('sidebarExpanded', expanded.classList.contains('hidden') ? 'false' : 'true');
+            };
+
+            // ============================================
+            // INICIALIZAÇÃO
+            // ============================================
+
+            document.addEventListener('DOMContentLoaded', function () {
+                console.log('🏥 HealthCRM - Sistema inicializado');
+
+                // Restaurar sidebar
+                const savedSidebar = localStorage.getItem('sidebarExpanded');
+                if (savedSidebar === 'false') {
+                    toggleSidebar();
+                }
+
+                // Configurar busca
+                const searchInput = document.getElementById('global-search');
+                if (searchInput) {
+                    searchInput.addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter' && this.value.trim()) {
+                            alert(`Busca: ${this.value}\n\n(Implementar integração com backend)`);
                         }
-                    }, 100);
+                    });
+                }
 
-                    // Atualizar histórico
-                    updateBrowserHistory(pagePath, pageTitle);
-                }, 300);
-            };
+                // Carregar dashboard inicial
+                setTimeout(() => {
+                    loadPage('dashboard.html', 'Dashboard Geral');
+                }, 500);
 
-            iframe.onerror = function () {
-                console.error(`❌ Erro ao carregar: ${fullPath}`);
-
-                loading.style.display = 'none';
-                isLoading = false;
-
-                // Mostrar erro amigável
-                showPageError(pageTitle, fullPath, pagePath);
-            };
-
-            // Carregar a página
-            iframe.src = fullPath;
-        };
-
-        // ============================================
-        // FUNÇÕES AUXILIARES
-        // ============================================
-
-        function updateBrowserHistory(pagePath, pageTitle) {
-            try {
-                history.pushState(
-                    { page: pagePath, title: pageTitle },
-                    pageTitle,
-                    `/?page=${encodeURIComponent(pagePath)}`
-                );
-            } catch (e) {
-                console.log('⚠️ Histórico não atualizado');
-            }
-        }
-
-        function showPageError(pageTitle, fullPath, pagePath) {
-            const iframe = document.getElementById('main-frame');
-            if (iframe) {
-                iframe.srcdoc = `
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <style>
-                            body {
-                                font-family: 'Segoe UI', sans-serif;
-                                background: #f5f5f5;
-                                padding: 40px;
-                                text-align: center;
-                            }
-                            .error-box {
-                                background: white;
-                                padding: 30px;
-                                border-radius: 10px;
-                                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                                max-width: 600px;
-                                margin: 0 auto;
-                            }
-                            h2 {
-                                color: #d48262;
-                                margin-bottom: 20px;
-                            }
-                            .info {
-                                background: #f8f9fa;
-                                padding: 15px;
-                                border-radius: 5px;
-                                margin: 20px 0;
-                                text-align: left;
-                                font-family: monospace;
-                                font-size: 12px;
-                                word-break: break-all;
-                            }
-                            .suggestion {
-                                background: #e8f4fd;
-                                padding: 15px;
-                                border-radius: 5px;
-                                margin: 20px 0;
-                                text-align: left;
-                                font-size: 14px;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="error-box">
-                            <h2>⚠️ Página não encontrada</h2>
-                            <p><strong>${pageTitle}</strong></p>
-                            
-                            <div class="info">
-                                <strong>Arquivo solicitado:</strong><br>
-                                ${pagePath}<br><br>
-                                <strong>Caminho completo:</strong><br>
-                                ${fullPath}
-                            </div>
-                            
-                            <div class="suggestion">
-                                <strong>Sugestões:</strong><br>
-                                1. Verifique se o arquivo existe no servidor<br>
-                                2. Dashboards devem estar em: /app/frontend/dashboards/<br>
-                                3. Outras páginas em: /app/frontend/pages/
-                            </div>
-                            
-                            <button onclick="window.parent.loadPage('dashboard.html', 'Dashboard Geral')"
-                                    style="background: #d48262; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">
-                                Voltar para Dashboard
-                            </button>
-                        </div>
-                    </body>
-                    </html>
-                `;
-            }
-        }
-
-        // FUNÇÕES DO MENU
-        window.toggleSubmenu = function (id) {
-            const submenu = document.getElementById(id);
-            const icon = document.getElementById(`icon-${id}`);
-            if (submenu.classList.contains('hidden')) {
-                submenu.classList.remove('hidden');
-                icon.classList.add('rotate-180');
-            } else {
-                submenu.classList.add('hidden');
-                icon.classList.remove('rotate-180');
-            }
-        };
-
-        window.toggleSidebar = function () {
-            const expanded = document.getElementById('expanded-sidebar');
-            const recolher = document.getElementById('recolher-sidebar');
-            expanded.classList.toggle('hidden');
-            recolher.classList.toggle('hidden');
-
-            // Salvar preferência
-            localStorage.setItem('sidebarExpanded', expanded.classList.contains('hidden') ? 'false' : 'true');
-        };
-
-        // ============================================
-        // INICIALIZAÇÃO
-        // ============================================
-
-        document.addEventListener('DOMContentLoaded', function () {
-            console.log('🏥 HealthCRM - Sistema inicializado');
-
-            // Restaurar sidebar
-            const savedSidebar = localStorage.getItem('sidebarExpanded');
-            if (savedSidebar === 'false') {
-                toggleSidebar();
-            }
-
-            // Configurar busca
-            const searchInput = document.getElementById('global-search');
-            if (searchInput) {
-                searchInput.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter' && this.value.trim()) {
-                        alert(`Busca: ${this.value}\n\n(Implementar integração com backend)`);
+                // Configurar histórico do navegador
+                window.addEventListener('popstate', function (event) {
+                    if (event.state && event.state.page) {
+                        loadPage(event.state.page, event.state.title);
                     }
                 });
-            }
 
-            // Carregar dashboard inicial
-            setTimeout(() => {
-                loadPage('dashboard.html', 'Dashboard Geral');
-            }, 500);
-
-            // Configurar histórico do navegador
-            window.addEventListener('popstate', function (event) {
-                if (event.state && event.state.page) {
-                    loadPage(event.state.page, event.state.title);
+                // Verificar página da URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const pageParam = urlParams.get('page');
+                if (pageParam) {
+                    loadPage(decodeURIComponent(pageParam), 'Sistema Atualizado - Dashboard');
                 }
             });
 
-            // Verificar página da URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const pageParam = urlParams.get('page');
-            if (pageParam) {
-                loadPage(decodeURIComponent(pageParam), 'Sistema Atualizado - Dashboard');
-            }
-        });
-
-        // LOGOUT SIMPLES
-        window.logout = function () {
-            if (confirm('Tem certeza que deseja sair?')) {
-                alert('Sistema de logout em desenvolvimento...');
-                window.location.reload();
-            }
-        };
-    </script>
+            // LOGOUT SIMPLES
+            window.logout = function () {
+                if (confirm('Tem certeza que deseja sair?')) {
+                    alert('Sistema de logout em desenvolvimento...');
+                    window.location.reload();
+                }
+            };
+        </script>
 
         <style>
-        /* Estilos adicionais */
-        .menu-item {
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .menu-item:hover {
-            transform: translateX(5px);
-        }
-
-        .progress-bar {
-            transition: width 0.5s ease;
-        }
-
-        #frame-loading {
-            background: rgba(255, 255, 255, 0.95);
-            z-index: 100;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
+            /* ESTILOS ESPECÍFICOS DA PÁGINA */
+            .health-header {
+                background: linear-gradient(135deg, #d48262 0%, #b86a50 100%);
+                border-radius: 0 0 1.5rem 1.5rem;
+                color: white;
+                padding: 0.5rem;
+                margin-bottom: 0.5rem;
             }
 
-            100% {
-                transform: rotate(360deg);
+            /* ESTILO ADICIONAL AO MAIN-CONTENT */
+            .main-frame {
+                border-radius: 1.5rem;
             }
-        }
 
-        .loading-spinner {
-            animation: spin 1s linear infinite;
-        }
-    </style>
+            /* Estilos adicionais */
+            .menu-item {
+                transition: all 0.2s ease;
+                cursor: pointer;
+            }
+
+            .menu-item:hover {
+                transform: translateX(5px);
+            }
+
+            .progress-bar {
+                transition: width 0.5s ease;
+            }
+
+            #frame-loading {
+                background: rgba(255, 255, 255, 0.95);
+                z-index: 100;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .loading-spinner {
+                animation: spin 1s linear infinite;
+            }
+        </style>
     </head>
 
     <body class="bg-background-light dark:bg-background-dark font-display">
@@ -846,37 +873,64 @@
                 </div>
 
                 <!-- CONTEÚDO PRINCIPAL -->
-                <main id="main-content" class="flex-1 flex flex-col">
+                <main id="main-content"
+                    class="flex-1 flex flex-col bg-background-light dark:bg-background-dark">
                     <!-- HEADER -->
-                    <header
-                        class="bg-white border-b border-gray-200 flex items-center justify-between p-4 sticky top-0 z-10">
-                        <div class="flex items-center gap-4">
-                            <button class="lg:hidden" onclick="toggleSidebar()">
-                                <span
-                                    class="material-symbols-outlined text-primary">menu</span>
-                            </button>
-                            <h2 id="page-title"
-                                class="text-xl font-semibold text-primary">Dashboard
-                                Geral</h2>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <div class="relative w-64 hidden md:block">
-                                <span
-                                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-                                <input id="global-search"
-                                    class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 border-none text-sm placeholder-gray-500"
-                                    placeholder="Buscar..." type="text">
+                    <header class="health-header animate-fade-in">
+                        <div class="max-w-7xl mx-auto mb-4 ml-2 mr-2">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4">
+                                    <button class="lg:hidden"
+                                        onclick="toggleSidebar()">
+                                        <span
+                                            class="material-symbols-outlined text-white">menu</span>
+                                    </button>
+                                    <h2 id="page-title"
+                                        class="text-xl font-semibold text-white"></h2>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <button
+                                        class="relative text-gray-600 hover:text-primary"
+                                        onclick="alert('Notificações')">
+                                        <span
+                                            class="material-symbols-outlined">notifications</span>
+                                    </button>
+                                    <div
+                                        class="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold cursor-pointer"
+                                        onclick="loadPage('perfil.html', 'Perfil')">
+                                        A
+                                    </div>
+                                </div>
                             </div>
-                            <button
-                                class="relative text-gray-600 hover:text-primary"
-                                onclick="alert('Notificações')">
-                                <span
-                                    class="material-symbols-outlined">notifications</span>
-                            </button>
-                            <div
-                                class="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold cursor-pointer"
-                                onclick="loadPage('perfil.html', 'Perfil')">
-                                A
+
+                            <!-- BREADCRUMB -->
+                            <div class="flex items-center justify-between mt-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="relative w-64 hidden md:block">
+                                        <nav
+                                            class="mt-4 flex items-center text-sm">
+                                            <a href="#"
+                                                class="hover:text-white opacity-80">Home</a>
+                                            <span
+                                                class="mx-2 opacity-60">/</span>
+                                            <a href="#"
+                                                class="hover:text-white opacity-80">Módulo</a>
+                                            <span
+                                                class="mx-2 opacity-60">/</span>
+                                            <span class="font-medium">Página
+                                                Atual</span>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div class="relative w-64 hidden md:block">
+                                        <span
+                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                                        <input id="global-search"
+                                            class="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-100 border-none text-sm placeholder-gray-500"
+                                            placeholder="Buscar..." type="text">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </header>
@@ -890,14 +944,14 @@
                             <div class="text-center">
                                 <div
                                     class="loading-spinner rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-                                <p class="mt-4 text-gray-600">Carregando...</p>
+                                <p
+                                    class="mt-4 text-gray-600">Carregando...</p>
                             </div>
                         </div>
 
                         <!-- IFRAME PRINCIPAL -->
                         <iframe id="main-frame" src
-                            class="w-full h-full border-0"
-                            title="Bem-vindo."></iframe>
+                            class="w-full h-full border-1"></iframe>
                     </div>
 
                 </main>
