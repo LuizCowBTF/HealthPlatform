@@ -5,7 +5,6 @@
         <meta charset="utf-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <title>Health CRM as SaaS</title>
-
         <!-- Tailwind CSS -->
         <script
             src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -132,24 +131,35 @@
                     loading.style.display = 'none';
                     isLoading = false;
 
-                    // Ajustar altura do IFRAME para caber TODO o conteúdo
-                    try {
-                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                        const bodyHeight = iframeDoc.body.scrollHeight;
-                        const htmlHeight = iframeDoc.documentElement.scrollHeight;
+                    // Ajustar altura do iframe para 100% da viewport
+                    // Isso permite que a página INTERNA tenha sua própria rolagem
+                    iframe.style.height = '100vh'; // Altura total da janela
 
-                        // Usar a MAIOR altura
-                        const totalHeight = Math.max(bodyHeight, htmlHeight, 800);
+                    // Dar um pequeno delay e ajustar novamente se necessário
+                    setTimeout(() => {
+                        try {
+                            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                            const contentHeight = Math.max(
+                                iframeDoc.body.scrollHeight,
+                                iframeDoc.documentElement.scrollHeight
+                            );
 
-                        // Definir altura do iframe
-                        iframe.style.height = totalHeight + 'px';
+                            // Se o conteúdo for MAIOR que a viewport, manter 100vh
+                            // Se for MENOR, ajustar para o tamanho exato
+                            const viewportHeight = window.innerHeight;
 
-                        console.log(`📏 Altura do conteúdo: ${totalHeight}px`);
-                    } catch (e) {
-                        // Erro de cross-origin - usar altura padrão
-                        console.log('⚠️ Cross-origin, usando altura padrão');
-                        iframe.style.height = '100vh'; // Altura total da viewport
-                    }
+                            if (contentHeight < viewportHeight) {
+                                iframe.style.height = contentHeight + 'px';
+                            } else {
+                                iframe.style.height = '100vh';
+                            }
+
+                            console.log(`📏 Conteúdo: ${contentHeight}px | Viewport: ${viewportHeight}px`);
+                        } catch (e) {
+                            // Cross-origin - manter 100vh
+                            iframe.style.height = '100vh';
+                        }
+                    }, 100);
 
                     // Atualizar histórico
                     updateBrowserHistory(pagePath, pageTitle);
@@ -369,44 +379,6 @@
 
         .loading-spinner {
             animation: spin 1s linear infinite;
-        }
-
-
-        /* ESTILOS PARA O IFRAME ROLÁVEL */
-        #iframe-container {
-        flex: 1;
-        position: relative;
-        overflow-y: auto; /* Habilita rolagem no CONTAINER do iframe */
-        width: 100%;
-        }
-
-        /* Barra de rolagem LARGA para o container do iframe */
-        #iframe-container::-webkit-scrollbar {
-        width: 24px;
-        }
-
-        #iframe-container::-webkit-scrollbar-track {
-        background: #f8f9fa;
-        border-radius: 12px;
-        border: 3px solid #ffffff;
-        }
-
-        #iframe-container::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #d48262, #b86a50);
-        border-radius: 12px;
-        border: 4px solid #f8f9fa;
-        }
-
-        #iframe-container::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #b86a50, #9c533d);
-        }
-
-        /* Remove a barra de rolagem do iframe em si (mantém do container) */
-        #iframe-container iframe {
-        border: none;
-        width: 100%;
-        min-height: 100%; /* Garante que o iframe ocupe altura mínima */
-        display: block;
         }
     </style>
     </head>
@@ -925,7 +897,7 @@
                         <!-- IFRAME PRINCIPAL -->
                         <iframe id="main-frame" src
                             class="w-full h-full border-0"
-                            title="Dashboard Principal"></iframe>
+                            title="Bem-vindo."></iframe>
                     </div>
 
                 </main>

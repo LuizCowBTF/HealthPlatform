@@ -4,10 +4,6 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control"
-      content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>Dashboard Geral - HealthCRM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -45,8 +41,9 @@
       },
     }
   </script>
+
     <style>
-    /* ESTILOS GERAIS */
+    /* ESTILOS GERAIS DO DASHBOARD */
     .card {
       background: white;
       border-radius: 12px;
@@ -84,20 +81,86 @@
       border-radius: 4px;
     }
 
-    /* GARANTIR QUE O CONTEÚDO TENHA ALTURA SUFICIENTE */
+    /* =========================================== */
+    /* BARRA DE ROLAGEM DENTRO DO DASHBOARD */
+    /* =========================================== */
+
+    /* HABILITA rolagem APENAS quando necessário */
+    html,
     body {
-      min-height: 100vh;
-      /* Isso é importante */
+      height: auto;
+      margin: 0;
+      padding: 0;
     }
 
+    body {
+      overflow-y: auto;
+      /* Rolagem VERTICAL quando necessário */
+      overflow-x: hidden;
+      /* Sem rolagem horizontal */
+      min-height: 100vh;
+      /* Altura mínima da viewport */
+    }
+
+    /* Container principal - garante que expanda com conteúdo */
     .max-w-7xl {
-      padding-bottom: 50px;
+      min-height: calc(100vh - 40px);
+      /* Altura menos padding */
+      padding-bottom: 100px;
       /* Espaço extra no final */
     }
+
+    /* =========================================== */
+    /* ESTILIZAÇÃO DA BARRA DE ROLAGEM - LARGA E BONITA */
+    /* =========================================== */
+
+    /* Para WebKit (Chrome, Edge, Safari) */
+    ::-webkit-scrollbar {
+      width: 15px;
+      /* LARGURA da barra */
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f8f9fa;
+      border-radius: 10px;
+      border: 3px solid #ffffff;
+      margin: 5px 0;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #d48262, #b86a50);
+      border-radius: 10px;
+      border: 3px solid #f8f9fa;
+      min-height: 60px;
+      /* Altura mínima do "botão" */
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #b86a50, #9c533d);
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: #f8f9fa;
+    }
+
+    /* Para Firefox */
+    * {
+      scrollbar-width: auto;
+      scrollbar-color: #d48262 #f8f9fa;
+    }
+
+    /* Garantir que a barra apareça sempre (mesmo que não precise rolar) */
+    /* Isso força uma barra de rolagem "fantasma" que ocupa espaço */
+    body {
+      padding-right: 20px !important;
+      overflow-y: scroll !important;
+    }
+
   </style>
+
   </head>
 
-  <body class="bg-gray-50 p-4 md:p-6 overflow-always">
+  <body class="bg-gray-50 p-4 md:p-6" style="overflow: hidden">
     <div class="max-w-7xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
         <!-- KPI Cards -->
@@ -449,8 +512,6 @@
         </div>
       </div>
 
-      <!-- ESPAÇO EXTRA PARA GARANTIR ROLAGEM -->
-      <div class="h-20"></div>
     </div>
 
     <!-- JAVASCRIPT DO DASHBOARD -->
@@ -464,13 +525,6 @@
       console.log('🚀 Inicializando dashboard...');
       initCharts();
       await fetchDashboardData();
-
-      // FORÇAR barra de rolagem sempre visível (técnica adicional)
-      document.documentElement.style.overflowY = 'scroll';
-      document.body.style.overflowY = 'scroll';
-
-      // Adicionar altura extra para garantir rolagem
-      document.body.style.minHeight = 'calc(100vh + 1px)';
     });
 
     function initCharts() {
