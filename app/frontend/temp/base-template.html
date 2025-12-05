@@ -4,514 +4,152 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>HealthPlatform - Nova Página</title>
-
-        <!-- Tailwind CSS -->
-        <script src="https://cdn.tailwindcss.com"></script>
-
-        <!-- Google Fonts -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-            rel="stylesheet">
+        <title>Dashboard Geral - HealthCRM</title>
         <link
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
             rel="stylesheet">
 
-        <!-- Sistema de Rolagem -->
-        <link href="/static/css/scrollbar.css" rel="stylesheet">
-
-        <!-- CSS Personalizado da Página -->
+        <!-- Tailwind -->
+        <script src="https://cdn.tailwindcss.com"></script>
         <script id="tailwind-config">
-            tailwind.config={
-            darkMode: "class",
-            theme: {
-            extend: {
-            colors: {
-            "primary": "#d48262",
-            "primary-dark": "#b86a50",
-            "secondary": "#4299e1",
-            "success": "#48bb78",
-            "warning": "#ed8936",
-            "danger": "#f56565",
-            "background-light": "#f5f5f5",
-            "background-dark": "#1a202c",
-            "card-light": "#ffffff",
-            "card-dark": "#2d3748",
-            "text-light": "#2d3748",
-            "text-dark": "#f7fafc"
-            },
-            fontFamily: {
-            "sans": ["Inter", "system-ui", "sans-serif"],
-            "display": ["Inter", "sans-serif"]
-            },
-            borderRadius: {
-            "xl": "1rem",
-            "2xl": "1.5rem"
-            },
-            },
-            },
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "primary": "#e67951",
+                            "background-light": "#f8f6f6",
+                            "background-dark": "#211511",
+                            "card-light": "#ffffff",
+                            "card-dark": "#2a1a14",
+                            "text-light": "#1c1c1c",
+                            "text-dark": "#f5f5f5",
+                            "subtext-light": "#876d64",
+                            "subtext-dark": "#a18a82",
+                            "border-light": "#e5dedc",
+                            "border-dark": "#40312c",
+                        },
+                        fontFamily: {
+                            "display": ["Inter", "sans-serif"]
+                        },
+                        borderRadius: {
+                            "DEFAULT": "0.5rem",
+                            "lg": "1rem",
+                            "xl": "1.5rem",
+                            "full": "9999px"
+                        },
+                    },
+                },
             }
         </script>
 
+        <!-- CSS para garantir scroll no iframe -->
         <style>
-            /* ESTILOS ESPECÍFICOS DA PÁGINA */
-            .health-header {
-                background: linear-gradient(135deg, #d48262 0%, #b86a50 100%);
-                color: white;
-                padding: 1.5rem;
-                border-radius: 0 0 1.5rem 1.5rem;
-                margin-bottom: 2rem;
+        /* ESTILOS CRÍTICOS PARA IFRAME */
+            html,
+            body {
+                min-height: 1200px !important;
+                height: auto !important;
+                overflow-y: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                padding-bottom: 200px !important;
             }
 
-            .health-card {
-                background: white;
-                border-radius: 1rem;
-                padding: 1.5rem;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-                border: 1px solid #e2e8f0;
-                transition: all 0.3s ease;
+            .max-w-7xl {
+                min-height: 1000px !important;
+                padding-bottom: 150px !important;
             }
 
-            .health-card:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-                border-color: #d48262;
+            /* Barra de rolagem estilizada */
+            body::-webkit-scrollbar {
+                width: 14px;
             }
 
-            .health-badge {
-                display: inline-flex;
-                align-items: center;
-                padding: 0.25rem 0.75rem;
-                border-radius: 9999px;
-                font-size: 0.75rem;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
+            body::-webkit-scrollbar-track {
+                background: #f8f9fa;
+                border-radius: 8px;
+                margin: 4px;
             }
 
-            .badge-primary {
-                background-color: rgba(212, 130, 98, 0.1);
-                color: #d48262;
+            body::-webkit-scrollbar-thumb {
+                background: linear-gradient(135deg, #d48262, #b86a50);
+                border-radius: 8px;
+                border: 3px solid #f8f9fa;
             }
 
-            .badge-success {
-                background-color: rgba(72, 187, 120, 0.1);
-                color: #48bb78;
+            body::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(135deg, #b86a50, #9c533d);
             }
 
-            .badge-warning {
-                background-color: rgba(237, 137, 54, 0.1);
-                color: #ed8936;
-            }
-
-            .badge-danger {
-                background-color: rgba(245, 101, 101, 0.1);
-                color: #f56565;
-            }
-
-            .health-table {
+            /* Área final para garantir scroll */
+            .scroll-end-area {
+                height: 300px;
                 width: 100%;
-                border-collapse: separate;
-                border-spacing: 0;
+                background: linear-gradient(transparent, rgba(212, 130, 98, 0.1));
+                border-top: 2px solid #d48262;
+                margin-top: 50px;
+                position: relative;
             }
 
-            .health-table th {
-                background-color: #f7fafc;
-                padding: 0.75rem 1rem;
-                text-align: left;
-                font-weight: 600;
-                color: #4a5568;
-                border-bottom: 2px solid #e2e8f0;
-            }
-
-            .health-table td {
-                padding: 0.75rem 1rem;
-                border-bottom: 1px solid #e2e8f0;
-            }
-
-            .health-table tr:hover {
-                background-color: #f7fafc;
-            }
-
-            /* ANIMAÇÕES */
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(10px);
-                }
-
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            .animate-fade-in {
-                animation: fadeIn 0.5s ease-out;
-            }
-
-            /* LOADING */
-            .loading-spinner {
-                border: 3px solid #f3f3f3;
-                border-top: 3px solid #d48262;
-                border-radius: 50%;
-                width: 40px;
-                height: 40px;
-                animation: spin 1s linear infinite;
-            }
-
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-
-            /* RESPONSIVIDADE EXTRA */
-            @media (max-width: 640px) {
-                .mobile-stack {
-                    flex-direction: column;
-                }
-
-                .mobile-full {
-                    width: 100%;
-                }
-
-                .mobile-padding {
-                    padding: 1rem;
-                }
+            .scroll-end-area::before {
+                content: "🏁 FIM DO CONTEÚDO 🏁";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #d48262;
+                color: white;
+                padding: 10px 25px;
+                border-radius: 25px;
+                font-weight: bold;
+                font-size: 14px;
             }
         </style>
     </head>
 
-    <body class="bg-gray-50 font-sans">
-
-        <!-- CONTAINER PRINCIPAL DA PÁGINA -->
-        <div class="page-container">
-
-            <!-- CABEÇALHO DA PÁGINA -->
-            <header class="health-header animate-fade-in">
-                <div class="max-w-7xl mx-auto">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h1
-                                class="text-2xl md:text-3xl font-bold mb-2">Título
-                                da Página</h1>
-                            <p class="opacity-90">Descrição ou subtítulo da
-                                página</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span
-                                class="material-symbols-outlined text-3xl">dashboard</span>
-                        </div>
-                    </div>
-
-                    <!-- BREADCRUMB -->
-                    <nav class="mt-4 flex items-center text-sm">
-                        <a href="#" class="hover:text-white opacity-80">Home</a>
-                        <span class="mx-2 opacity-60">/</span>
-                        <a href="#"
-                            class="hover:text-white opacity-80">Módulo</a>
-                        <span class="mx-2 opacity-60">/</span>
-                        <span class="font-medium">Página Atual</span>
-                    </nav>
-                </div>
-            </header>
-
-            <!-- CONTEÚDO PRINCIPAL -->
-            <main class="max-w-7xl mx-auto">
-
-                <!-- STATS/CARDS SUPERIORES -->
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="health-card animate-fade-in"
-                        style="animation-delay: 0.1s">
-                        <div class="flex items-center">
-                            <div
-                                class="p-3 rounded-xl bg-blue-50 text-blue-600 mr-4">
-                                <span
-                                    class="material-symbols-outlined">trending_up</span>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Faturamento</p>
-                                <p class="text-2xl font-bold">R$ 189.750,50</p>
-                            </div>
-                        </div>
-                        <div
-                            class="mt-3 text-sm text-green-600 flex items-center">
-                            <span
-                                class="material-symbols-outlined text-sm mr-1">arrow_upward</span>
-                            +12.5% este mês
-                        </div>
-                    </div>
-
-                    <div class="health-card animate-fade-in"
-                        style="animation-delay: 0.2s">
-                        <div class="flex items-center">
-                            <div
-                                class="p-3 rounded-xl bg-green-50 text-green-600 mr-4">
-                                <span
-                                    class="material-symbols-outlined">group</span>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Clientes</p>
-                                <p class="text-2xl font-bold">45</p>
-                            </div>
-                        </div>
-                        <div
-                            class="mt-3 text-sm text-green-600 flex items-center">
-                            <span
-                                class="material-symbols-outlined text-sm mr-1">person_add</span>
-                            +8 novos
-                        </div>
-                    </div>
-
-                    <div class="health-card animate-fade-in"
-                        style="animation-delay: 0.3s">
-                        <div class="flex items-center">
-                            <div
-                                class="p-3 rounded-xl bg-purple-50 text-purple-600 mr-4">
-                                <span
-                                    class="material-symbols-outlined">show_chart</span>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Conversão</p>
-                                <p class="text-2xl font-bold">37.2%</p>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <span
-                                class="health-badge badge-success">+2.3%</span>
-                        </div>
-                    </div>
-
-                    <div class="health-card animate-fade-in"
-                        style="animation-delay: 0.4s">
-                        <div class="flex items-center">
-                            <div
-                                class="p-3 rounded-xl bg-orange-50 text-orange-600 mr-4">
-                                <span
-                                    class="material-symbols-outlined">target</span>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Meta</p>
-                                <p class="text-2xl font-bold">75%</p>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-primary h-2 rounded-full"
-                                    style="width: 75%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CONTEÚDO DINÂMICO -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                    <!-- COLUNA ESQUERDA -->
-                    <div class="lg:col-span-2">
-                        <div class="health-card mb-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h2
-                                    class="text-xl font-bold text-gray-800">Título
-                                    da Seção</h2>
-                                <button
-                                    class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition">
-                                    <span
-                                        class="material-symbols-outlined align-middle mr-1">add</span>
-                                    Novo Item
-                                </button>
-                            </div>
-
-                            <p class="text-gray-600 mb-4">
-                                Este é um template base para suas páginas.
-                                Substitua este conteúdo pelo conteúdo específico
-                                de cada página.
-                            </p>
-
-                            <!-- TABELA EXEMPLO -->
-                            <div class="overflow-x-auto">
-                                <table class="health-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Nome</th>
-                                            <th>Status</th>
-                                            <th>Valor</th>
-                                            <th>Ações</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="font-medium">João
-                                                Silva</td>
-                                            <td><span
-                                                    class="health-badge badge-success">Ativo</span></td>
-                                            <td>R$ 1.500,00</td>
-                                            <td>
-                                                <button
-                                                    class="text-primary hover:text-primary-dark mr-2">
-                                                    <span
-                                                        class="material-symbols-outlined text-lg">edit</span>
-                                                </button>
-                                                <button
-                                                    class="text-gray-500 hover:text-gray-700">
-                                                    <span
-                                                        class="material-symbols-outlined text-lg">delete</span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-medium">Maria
-                                                Santos</td>
-                                            <td><span
-                                                    class="health-badge badge-warning">Pendente</span></td>
-                                            <td>R$ 2.300,00</td>
-                                            <td>
-                                                <button
-                                                    class="text-primary hover:text-primary-dark mr-2">
-                                                    <span
-                                                        class="material-symbols-outlined text-lg">edit</span>
-                                                </button>
-                                                <button
-                                                    class="text-gray-500 hover:text-gray-700">
-                                                    <span
-                                                        class="material-symbols-outlined text-lg">delete</span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- COLUNA DIREITA -->
-                    <div>
-                        <div class="health-card mb-6">
-                            <h3
-                                class="text-lg font-bold text-gray-800 mb-4">Ações
-                                Rápidas</h3>
-
-                            <div class="space-y-3">
-                                <button
-                                    class="w-full flex items-center p-3 rounded-lg border border-gray-200 hover:border-primary hover:bg-blue-50 transition">
-                                    <span
-                                        class="material-symbols-outlined text-primary mr-3">add_circle</span>
-                                    <span>Novo Lead</span>
-                                </button>
-
-                                <button
-                                    class="w-full flex items-center p-3 rounded-lg border border-gray-200 hover:border-primary hover:bg-blue-50 transition">
-                                    <span
-                                        class="material-symbols-outlined text-primary mr-3">description</span>
-                                    <span>Gerar Relatório</span>
-                                </button>
-
-                                <button
-                                    class="w-full flex items-center p-3 rounded-lg border border-gray-200 hover:border-primary hover:bg-blue-50 transition">
-                                    <span
-                                        class="material-symbols-outlined text-primary mr-3">notifications</span>
-                                    <span>Notificações</span>
-                                </button>
-
-                                <button
-                                    class="w-full flex items-center p-3 rounded-lg border border-gray-200 hover:border-primary hover:bg-blue-50 transition">
-                                    <span
-                                        class="material-symbols-outlined text-primary mr-3">settings</span>
-                                    <span>Configurações</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="health-card">
-                            <h3
-                                class="text-lg font-bold text-gray-800 mb-4">Informações</h3>
-
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">Última
-                                        atualização:</span>
-                                    <span class="font-medium">Hoje, 10:30</span>
-                                </div>
-
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">Total de
-                                        itens:</span>
-                                    <span class="font-medium">156</span>
-                                </div>
-
-                                <div class="flex items-center justify-between">
-                                    <span class="text-gray-600">Status do
-                                        sistema:</span>
-                                    <span
-                                        class="health-badge badge-success">Operacional</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RODAPÉ DA PÁGINA -->
-                <footer
-                    class="mt-12 pt-6 border-t border-gray-200 text-center text-gray-500 text-sm">
-                    <p>HealthPlatform SaaS © 2024 - Todos os direitos
-                        reservados</p>
-                    <p class="mt-1">Página carregada em: <span
-                            id="load-time"></span></p>
-                </footer>
-
-                <!-- ESPAÇO EXTRA PARA ROLAGEM -->
-                <div class="h-20"></div>
-            </main>
+    <body class="bg-gray-50 p-4 md:p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- CONTAINER PRINCIPAL DA PÁGINA -->
         </div>
-
-        <!-- SCRIPTS -->
-        <script src="/static/js/scroll-system.js"></script>
-
-        <!-- SCRIPT DA PÁGINA -->
         <script>
-        // Inicializar quando o DOM estiver pronto
-        document.addEventListener('DOMContentLoaded', function () {
-            // Mostrar tempo de carregamento
-            const loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
-            document.getElementById('load-time').textContent = `${loadTime}ms`;
-
-            // Inicializar sistema de rolagem (se não auto-inicializou)
-            if (window.ScrollSystem && !window.ScrollSystem.state.isInitialized) {
-                window.ScrollSystem.init({
-                    forceScrollbar: true,
-                    debug: false
+        // Verificar se está dentro de iframe
+            if (window.self !== window.top) {
+                console.log('📦 Dashboard carregado em iframe');
+                
+                // Garantir altura suficiente
+                document.addEventListener('DOMContentLoaded', function() {
+                    const bodyHeight = document.body.scrollHeight;
+                    const viewportHeight = window.innerHeight;
+                    
+                    console.log('📏 Alturas:', {
+                        body: bodyHeight + 'px',
+                        viewport: viewportHeight + 'px'
+                    });
+                    
+                    // Se necessário, expandir mais
+                    if (bodyHeight < viewportHeight + 300) {
+                        const scrollArea = document.querySelector('.scroll-end-area');
+                        if (scrollArea) {
+                            scrollArea.style.height = (viewportHeight + 400 - bodyHeight) + 'px';
+                            console.log('⚡ Área de scroll ajustada');
+                        }
+                    }
+                    
+                    // Informar ao parent que carregamos
+                    setTimeout(() => {
+                        try {
+                            window.parent.postMessage({
+                                type: 'iframeLoaded',
+                                page: 'dashboard.html',
+                                height: document.body.scrollHeight
+                            }, '*');
+                        } catch(e) {
+                            // Ignorar cross-origin
+                        }
+                    }, 500);
                 });
             }
-
-            // Exemplo: Aplicar animações em elementos
-            const cards = document.querySelectorAll('.health-card');
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${(index + 1) * 0.1}s`;
-            });
-
-            // Exemplo: Adicionar funcionalidade aos botões
-            document.querySelectorAll('button').forEach(button => {
-                button.addEventListener('click', function (e) {
-                    if (!this.getAttribute('href') && !this.getAttribute('onclick')) {
-                        console.log('Botão clicado:', this.textContent);
-                        // Adicione a funcionalidade específica aqui
-                    }
-                });
-            });
-
-            console.log('✅ Página carregada com sucesso');
-        });
-
-        // Lidar com erros
-        window.addEventListener('error', function (e) {
-            console.error('Erro na página:', e.message);
-        });
-    </script>
+        </script>
     </body>
-
 </html>

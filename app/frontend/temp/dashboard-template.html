@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- TITLE VARIÁVEL - Editar em cada dashboard -->
+        <title>HealthCRM</title>
+
+        <!-- Ícones do Google -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet">
+
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Configuração do Tailwind -->
+        <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e67951",
+                        "primary-light": "#f8a583",
+                        "primary-dark": "#b86a50",
+                        "secondary": "#4299e1",
+                        "success": "#48bb78",
+                        "warning": "#ed8936",
+                        "danger": "#f56565",
+                        "info": "#0bc5ea",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211511",
+                        "card-light": "#ffffff",
+                        "card-dark": "#2a1a14",
+                        "text-light": "#1c1c1c",
+                        "text-dark": "#f5f5f5",
+                        "subtext-light": "#876d64",
+                        "subtext-dark": "#a18a82",
+                        "border-light": "#e5dedc",
+                        "border-dark": "#40312c",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "system-ui", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+
+        <!-- CSS PADRÃO PARA TODOS OS DASHBOARDS -->
+        <style>
+        /* =========================================== */
+        /* RESET E ESTILOS GLOBAIS PARA IFRAME */
+        /* =========================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100vh !important;
+            height: auto !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color, #f8f6f6);
+        }
+
+        body.dark {
+            --bg-color: #211511;
+            --card-color: #2a1a14;
+            --text-color: #f5f5f5;
+            --border-color: #40312c;
+        }
+
+        body.light {
+            --bg-color: #f8f6f6;
+            --card-color: #ffffff;
+            --text-color: #1c1c1c;
+            --border-color: #e5dedc;
+        }
+
+        /* =========================================== */
+        /* CONTAINER PRINCIPAL */
+        /* =========================================== */
+
+        .dashboard-container {
+            min-height: 1000px !important;
+            padding-bottom: 200px !important;
+            background: var(--bg-color);
+        }
+
+        /* =========================================== */
+        /* COMPONENTES PADRÃO DO DASHBOARD */
+        /* =========================================== */
+
+        /* CARD PADRÃO */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .mini-card {
+            background: var(--card-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .mini-card:hover {
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+        }
+
+        /* KPI CARD */
+        .kpi-card {
+            background: var(--card-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border-left: 4px solid #e67951;
+            position: relative;
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e67951;
+            line-height: 1;
+        }
+
+        .kpi-label {
+            font-size: 0.875rem;
+            color: var(--subtext-color);
+            margin-top: 0.5rem;
+        }
+
+        /* BADGE DE STATUS */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* =========================================== */
+        /* BARRA DE ROLAGEM PADRÃO */
+        /* =========================================== */
+
+        body::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 4px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+            border-radius: 8px;
+            border: 3px solid #f8f9fa;
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #b86a50, #9c533d);
+        }
+
+        /* Firefox */
+        body {
+            scrollbar-width: auto;
+            scrollbar-color: #e67951 #f8f9fa;
+        }
+
+        /* =========================================== */
+        /* MARCADOR FINAL PADRÃO */
+        /* =========================================== */
+
+        .scroll-end-marker {
+            height: 200px;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(230, 121, 81, 0.1));
+            border-top: 3px solid #e67951;
+            margin-top: 3rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-end-text {
+            background: #e67951;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(230, 121, 81, 0.3);
+            text-align: center;
+        }
+
+        /* =========================================== */
+        /* UTILITÁRIOS */
+        /* =========================================== */
+
+        .text-gradient {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bg-gradient {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+        }
+
+        .border-gradient {
+            border-image: linear-gradient(135deg, #e67951, #b86a50) 1;
+        }
+
+        /* =========================================== */
+        /* RESPONSIVIDADE */
+        /* =========================================== */
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem !important;
+            }
+
+            .kpi-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    </head>
+
+    <body class="bg-gray-50 p-4 md:p-6">
+        <div class="max-w-7xl mx-auto">
+            <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- KPI 1 -->
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3
+                            class="font-semibold text-gray-700 dark:text-gray-300">Total
+                            de Vendas</h3>
+                        <span
+                            class="material-symbols-outlined text-primary">trending_up</span>
+                    </div>
+                    <div class="kpi-value">R$ 189,7K</div>
+                    <div class="kpi-label">+12.5% vs mês anterior</div>
+                </div>
+
+                <!-- KPI 2 -->
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3
+                            class="font-semibold text-gray-700 dark:text-gray-300">Novos
+                            Leads</h3>
+                        <span
+                            class="material-symbols-outlined text-primary">person_add</span>
+                    </div>
+                    <div class="kpi-value">68</div>
+                    <div class="kpi-label">75% da meta atingida</div>
+                </div>
+
+                <!-- KPI 3 -->
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3
+                            class="font-semibold text-gray-700 dark:text-gray-300">Taxa
+                            Conversão</h3>
+                        <span
+                            class="material-symbols-outlined text-primary">conversion_path</span>
+                    </div>
+                    <div class="kpi-value">37.2%</div>
+                    <div class="kpi-label">Eficiência de vendas</div>
+                </div>
+
+                <!-- KPI 4 -->
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3
+                            class="font-semibold text-gray-700 dark:text-gray-300">Clientes
+                            Ativos</h3>
+                        <span
+                            class="material-symbols-outlined text-primary">group</span>
+                    </div>
+                    <div class="kpi-value">45</div>
+                    <div class="kpi-label">+8 este mês</div>
+                </div>
+            </div>
+
+            <!-- =========================================== -->
+            <!-- SEÇÃO DE GRÁFICOS (EXEMPLO) -->
+            <!-- =========================================== -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- GRÁFICO 1 -->
+                <div class="dashboard-card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3
+                            class="text-xl font-semibold text-gray-900 dark:text-white">Vendas
+                            por Categoria</h3>
+                        <span class="text-sm text-gray-500">Este mês</span>
+                    </div>
+                    <div
+                        class="h-64 flex items-center justify-center text-gray-400">
+                        <!-- Espaço para gráfico -->
+                        [GRÁFICO 1 - Personalizar]
+                    </div>
+                </div>
+
+                <!-- GRÁFICO 2 -->
+                <div class="dashboard-card">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3
+                            class="text-xl font-semibold text-gray-900 dark:text-white">Leads
+                            por Status</h3>
+                        <span class="text-sm text-gray-500">Últimos 30
+                            dias</span>
+                    </div>
+                    <div
+                        class="h-64 flex items-center justify-center text-gray-400">
+                        <!-- Espaço para gráfico -->
+                        [GRÁFICO 2 - Personalizar]
+                    </div>
+                </div>
+            </div>
+
+            <!-- =========================================== -->
+            <!-- SEÇÃO DE TABELAS (EXEMPLO) -->
+            <!-- =========================================== -->
+            <div class="dashboard-card mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3
+                        class="text-xl font-semibold text-gray-900 dark:text-white">Top
+                        Corretores</h3>
+                    <button
+                        class="text-primary hover:text-primary-dark font-medium">
+                        Ver todos →
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr
+                                class="border-b border-gray-200 dark:border-gray-700">
+                                <th
+                                    class="py-3 px-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Corretor
+                                </th>
+                                <th
+                                    class="py-3 px-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Vendas
+                                </th>
+                                <th
+                                    class="py-3 px-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Comissão
+                                </th>
+                                <th
+                                    class="py-3 px-4 text-left text-sm font-semibold text-gray-900 dark:text-white">Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                class="border-b border-gray-100 dark:border-gray-800">
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                                            JS
+                                        </div>
+                                        <div>
+                                            <p class="font-medium">João
+                                                Silva</p>
+                                            <p
+                                                class="text-sm text-gray-500">Equipe
+                                                Alpha</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <div class="font-semibold">15</div>
+                                    <div
+                                        class="text-sm text-gray-500">Planos</div>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <div class="font-semibold">R$ 2.250,00</div>
+                                    <div class="text-sm text-gray-500">Este
+                                        mês</div>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="status-success status-badge">
+                                        <span
+                                            class="material-symbols-outlined text-sm mr-1">check_circle</span>
+                                        Ativo
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- Mais linhas da tabela... -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div> <!-- Fim do dashboard-container -->
+
+        <!-- =========================================== -->
+        <!-- SCRIPT PADRÃO PARA TODOS OS DASHBOARDS -->
+        <!-- =========================================== -->
+        <script>
+            // CONFIGURAÇÃO PADRÃO PARA DASHBOARDS EM IFRAME
+            (function () {
+                'use strict';
+
+                console.log('📊 Dashboard Template - Carregado');
+
+                // ===========================================
+                // 1. VERIFICAR SE ESTÁ DENTRO DE IFRAME
+                // ===========================================
+                const isInIframe = window.self !== window.top;
+
+                if (isInIframe) {
+                    console.log('🎯 Dashboard carregado dentro de iframe');
+
+                    // ===========================================
+                    // 2. INICIALIZAÇÃO DO DASHBOARD
+                    // ===========================================
+                    document.addEventListener('DOMContentLoaded', function () {
+                        console.log('✅ DOM totalmente carregado');
+
+                        // Ajustar tema automaticamente
+                        adjustTheme();
+
+                        // Garantir altura suficiente para scroll
+                        guaranteeScrollHeight();
+
+                        // Configurar componentes dinâmicos
+                        setupDynamicComponents();
+
+                        // Informar ao parent que o dashboard está pronto
+                        notifyParentDashboardReady();
+                    });
+
+                    // ===========================================
+                    // 3. FUNÇÕES UTILITÁRIAS
+                    // ===========================================
+
+                    /**
+                     * Ajusta o tema (claro/escuro) com base no parent
+                     */
+                    function adjustTheme() {
+                        try {
+                            const parentTheme = window.parent.document.documentElement.classList.contains('dark')
+                                ? 'dark'
+                                : 'light';
+
+                            document.body.className = parentTheme;
+                            console.log(`🎨 Tema ajustado para: ${parentTheme}`);
+                        } catch (e) {
+                            console.log('⚠️ Não foi possível detectar tema do parent');
+                        }
+                    }
+
+                    /**
+                     * Garante que o dashboard tenha altura suficiente para scroll
+                     */
+                    function guaranteeScrollHeight() {
+                        setTimeout(() => {
+                            const bodyHeight = document.body.scrollHeight;
+                            const viewportHeight = window.innerHeight;
+                            const minRequiredHeight = viewportHeight + 400;
+
+                            console.log('📏 Verificando altura:', {
+                                atual: bodyHeight + 'px',
+                                viewport: viewportHeight + 'px',
+                                necessária: minRequiredHeight + 'px',
+                                precisaExpandir: bodyHeight < minRequiredHeight
+                            });
+
+                            // Se necessário, ajustar a área de scroll
+                            if (bodyHeight < minRequiredHeight) {
+                                const scrollMarker = document.querySelector('.scroll-end-marker');
+                                if (scrollMarker) {
+                                    const extraHeight = minRequiredHeight - bodyHeight + 100;
+                                    scrollMarker.style.height = `${extraHeight}px`;
+                                    console.log(`⚡ Área de scroll expandida em ${extraHeight}px`);
+                                }
+                            }
+                        }, 300);
+                    }
+
+                    /**
+                     * Configura componentes dinâmicos do dashboard
+                     */
+                    function setupDynamicComponents() {
+                        // Adicionar tooltips nos KPIs
+                        document.querySelectorAll('.kpi-card').forEach(card => {
+                            card.addEventListener('mouseenter', function () {
+                                this.style.transform = 'translateY(-4px)';
+                            });
+
+                            card.addEventListener('mouseleave', function () {
+                                this.style.transform = 'translateY(0)';
+                            });
+                        });
+
+                        // Configurar tooltips de status
+                        document.querySelectorAll('[data-tooltip]').forEach(element => {
+                            const tooltipText = element.getAttribute('data-tooltip');
+                            if (tooltipText) {
+                                element.title = tooltipText;
+                            }
+                        });
+
+                        console.log('🔧 Componentes dinâmicos configurados');
+                    }
+
+                    /**
+                     * Informa ao parent que o dashboard está pronto
+                     */
+                    function notifyParentDashboardReady() {
+                        setTimeout(() => {
+                            try {
+                                const dashboardData = {
+                                    type: 'dashboardReady',
+                                    title: document.title,
+                                    height: document.body.scrollHeight,
+                                    url: window.location.href,
+                                    timestamp: Date.now()
+                                };
+
+                                window.parent.postMessage(dashboardData, '*');
+                                console.log('📤 Dashboard notificado como pronto para parent');
+
+                            } catch (e) {
+                                console.log('⚠️ Não foi possível notificar parent');
+                            }
+                        }, 1000);
+                    }
+
+                    // ===========================================
+                    // 4. ESCUTAR COMANDOS DO PARENT
+                    // ===========================================
+                    window.addEventListener('message', function (event) {
+                        try {
+                            const data = event.data;
+
+                            if (data.type === 'refreshDashboard') {
+                                console.log('🔄 Parent solicitou refresh do dashboard');
+                                // Implementar refresh se necessário
+                            }
+
+                            if (data.type === 'updateTheme') {
+                                console.log(`🎨 Parent solicitou mudança de tema: ${data.theme}`);
+                                document.body.className = data.theme || 'light';
+                            }
+
+                        } catch (e) {
+                            // Ignorar erros
+                        }
+                    });
+
+                    // ===========================================
+                    // 5. FUNÇÕES GLOBAIS PARA DEBUG
+                    // ===========================================
+
+                    // Debug helper
+                    window.dashboardDebug = function () {
+                        console.group('🔧 DEBUG DO DASHBOARD');
+                        console.log('URL:', window.location.href);
+                        console.log('Título:', document.title);
+                        console.log('Altura body:', document.body.scrollHeight + 'px');
+                        console.log('Viewport:', window.innerHeight + 'px');
+                        console.log('Tema atual:', document.body.className);
+                        console.log('Em iframe:', isInIframe);
+                        console.groupEnd();
+
+                        return {
+                            height: document.body.scrollHeight,
+                            viewport: window.innerHeight,
+                            theme: document.body.className,
+                            url: window.location.href
+                        };
+                    };
+
+                    // Forçar recálculo de altura
+                    window.recalculateHeight = function () {
+                        guaranteeScrollHeight();
+                        notifyParentDashboardReady();
+                        console.log('📐 Altura recalculada');
+                    };
+
+                } else {
+                    console.log('🌍 Dashboard carregado diretamente (não em iframe)');
+                }
+
+                // ===========================================
+                // 6. EXPORTAÇÃO DE FUNÇÕES PÚBLICAS
+                // ===========================================
+                window.dashboardUtils = {
+                    refresh: function () {
+                        location.reload();
+                    },
+
+                    toggleTheme: function () {
+                        const currentTheme = document.body.className;
+                        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                        document.body.className = newTheme;
+                        console.log(`🎨 Tema alterado para: ${newTheme}`);
+                        return newTheme;
+                    },
+
+                    getStats: function () {
+                        const cards = document.querySelectorAll('.kpi-card, .dashboard-card');
+                        const tables = document.querySelectorAll('table');
+                        const charts = document.querySelectorAll('[data-chart]');
+
+                        return {
+                            totalCards: cards.length,
+                            totalTables: tables.length,
+                            totalCharts: charts.length,
+                            totalHeight: document.body.scrollHeight,
+                            theme: document.body.className
+                        };
+                    }
+                };
+
+            })();
+    </script>
+    </body>
+
+</html>

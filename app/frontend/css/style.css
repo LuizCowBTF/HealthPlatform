@@ -1,0 +1,110 @@
+/* =========================================== */
+/* VARIÁVEIS E RESET */
+/* =========================================== */
+:root {
+    --primary: #d48262;
+    --primary-dark: #b86a50;
+    --background-light: #f5f5f5;
+    --background-dark: #1a202c;
+    --card-light: #ffffff;
+    --card-dark: #2d3748;
+    --text-light: #2d3748;
+    --text-dark: #f7fafc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* =========================================== */
+/* HEADER */
+/* =========================================== */
+.health-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 1rem 2rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+/* =========================================== */
+/* CONTAINER DE CONTEÚDO */
+/* =========================================== */
+.content-container {
+    flex: 1;
+    position: relative;
+    background: white;
+    margin: 1rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================== */
+/* IFRAME */
+/* =========================================== */
+.main-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* Garantir que o iframe tenha scroll */
+.main-iframe html,
+.main-iframe body {
+    overflow-y: auto !important;
+    min-height: 100vh !important;
+}
+
+/* =========================================== */
+/* LOADING */
+/* =========================================== */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* =========================================== */
+/* RESPONSIVIDADE */
+/* =========================================== */
+@media (max-width: 768px) {
+    .content-container {
+        margin: 0.5rem;
+        border-radius: 0.75rem;
+    }
+    
+    .health-header {
+        padding: 0.75rem 1rem;
+    }
+}
