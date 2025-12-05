@@ -5,193 +5,179 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard Geral - HealthCRM</title>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
         <!-- Tailwind -->
         <script src="https://cdn.tailwindcss.com"></script>
         <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#e67951",
-                        "primary-light": "#f8a583",
-                        "primary-dark": "#b86a50",
-                        "secondary": "#4299e1",
-                        "success": "#48bb78",
-                        "warning": "#ed8936",
-                        "danger": "#f56565",
-                        "info": "#0bc5ea",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#211511",
-                        "card-light": "#ffffff",
-                        "card-dark": "#2a1a14",
-                        "text-light": "#1c1c1c",
-                        "text-dark": "#f5f5f5",
-                        "subtext-light": "#876d64",
-                        "subtext-dark": "#a18a82",
-                        "border-light": "#e5dedc",
-                        "border-dark": "#40312c",
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "primary": "#e67951",
+                            "primary-light": "#f8a583",
+                            "primary-dark": "#b86a50",
+                            "secondary": "#4299e1",
+                            "success": "#48bb78",
+                            "warning": "#ed8936",
+                            "danger": "#f56565",
+                            "info": "#0bc5ea",
+                            "background-light": "#f8f6f6",
+                            "background-dark": "#211511",
+                            "card-light": "#ffffff",
+                            "card-dark": "#2a1a14",
+                            "text-light": "#1c1c1c",
+                            "text-dark": "#f5f5f5",
+                            "subtext-light": "#876d64",
+                            "subtext-dark": "#a18a82",
+                            "border-light": "#e5dedc",
+                            "border-dark": "#40312c",
 
-                    },
-                    fontFamily: {
-                        "display": ["Inter", "sans-serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.5rem",
-                        "lg": "1rem",
-                        "xl": "1.5rem",
-                        "full": "9999px"
+                        },
+                        fontFamily: {
+                            "display": ["Inter", "sans-serif"]
+                        },
+                        borderRadius: {
+                            "DEFAULT": "0.5rem",
+                            "lg": "1rem",
+                            "xl": "1.5rem",
+                            "full": "9999px"
+                        },
                     },
                 },
-            },
-        }
-    </script>
+            }
+        </script>
 
         <!-- CSS para garantir scroll no iframe -->
         <style>
-        /* ESTILOS CRÍTICOS PARA IFRAME */
-        html,
-        body {
-            min-height: 100% !important;
-            height: auto !important;
-            overflow-y: auto !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            padding-bottom: 10px !important;
-        }
+            /* ESTILOS CRÍTICOS PARA IFRAME */
+            html,
+            body {
+                min-height: 100% !important;
+                height: auto !important;
+                overflow-y: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                padding-bottom: 10px !important;
+            }
 
-        .max-w-7xl {
-            min-height: 100% !important;
-            padding-bottom: 0px !important;
-        }
+            .max-w-7xl {
+                min-height: 100% !important;
+                padding-bottom: 0px !important;
+            }
 
-        /* Barra de rolagem estilizada */
-        body::-webkit-scrollbar {
-            width: 18px;
-        }
+            /* Barra de rolagem estilizada */
+            body::-webkit-scrollbar {
+                width: 18px;
+            }
 
-        body::-webkit-scrollbar-track {
-            background: #f8f9fa;
-            border-radius: 8px;
-            margin: 4px;
-        }
+            body::-webkit-scrollbar-track {
+                background: #f8f9fa;
+                border-radius: 8px;
+                margin: 4px;
+            }
 
-        body::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #d48262, #b86a50);
-            border-radius: 8px;
-            border: 3px solid #f8f9fa;
-        }
+            body::-webkit-scrollbar-thumb {
+                background: linear-gradient(135deg, #d48262, #b86a50);
+                border-radius: 8px;
+                border: 3px solid #f8f9fa;
+            }
 
-        body::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #b86a50, #9c533d);
-        }
-    </style>
+            body::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(135deg, #b86a50, #9c533d);
+            }
+        </style>
 
         <!-- ESTILOS GERAIS DO DASHBOARD -->
         <style>
-        .card {
-            background: var(--card-color);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: var(--shadow-card);
-            border-left: 4px solid #e67951;
-            position: relative;
-        }
+            .card {
+                background: var(--card-color);
+                border-radius: 1rem;
+                padding: 1.5rem;
+                box-shadow: var(--shadow-card);
+                border-left: 4px solid #e67951;
+                position: relative;
+            }
 
 
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-card-hover);
-        }
+            .card:hover {
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-card-hover);
+            }
 
-        .kpi-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #d48262;
-        }
+            .kpi-value {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #d48262;
+            }
 
-        .kpi-label {
-            color: #666;
-            font-size: 0.9rem;
-        }
+            .kpi-label {
+                color: #666;
+                font-size: 0.9rem;
+            }
 
-        .progress-bar {
-            height: 8px;
-            border-radius: 4px;
-            background: #e5e7eb;
-            overflow: hidden;
-        }
+            .progress-bar {
+                height: 8px;
+                border-radius: 4px;
+                background: #e5e7eb;
+                overflow: hidden;
+            }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #d48262, #f0a087);
-            border-radius: 4px;
-        }
-    </style>
+            .progress-fill {
+                height: 100%;
+                background: linear-gradient(90deg, #d48262, #f0a087);
+                border-radius: 4px;
+            }
+        </style>
 
     </head>
 
     <body class="bg-gray-50 p-4 md:p-6">
         <div class="max-w-7xl mx-auto">
-            <div
-                class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
                 <!-- KPI Cards -->
                 <div
                     class="bg-card-light dark:bg-card-dark m-2 p-6 pb-8 rounded-xl shadow-sm col-span-1 md:col-span-2 xl:col-span-4">
                     <div class="flex flex-col gap-3">
                         <div class="flex gap-6 justify-between">
-                            <p
-                                class="text-text-light dark:text-text-dark text-base font-medium">Meta
+                            <p class="text-text-light dark:text-text-dark text-base font-medium">🎯
+                                Meta
                                 Mensal</p>
                             <p class="text-primary text-sm font-bold">65%</p>
                         </div>
-                        <div
-                            class="rounded-full bg-background-light dark:bg-background-dark h-2.5">
-                            <div class="h-2.5 rounded-full bg-primary"
-                                style="width: 65%;"></div>
+                        <div class="rounded-full bg-background-light dark:bg-background-dark h-2.5">
+                            <div class="h-2.5 rounded-full bg-primary" style="width: 65%;"></div>
                         </div>
-                        <p
-                            class="text-subtext-light dark:text-subtext-dark text-sm font-normal">R$
+                        <p class="text-subtext-light dark:text-subtext-dark text-sm font-normal">R$
                             32,
                             500.00 / R$ 50,
                             000.00</p>
                     </div>
                 </div>
-                <div
-                    class="flex flex-col gap-2 rounded-xl ml-2 p-6 bg-card-light dark:bg-card-dark shadow-sm">
-                    <p
-                        class="text-text-light dark:text-text-dark text-base font-medium">Planos
+                <div class="flex flex-col gap-2 rounded-xl ml-2 p-6 bg-card-light dark:bg-card-dark shadow-sm">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium">🔒
+                        Planos
                         Fechados</p>
-                    <p
-                        class="text-primary tracking-tight text-4xl font-bold">15</p>
+                    <p class="text-primary tracking-tight text-4xl font-bold">15</p>
                 </div>
-                <div
-                    class="flex flex-col gap-2 rounded-xl mr-2 p-6 bg-card-light dark:bg-card-dark shadow-sm">
-                    <p
-                        class="text-text-light dark:text-text-dark text-base font-medium">Vidas
+                <div class="flex flex-col gap-2 rounded-xl mr-2 p-6 bg-card-light dark:bg-card-dark shadow-sm">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium">🛡️
+                        Vidas
                         Cobertas</p>
-                    <p
-                        class="text-primary tracking-tight text-4xl font-bold">42</p>
+                    <p class="text-primary tracking-tight text-4xl font-bold">42</p>
                 </div>
-                <div
-                    class="flex flex-col gap-2 rounded-xl ml-2 p-6 bg-card-light dark:bg-card-dark shadow-sm">
-                    <p
-                        class="text-text-light dark:text-text-dark text-base font-medium">Taxa
+                <div class="flex flex-col gap-2 rounded-xl ml-2 p-6 bg-card-light dark:bg-card-dark shadow-sm">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium">📈
+                        Taxa
                         de Converção</p>
-                    <p
-                        class="text-primary tracking-tight text-4xl font-bold">25%</p>
+                    <p class="text-primary tracking-tight text-4xl font-bold">25%</p>
                 </div>
-                <div
-                    class="flex flex-col gap-2 rounded-xl mr-2 p-6 bg-card-light dark:bg-card-dark shadow-sm">
-                    <p
-                        class="text-text-light dark:text-text-dark text-base font-medium">Receita
+                <div class="flex flex-col gap-2 rounded-xl mr-2 p-6 bg-card-light dark:bg-card-dark shadow-sm">
+                    <p class="text-text-light dark:text-text-dark text-base font-medium">💰
+                        Receita
                         Atual</p>
-                    <p
-                        class="text-primary tracking-tight text-4xl font-bold">R$32,
+                    <p class="text-primary tracking-tight text-4xl font-bold">R$32,
                         500</p>
                 </div>
             </div>
@@ -206,8 +192,7 @@
                     <div class="kpi-value" data-kpi="faturamento">R$ 189.750,
                         50</div>
                     <div class="kpi-label">Mês atual</div>
-                    <div
-                        class="mt-3 text-sm text-green-600 flex items-center"><span
+                    <div class="mt-3 text-sm text-green-600 flex items-center"><span
                             class="material-symbols-outlined text-sm mr-1">arrow_upward</span>+12.5%
                         vs mês anterior </div>
                 </div>
@@ -247,270 +232,259 @@
                     <div class="kpi-value" data-kpi="clientes">45</div>
                     <div class="kpi-label">Total
                         ativo</div>
-                    <div class="mt-3 text-sm"><span
-                            class="text-green-600">+8</span>este mês
+                    <div class="mt-3 text-sm"><span class="text-green-600">+8</span>este mês
                     </div>
                 </div>
             </div>
 
             <!-- GRÁFICOS E TABELAS -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-                <!-- Chart Cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-2 gap-6 mb-8 ml-2 mr-2">
+                <!-- VENDAS POR MÊS -->
                 <div
-                    class="lg:col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-4">
+                    class="lg:col-span-2 bg-card-light dark:bg-card-dark p-6 ml-0 mr-0 rounded-xl shadow-sm flex flex-col gap-4">
                     <div class="flex items-center justify-between">
-                        <h3
-                            class="text-text-light dark:text-text-dark text-lg font-semibold">Vendas
-                            por Categorias</h3>
-                        <p
-                            class="text-subtext-light dark:text-subtext-dark text-sm">Neste
+                        <h3 class="text-text-light dark:text-text-dark text-lg font-semibold">📊
+                            Vendas por Mês</h3>
+                        <p class="text-subtext-light dark:text-subtext-dark text-sm">Este
                             Mês</p>
                     </div>
                     <div class="flex items-center justify-center h-64">
-                        <div class="relative w-48 h-48"><svg
-                                class="w-full h-full" viewbox="0 0 36 36">
-                                <path
-                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                    fill="none" stroke="#e67951"
-                                    stroke-dasharray="60, 100" stroke-width="4">
-                                </path>
-                                <path
-                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                                    fill="none" stroke="#f4a261"
-                                    stroke-dasharray="30, 100"
-                                    stroke-dashoffset="-60"
-                                    stroke-width="4"></path>
-                                <path
-                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                                    fill="none" stroke="#2a9d8f"
-                                    stroke-dasharray="10, 100"
-                                    stroke-dashoffset="-90"
-                                    stroke-width="4"></path>
-                            </svg></div>
+                        <div class="relative w-48 h-48">
+                            <svg class="w-full h-full" viewbox="0 0 36 36">
+                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    fill="none" stroke="#e67951" stroke-dasharray="60, 100" stroke-width="4"></path>
+                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831" fill="none" stroke="#f4a261"
+                                    stroke-dasharray="30, 100" stroke-dashoffset="-60" stroke-width="4"></path>
+                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831" fill="none" stroke="#2a9d8f"
+                                    stroke-dasharray="10, 100" stroke-dashoffset="-90" stroke-width="4"></path>
+                            </svg>
+                        </div>
                         <div class="flex flex-col gap-4 ml-8">
-                            <div class="flex items-center gap-2"><span
-                                    class="w-3 h-3 rounded-full"
-                                    style="background-color: #e67951;"></span><span
-                                    class="text-text-light dark:text-text-dark text-sm">PME
-                                    (60%)</span></div>
-                            <div class="flex items-center gap-2"><span
-                                    class="w-3 h-3 rounded-full"
-                                    style="background-color: #f4a261;"></span><span
-                                    class="text-text-light dark:text-text-dark text-sm">PF
-                                    (30%)</span></div>
-                            <div class="flex items-center gap-2"><span
-                                    class="w-3 h-3 rounded-full"
-                                    style="background-color: #2a9d8f;"></span><span
-                                    class="text-text-light dark:text-text-dark text-sm">Adesão
-                                    (10%)</span></div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full" style="background-color: #e67951;"></span>
+                                <span class="text-text-light dark:text-text-dark text-sm">PME
+                                    (60%)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full" style="background-color: #f4a261;"></span>
+                                <span class="text-text-light dark:text-text-dark text-sm">PF
+                                    (30%)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full" style="background-color: #2a9d8f;"></span>
+                                <span class="text-text-light dark:text-text-dark text-sm">Adesão
+                                    (10%)</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div
-                    class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-4">
-                    <h3
-                        class="text-text-light dark:text-text-dark text-lg font-semibold">Mais
+                <!-- MAIS VENDIDOS / EQUIPES -->
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm flex flex-col gap-1">
+                    <h3 class="text-text-light dark:text-text-dark text-lg font-semibold">🏆
+                        Mais
                         Vendidos / Equipes</h3>
                     <ul class="space-y-4">
-                        <li class="flex items-center gap-4"><img
-                                class="w-10 h-10 rounded-full"
-                                data-alt="Avatar of Maria Silva"
+                        <li class="flex items-center gap-4">
+                            <img class="w-10 h-10 rounded-full" data-alt="Avatar of Maria Silva"
                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaBOEI7mRhIoRWRejxqNbCX0mVL_PSusY7QBshzIKMto2GC8NLRmCNGPohCR10E7aLCBpB0t7_YE_ON8ZcNgsnbW5PjeRZzXAP8QysEZfuo5JlQKKJDblb5Xa0Fqp8DX350UwM1741nDpwpQnOXEm1omRt3dVrU5JdOkGtgeLPEK9T_yY7SgyTsPHD32fDSkc0XyxCDrYGbSmq2VS6xZVBEzFBU69kvljLMAKGXsU_yDLZXVRfwKqIhAJnBxIBmPJhu7qI24xQcEY" />
                             <div>
-                                <p
-                                    class="font-medium text-text-light dark:text-text-dark">Maria
+                                <p class="font-medium text-text-light dark:text-text-dark">Maria
                                     Silva</p>
-                                <p
-                                    class="text-sm text-subtext-light dark:text-subtext-dark">R$
+                                <p class="text-sm text-subtext-light dark:text-subtext-dark">R$
                                     12,300.00</p>
                             </div>
                         </li>
-                        <li class="flex items-center gap-4"><img
-                                class="w-10 h-10 rounded-full"
-                                data-alt="Avatar of Carlos Souza"
+                        <li class="flex items-center gap-4">
+                            <img class="w-10 h-10 rounded-full" data-alt="Avatar of Carlos Souza"
                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRbo1g2PWkgTdncCx_EZOQ--TwUAWZ7xeyO1iA8fL2_Y3gvJosvLqiO4ChO3jVUlYGGlC5AJe735gHnraLYZ8DKZTSrt8WWtt2-UJBkHX_psnNg1-P83ID7xV-BYiFfwjSGePHUrnnsHN7_bNXSFuarucnFbiVMEmMhA0rsmI25IIl_rx9fXcPBobThbCrqEKcYxYTtVPW3kdjrceBjVZ74BtnqKA2ARXCF9fAvcWWFlQWHN4BCpmfpzu3tE_JkeGWgoq0qaB6nqc" />
                             <div>
-                                <p
-                                    class="font-medium text-text-light dark:text-text-dark">Carlos
+                                <p class="font-medium text-text-light dark:text-text-dark">Carlos
                                     Souza</p>
-                                <p
-                                    class="text-sm text-subtext-light dark:text-subtext-dark">R$
-                                    9,
-                                    800.00</p>
+                                <p class="text-sm text-subtext-light dark:text-subtext-dark">R$
+                                    9,800.00</p>
                             </div>
                         </li>
-                        <li class="flex items-center gap-4"><img
-                                class="w-10 h-10 rounded-full"
-                                data-alt="Avatar of Equipe Alpha"
+                        <li class="flex items-center gap-4">
+                            <img class="w-10 h-10 rounded-full" data-alt="Avatar of Equipe Alpha"
                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnI-5BHDZe6iVk7pkidnCwwRJ0ZcmBa6bUtLD0ZxGU_OOH3mT-OP48cKh7keTNqT1_LDKq84OoxefPrHCQGmosrjYXFzDO8pluhNPUKWaYYx5gijRIxBkP2B4FOcburVmO3UYd6zspleYieP8E1KqMjlzDQDw6HG7BDO8Mo_DTTXKcjWcGEHEn_M7nV-xrVKQ_lNRlhmrCnXEVq8OHLOFoyIK7l1GI1QG1MghJu9nloMhj7ybieA0W7oYcB9qNmHtnEAAmcTqGVjU" />
                             <div>
-                                <p
-                                    class="font-medium text-text-light dark:text-text-dark">Equipe
+                                <p class="font-medium text-text-light dark:text-text-dark">Equipe
                                     Alpha</p>
-                                <p
-                                    class="text-sm text-subtext-light dark:text-subtext-dark">R$
-                                    8,
-                                    500.00</p>
+                                <p class="text-sm text-subtext-light dark:text-subtext-dark">R$
+                                    8,500.00</p>
                             </div>
                         </li>
-                        <li class="flex items-center gap-4"><img
-                                class="w-10 h-10 rounded-full"
-                                data-alt="Avatar of Ana Pereira"
+                        <li class="flex items-center gap-4">
+                            <img class="w-10 h-10 rounded-full" data-alt="Avatar of Ana Pereira"
                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPUFxHa0mjKX4zYM67z1vQziGQH4mr9NSZwE0VtIT4pzZ6_1eJyIWas8n5-x46o0IU69SuOPKnQ7RlZPjgVUOwbbWxGMoYk5N0OF_IW-USGCoJ506xkJCm953NGuXSGtCyiKNGMNseLTArFsKM83WQJCPd4joFegj6JSPhrenV02xHpypiKsYe2BbRhaYk2wxKD5ANCdboLcE7pdApD8fHHjzJdbB6_5p-4BgCwWs9lmzD6H2ehKf1rnkt8PT0HRgZMoM0WPmj9Z0" />
                             <div>
-                                <p
-                                    class="font-medium text-text-light dark:text-text-dark">Ana
+                                <p class="font-medium text-text-light dark:text-text-dark">Ana
                                     Pereira</p>
-                                <p
-                                    class="text-sm text-subtext-light dark:text-subtext-dark">R$
-                                    7,
-                                    250.00</p>
+                                <p class="text-sm text-subtext-light dark:text-subtext-dark">R$
+                                    7,250.00</p>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div
-                class="mt-6 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm">
-                <div class="flex items-center justify-between mb-4">
-                    <h3
-                        class="text-text-light dark:text-text-dark text-lg font-semibold">Receita
-                        por Plano/Operadora</h3>
-                    <p
-                        class="text-subtext-light dark:text-subtext-dark text-sm">Neste
-                        Mês</p>
-                </div>
-                <div class="space-y-4">
-                    <div class="grid gap-2 items-center"
-                        style="grid-template-columns: 100px 1fr;">
-                        <p
-                            class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
-                            Amil</p>
-                        <div
-                            class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
-                            <div class="bg-primary h-4 rounded-full"
-                                style="width: 70%"></div>
-                        </div>
+
+            <!-- RECEITA POR PLANO / OPERADORA-->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 ml-2 mr-2">
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-text-light dark:text-text-dark text-lg font-semibold">💹
+                            Receita por Plano / Operadora</h3>
+                        <p class="text-subtext-light dark:text-subtext-dark text-sm">Neste
+                            Mês</p>
                     </div>
-                    <div class="grid gap-2 items-center"
-                        style="grid-template-columns: 100px 1fr;">
-                        <p
-                            class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
-                            Bradesco
-                        </p>
-                        <div
-                            class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
-                            <div class="bg-primary h-4 rounded-full"
-                                style="width: 40%"></div>
+                    <div class="space-y-4">
+                        <div class="grid gap-2 items-center" style="grid-template-columns: 100px 1fr;">
+                            <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
+                                Amil</p>
+                            <div class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
+                                <div class="bg-primary h-4 rounded-full" style="width: 70%"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="grid gap-2 items-center"
-                        style="grid-template-columns: 100px 1fr;">
-                        <p
-                            class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
-                            SulAmérica
-                        </p>
-                        <div
-                            class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
-                            <div class="bg-primary h-4 rounded-full"
-                                style="width: 65%"></div>
+                        <div class="grid gap-2 items-center" style="grid-template-columns: 100px 1fr;">
+                            <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
+                                Bradesco
+                            </p>
+                            <div class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
+                                <div class="bg-primary h-4 rounded-full" style="width: 40%"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="grid gap-2 items-center"
-                        style="grid-template-columns: 100px 1fr;">
-                        <p
-                            class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
-                            NotreDame
-                        </p>
-                        <div
-                            class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
-                            <div class="bg-primary h-4 rounded-full"
-                                style="width: 55%"></div>
+                        <div class="grid gap-2 items-center" style="grid-template-columns: 100px 1fr;">
+                            <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
+                                SulAmérica
+                            </p>
+                            <div class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
+                                <div class="bg-primary h-4 rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <div class="grid gap-2 items-center" style="grid-template-columns: 100px 1fr;">
+                            <p class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
+                                NotreDame
+                            </p>
+                            <div class="w-full bg-background-light dark:bg-background-dark rounded-full h-4">
+                                <div class="bg-primary h-4 rounded-full" style="width: 55%"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                <!-- GRÁFICO 1 -->
-                <div class="m-2 p-4">
-                    <h3 class="font-semibold text-gray-700 mb-4">📈 Vendas
-                        Mensais</h3>
-                    <div class="h-64"><canvas id="salesChart"></canvas></div>
-                </div>
-                <!-- GRÁFICO 2 -->
-                <div class="m-2 p-4">
-                    <h3 class="font-semibold text-gray-700 mb-4">🎯 Leads por
-                        Status</h3>
-                    <div class="h-64"><canvas id="leadsChart"></canvas></div>
+
+            <!-- LEADS POR STATUS -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 m-8 ml-2 mr-2">
+                <div class="flex items-center justify-between">
+                    <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm">
+                        <h3 class="font-semibold text-gray-700 mb-4">🎯 Leads por Status</h3>
+                        <div class="grid grid-cols-4 lg:grid-cols-4 gap-6">
+                            <div class="card">
+                                <div class="flex items-center mb-3 gap-2 mr-6">
+                                    <h3 class="text-base font-medium leading-normal">📝 Leads Criados</h3>
+                                </div>
+                                <div class="kpi-value tracking-light text-3xl font-bold leading-tight">125</div>
+                                <div class="text-green-500 text-base font-medium leading-normal"class="text-green-500 text-base font-medium leading-normal">+15%</div>
+                            </div>
+                            <div class="card">
+                                <div class="flex items-center mb-3 gap-2 mr-6">
+                                    <h3 class="text-base font-medium leading-normal">💼 Planos Fechados</h3>
+                                </div>
+                                <div class="kpi-value tracking-light text-3xl font-bold leading-tight">32</div>
+                                <div class="text-green-500 text-base font-medium leading-normal">+10%</div>
+                            </div>
+                            <div class="card">
+                                <div class="flex items-center mb-3 gap-2 mr-6">
+                                    <h3 class="text-base font-medium leading-normal">💰 Receita Total</h3>
+                                </div>
+                                <div class="kpi-value tracking-light text-3xl font-bold leading-tight">$56.800,</div>
+                                <div class="text-green-500 text-base font-medium leading-normal">+8%</div>
+                            </div>
+                            <div class="card">
+                                <div class="flex items-center mb-3 gap-2">
+                                    <h3 class="text-base font-medium leading-normal">➗ Média Negócios</h3>
+                                </div>
+                                <div class="kpi-value tracking-light text-3xl font-bold leading-tight">$1.775,</div>
+                                <div class="text-green-500 text-base font-medium leading-normal">+5%</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- TABELA DE PERFORMANCE -->
-            <div class="mb-8">
-                <h3 class="font-semibold text-gray-700 mb-4">👥 Top
-                    Corretores</h3>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full">
-                        <thead>
-                            <tr class="bg-gray-100">
-                                <th class="py-3 px-4 text-left">Corretor</th>
-                                <th class="py-3 px-4 text-left">Vendas</th>
-                                <th class="py-3 px-4 text-left">Comissão</th>
-                                <th class="py-3 px-4 text-left">Conversão</th>
-                                <th class="py-3 px-4 text-left">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="corretores-table">
-                            <tr class="border-b">
-                                <td class="py-3 px-4">João Silva</td>
-                                <td class="py-3 px-4">15</td>
-                                <td class="py-3 px-4">R$ 2.250,
-                                    00</td>
-                                <td class="py-3 px-4">
-                                    <div class="progress-bar w-24">
-                                        <div class="progress-fill"
-                                            style="width: 33%"></div>
-                                    </div><span class="text-xs">33%</span>
-                                </td>
-                                <td class="py-3 px-4"><span
-                                        class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Ativo</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 m-8 ml-2 mr-2">
+                <div class="p-4 bg-card-light dark:bg-card-dark rounded-xl shadow-sm">
+                    <h3 class="font-semibold text-gray-700 mb-4">
+                        👥 Top Corretores
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="py-3 px-4 text-left">Corretor</th>
+                                    <th class="py-3 px-4 text-left">Vendas</th>
+                                    <th class="py-3 px-4 text-left">Comissão</th>
+                                    <th class="py-3 px-4 text-left">Conversão</th>
+                                    <th class="py-3 px-4 text-left">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corretores-table">
+                                <tr class="border-b">
+                                    <td class="py-3 px-4">João
+                                        Silva</td>
+                                    <td class="py-3 px-4">15</td>
+                                    <td class="py-3 px-4">R$ 2.250,
+                                        00</td>
+                                    <td class="py-3 px-4">
+                                        <div class="progress-bar w-24">
+                                            <div class="progress-fill" style="width: 33%"></div>
+                                        </div><span class="text-xs">33%</span>
+                                    </td>
+                                    <td class="py-3 px-4"><span
+                                            class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Ativo</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
             <!-- SISTEMA DE SAÚDE -->
-            <div class="mt-6">
-                <h3 class="font-semibold text-gray-700 mb-4">🩺 Status do
-                    Sistema</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="text-center p-4 bg-green-50 rounded-lg"><span
-                            class="material-symbols-outlined text-green-500 text-3xl">check_circle</span>
-                        <div class="font-semibold mt-2">CRM</div>
-                        <div class="text-sm text-green-600">Operacional</div>
-                    </div>
-                    <div class="text-center p-4 bg-green-50 rounded-lg"><span
-                            class="material-symbols-outlined text-green-500 text-3xl">check_circle</span>
-                        <div class="font-semibold mt-2">Financeiro</div>
-                        <div class="text-sm text-green-600">Operacional</div>
-                    </div>
-                    <div class="text-center p-4 bg-green-50 rounded-lg"><span
-                            class="material-symbols-outlined text-green-500 text-3xl">check_circle</span>
-                        <div class="font-semibold mt-2">WhatsApp</div>
-                        <div class="text-sm text-green-600">Operacional</div>
-                    </div>
-                    <div class="text-center p-4 bg-green-50 rounded-lg"><span
-                            class="material-symbols-outlined text-green-500 text-3xl">check_circle</span>
-                        <div class="font-semibold mt-2">IA</div>
-                        <div class="text-sm text-green-600">Operacional</div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 m-8 ml-2 mr-2">
+                <div class="p-4 bg-card-light dark:bg-card-dark rounded-xl shadow-sm">
+                    <h3 class="font-semibold text-gray-700 mb-4">🩺
+                        Status do
+                        Sistema</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center p-4 bg-green-50 rounded-lg"><span
+                                class="material-symbols-outlined text-green-500 text-3xl">check_circle</span>
+                            <div class="font-semibold mt-2">CRM</div>
+                            <div class="text-sm text-green-600">Operacional</div>
+                        </div>
+                        <div class="text-center p-4 bg-green-50 rounded-lg"><span
+                                class="material-symbols-outlined text-green-500 text-3xl">check_circle</span>
+                            <div class="font-semibold mt-2">Financeiro</div>
+                            <div class="text-sm text-green-600">Operacional</div>
+                        </div>
+                        <div class="text-center p-4 bg-green-50 rounded-lg"><span
+                                class="material-symbols-outlined text-green-500 text-3xl">check_circle</span>
+                            <div class="font-semibold mt-2">WhatsApp</div>
+                            <div class="text-sm text-green-600">Operacional</div>
+                        </div>
+                        <div class="text-center p-4 bg-green-50 rounded-lg"><span
+                                class="material-symbols-outlined text-green-500 text-3xl">check_circle</span>
+                            <div class="font-semibold mt-2">IA</div>
+                            <div class="text-sm text-green-600">Operacional</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script> // Verificar se está dentro de iframe
+    <script> // Verificar se está dentro de iframe
 
         if (window.self !== window.top) {
             console.log('📦 Dashboard carregado em iframe');
@@ -557,6 +531,6 @@
         }
 
     </script>
-    </body>
+</body>
 
 </html>
