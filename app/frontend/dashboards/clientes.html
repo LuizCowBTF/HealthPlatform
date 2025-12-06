@@ -1,726 +1,697 @@
 <!DOCTYPE html>
-<html class="light" lang="pt-BR">
+<html lang="pt-BR">
+
   <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Clientes - Health Platform</title>
-    <script
-      src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
-      rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- TITLE VARIÁVEL - Editar em cada dashboard -->
+    <title>HealthCRM</title>
+
+    <!-- Ícones do Google -->
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-      rel="stylesheet" />
-    <style>
-      .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-      }
-    </style>
+      rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuração do Tailwind -->
     <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#e67951",
-              background: {
-                light: "#f8f6f6",
-                dark: "#211511",
-              },
-              card: {
-                light: "#ffffff",
-                dark: "#2a1a14",
-              },
-              text: {
-                light: "#1c1c1c",
-                dark: "#f5f5f5",
-              },
-              subtext: {
-                light: "#876d64",
-                dark: "#a18a82",
-              },
-              border: {
-                light: "#e5dedc",
-                dark: "#40312c",
-              },
-            },
-            fontFamily: {
-              display: ["Inter", "sans-serif"],
-            },
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#e67951",
+            "primary-light": "#f8a583",
+            "primary-dark": "#b86a50",
+            "secondary": "#4299e1",
+            "success": "#48bb78",
+            "warning": "#ed8936",
+            "danger": "#f56565",
+            "info": "#0bc5ea",
+            "background-light": "#f8f6f6",
+            "background-dark": "#211511",
+            "card-light": "#ffffff",
+            "card-dark": "#2a1a14",
+            "text-light": "#1c1c1c",
+            "text-dark": "#f5f5f5",
+            "subtext-light": "#876d64",
+            "subtext-dark": "#a18a82",
+            "border-light": "#e5dedc",
+            "border-dark": "#40312c",
           },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"],
+            "sans": ["Inter", "system-ui", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.75rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "2xl": "2rem",
+            "full": "9999px"
+          },
+          boxShadow: {
+            'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+            'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+          }
         },
-      };
-    </script>
+      },
+    }
+  </script>
+
+    <!-- CSS PADRÃO PARA TODOS OS DASHBOARDS -->
+    <style>
+    /* =========================================== */
+    /* RESET E ESTILOS GLOBAIS PARA IFRAME */
+    /* =========================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100vh !important;
+      height: auto !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-color, #f8f6f6);
+    }
+
+    body.dark {
+      --bg-color: #211511;
+      --card-color: #2a1a14;
+      --text-color: #f5f5f5;
+      --border-color: #40312c;
+    }
+
+    body.light {
+      --bg-color: #f8f6f6;
+      --card-color: #ffffff;
+      --text-color: #1c1c1c;
+      --border-color: #e5dedc;
+    }
+
+    /* =========================================== */
+    /* CONTAINER PRINCIPAL */
+    /* =========================================== */
+
+    .dashboard-container {
+      min-height: 1000px !important;
+      padding-bottom: 200px !important;
+      background: var(--bg-color);
+    }
+
+    /* =========================================== */
+    /* COMPONENTES PADRÃO DO DASHBOARD */
+    /* =========================================== */
+
+    /* CARD PADRÃO */
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .mini-card {
+      background: var(--card-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .mini-card:hover {
+      box-shadow: var(--shadow-card-hover);
+      transform: translateY(-2px);
+    }
+
+    /* KPI CARD */
+    .kpi-card {
+      background: var(--card-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border-left: 4px solid #e67951;
+      position: relative;
+    }
+
+    .kpi-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #e67951;
+      line-height: 1;
+    }
+
+    .kpi-label {
+      font-size: 0.875rem;
+      color: var(--subtext-color);
+      margin-top: 0.5rem;
+    }
+
+    /* BADGE DE STATUS */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-warning {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-danger {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .status-info {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    /* =========================================== */
+    /* BARRA DE ROLAGEM PADRÃO */
+    /* =========================================== */
+
+    body::-webkit-scrollbar {
+      width: 14px;
+    }
+
+    body::-webkit-scrollbar-track {
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin: 4px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #e67951, #b86a50);
+      border-radius: 8px;
+      border: 3px solid #f8f9fa;
+    }
+
+    body::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #b86a50, #9c533d);
+    }
+
+    /* Firefox */
+    body {
+      scrollbar-width: auto;
+      scrollbar-color: #e67951 #f8f9fa;
+    }
+
+    /* =========================================== */
+    /* MARCADOR FINAL PADRÃO */
+    /* =========================================== */
+
+    .scroll-end-marker {
+      height: 200px;
+      width: 100%;
+      background: linear-gradient(transparent, rgba(230, 121, 81, 0.1));
+      border-top: 3px solid #e67951;
+      margin-top: 3rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scroll-end-text {
+      background: #e67951;
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 2rem;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(230, 121, 81, 0.3);
+      text-align: center;
+    }
+
+    /* =========================================== */
+    /* UTILITÁRIOS */
+    /* =========================================== */
+
+    .text-gradient {
+      background: linear-gradient(135deg, #e67951, #b86a50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .bg-gradient {
+      background: linear-gradient(135deg, #e67951, #b86a50);
+    }
+
+    .border-gradient {
+      border-image: linear-gradient(135deg, #e67951, #b86a50) 1;
+    }
+
+    /* =========================================== */
+    /* RESPONSIVIDADE */
+    /* =========================================== */
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: 1rem !important;
+      }
+
+      .kpi-value {
+        font-size: 2rem;
+      }
+    }
+  </style>
   </head>
-  <body
-    class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
-    <div class="flex min-h-screen">
-      <div class="flex-1 flex flex-col">
-        <!-- Main Content -->
-        <main class="flex-1 p-1 bg-background-light dark:bg-background-dark">
-          <div class="flex-1 space-y-2">
-            <!-- Page Heading & Actions -->
-            <div
-              class="flex flex-col md:flex-row justify-between items-start md:items-center gap-1">
-              <div class="flex gap-1">
-                <button
-                  class="flex items-center justify-center gap-2 rounded-lg px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <span
-                    class="material-symbols-outlined text-base">download</span>
-                  <span>Exportar .XLSX</span>
-                </button>
-                <button
-                  class="flex items-center justify-center gap-2 rounded-lg px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <span
-                    class="material-symbols-outlined text-base">download</span>
-                  <span>Exportar .CSV</span>
-                </button>
-              </div>
-            </div>
 
-            <!-- Filter Bar Card -->
-            <div
-              class="bg-card-light dark:bg-card-dark p-4 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- Coluna 1 -->
-                <div class="space-y-4">
-                  <label class="flex flex-col">
-                    <p class="text-sm font-medium pb-2">Período</p>
-                    <input
-                      class="form-input w-full flex flex-1 overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
-                      placeholder="Selecionar período"
-                      type="text"
-                      id="periodFilter" />
-                  </label>
-                  <label class="flex flex-col">
-                    <p class="text-sm font-medium pb-2">Status</p>
-                    <select
-                      class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
-                      id="statusFilter">
-                      <option value>Todos</option>
-                      <option>Ativo</option>
-                      <option>Pendente</option>
-                      <option>Cancelado</option>
-                    </select>
-                  </label>
-                  <label class="flex flex-col">
-                    <p class="text-sm font-medium pb-2">Email</p>
-                    <input
-                      class="form-input w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
-                      placeholder="ex: cliente@email.com"
-                      type="text"
-                      id="emailFilter" />
-                  </label>
-                </div>
-
-                <!-- Coluna 2 -->
-                <div class="space-y-4">
-                  <label class="flex flex-col">
-                    <p class="text-sm font-medium pb-2">Categoria do Plano</p>
-                    <select
-                      class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
-                      id="categoryFilter">
-                      <option value>Todos</option>
-                      <option>Plano de Saúde</option>
-                      <option>Plano Odontológico</option>
-                    </select>
-                  </label>
-                  <label class="flex flex-col">
-                    <p class="text-sm font-medium pb-2">Nome do Cliente</p>
-                    <input
-                      class="form-input w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
-                      placeholder="ex: João Silva"
-                      type="text"
-                      id="clientNameFilter" />
-                  </label>
-                  <label class="flex flex-col">
-                    <p class="text-sm font-medium pb-2">Corretor</p>
-                    <select
-                      class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
-                      id="brokerFilter">
-                      <option value>Todos</option>
-                      <option>João Silva</option>
-                      <option>Maria Santos</option>
-                      <option>Pedro Oliveira</option>
-                    </select>
-                  </label>
-                </div>
-
-                <!-- Coluna 3 -->
-                <div class="space-y-4">
-                  <label class="flex flex-col">
-                    <p class="text-sm font-medium pb-2">Origem</p>
-                    <select
-                      class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
-                      id="originFilter">
-                      <option value>Todas</option>
-                      <option>Online</option>
-                      <option>Indicação</option>
-                    </select>
-                  </label>
-                  <label class="flex flex-col">
-                    <p class="text-sm font-medium pb-2">Número do Contrato</p>
-                    <input
-                      class="form-input w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
-                      placeholder="ex: C12345"
-                      type="text"
-                      id="contractFilter" />
-                  </label>
-                  <!-- Botões ocupando o mesmo espaço que os inputs acima -->
-                  <div class="flex flex-col justify-end h-[42px]">
-                    <div class="flex gap-2">
-                      <button
-                        class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-gray-200 dark:bg-gray-600 text-text-light dark:text-text-dark text-sm font-semibold leading-normal tracking-[0.015em] hover:bg-gray-300 dark:hover:bg-gray-500"
-                        id="clearFilters">
-                        <span class="truncate">Limpar Filtros</span>
-                      </button>
-                      <button
-                        class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-primary text-white text-sm font-semibold leading-normal tracking-[0.015em] hover:bg-primary/90"
-                        id="applyFilters">
-                        <span class="truncate">Aplicar Filtros</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Data Table Card -->
-            <div
-              class="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-border-light dark:border-border-dark overflow-hidden">
-              <div
-                class="p-4 flex justify-between items-center border-b border-border-light dark:border-border-dark">
-                <label class="flex flex-col min-w-40 !h-10 max-w-sm">
-                  <div
-                    class="flex w-full flex-1 items-stretch rounded-lg h-full">
-                    <div
-                      class="text-gray-500 flex bg-gray-100 dark:bg-gray-700 items-center justify-center pl-3 rounded-l-lg border-r-0">
-                      <span class="material-symbols-outlined">search</span>
-                    </div>
-                    <input
-                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-gray-100 dark:bg-gray-700 focus:border-none h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal"
-                      placeholder="Buscar na tabela..."
-                      value
-                      id="tableSearch" />
-                  </div>
-                </label>
-              </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
-                  <thead
-                    class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700/50">
-                    <tr>
-                      <th class="px-6 py-3 font-semibold" scope="col">
-                        Cliente
-                      </th>
-                      <th class="px-6 py-3 font-semibold" scope="col">
-                        Nº Contrato
-                      </th>
-                      <th class="px-6 py-3 font-semibold" scope="col">
-                        Produto
-                      </th>
-                      <th class="px-6 py-3 font-semibold" scope="col">
-                        Categoria
-                      </th>
-                      <th class="px-6 py-3 font-semibold" scope="col">Valor</th>
-                      <th class="px-6 py-3 font-semibold" scope="col">Data</th>
-                      <th class="px-6 py-3 font-semibold" scope="col">
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody id="clientsTableBody">
-                    <!-- Dados serão carregados via JavaScript -->
-                  </tbody>
-                </table>
-              </div>
-              <!-- Pagination -->
-              <div class="p-4 space-y-4">
-                <div class="w-full text-center">
-                  <span
-                    class="text-gray-500 dark:text-gray-400 text-sm"
-                    id="paginationInfo">Carregando...</span>
-                </div>
-                <div class="w-full flex justify-center">
-                  <div
-                    class="inline-flex items-center -space-x-px"
-                    id="paginationContainer">
-                    <!-- Paginação será gerada via JavaScript -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
-
-        <!-- Client Details Drawer -->
+  <body class="bg-gray-50 p-4 md:p-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex-1 space-y-2">
+        <!-- Page Heading & Actions -->
         <div
-          class="fixed inset-0 bg-black/30 z-20 hidden"
-          id="drawerOverlay"></div>
-        <aside
-          class="fixed top-0 right-0 h-full w-full max-w-md bg-card-light dark:bg-card-dark shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-30"
-          id="clientDrawer">
-          <div
-            class="p-6 border-b border-border-light dark:border-border-dark flex justify-between items-center">
-            <h2 class="text-xl font-semibold">Detalhes do Cliente</h2>
-            <button id="closeDrawer">
-              <span class="material-symbols-outlined">close</span>
+          class="flex flex-col md:flex-row justify-between items-start md:items-center gap-1">
+          <div class="flex gap-1">
+            <button
+              class="flex items-center justify-center gap-2 rounded-lg px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600">
+              <span class="material-symbols-outlined text-base">download</span>
+              <span>Exportar .XLSX</span>
+            </button>
+            <button
+              class="flex items-center justify-center gap-2 rounded-lg px-4 bg-white dark:bg-gray-700 border border-border-light dark:border-border-dark text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-600">
+              <span class="material-symbols-outlined text-base">download</span>
+              <span>Exportar .CSV</span>
             </button>
           </div>
-          <div class="p-6 space-y-4" id="clientDetails">
-            <!-- Detalhes serão carregados via JavaScript -->
-          </div>
-        </aside>
-      </div>
-    </div>
+        </div>
 
-    <script>
-      // Variáveis globais
-      let allClients = [];
-      let filteredClients = [];
-      let currentPage = 1;
-      const itemsPerPage = 10;
-      const maxVisiblePages = 12; // Máximo de páginas visíveis na paginação
-
-      // Inicializar quando o DOM carregar
-      document.addEventListener("DOMContentLoaded", function () {
-        console.log("🚀 Página Clientes inicializada");
-        loadClientesReais();
-        setupEventListeners();
-      });
-
-      // Configurar event listeners
-      function setupEventListeners() {
-        document
-          .getElementById("applyFilters")
-          .addEventListener("click", applyFilters);
-        document
-          .getElementById("clearFilters")
-          .addEventListener("click", clearFilters);
-        document
-          .getElementById("tableSearch")
-          .addEventListener("input", function (e) {
-            filterTable(e.target.value);
-          });
-        document
-          .getElementById("searchInput")
-          .addEventListener("input", function (e) {
-            filterTable(e.target.value);
-          });
-        document
-          .getElementById("closeDrawer")
-          .addEventListener("click", closeDrawer);
-        document
-          .getElementById("drawerOverlay")
-          .addEventListener("click", closeDrawer);
-      }
-
-      // ✅ BUSCAR DADOS REAIS DO BANCO
-      async function loadClientesReais() {
-        try {
-          console.log("🔄 Buscando clientes reais do banco...");
-
-          const response = await fetch("/api/clientes/reais");
-
-          if (!response.ok) {
-            throw new Error(`Erro HTTP: ${response.status}`);
-          }
-
-          const data = await response.json();
-          console.log("✅ Dados reais recebidos:", data);
-
-          if (data.error) {
-            throw new Error(data.error);
-          }
-
-          allClients = data.clientes || [];
-          filteredClients = [...allClients];
-
-          console.log(`📊 ${allClients.length} clientes carregados do banco`);
-          renderClients();
-        } catch (error) {
-          console.error("❌ Erro ao carregar clientes reais:", error);
-          // Fallback vazio - não usar dados mockados
-          allClients = [];
-          filteredClients = [];
-          renderClients();
-          showError("Erro ao carregar dados: " + error.message);
-        }
-      }
-
-      // Renderizar clientes na tabela
-      function renderClients() {
-        const tbody = document.getElementById("clientsTableBody");
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const clientsToShow = filteredClients.slice(startIndex, endIndex);
-
-        if (clientsToShow.length === 0) {
-          tbody.innerHTML = `
-                <tr>
-                    <td colspan="7" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
-                        <div class="flex flex-col items-center gap-2">
-                            <span class="material-symbols-outlined">search_off</span>
-                            <span>${
-                              allClients.length === 0
-                                ? "Nenhum cliente encontrado no banco"
-                                : "Nenhum resultado para os filtros"
-                            }</span>
-                        </div>
-                    </td>
-                </tr>
-            `;
-        } else {
-          tbody.innerHTML = clientsToShow
-            .map(
-              (client) => `
-                <tr class="bg-card-light dark:bg-card-dark border-b dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer" onclick="openClientDetails(${
-                  client.id
-                })">
-                    <td class="px-6 py-4 font-medium whitespace-nowrap">
-                        <div class="flex items-center gap-3">
-                            <div class="size-8 bg-primary/20 rounded-full flex items-center justify-center text-primary font-semibold">
-                                ${(client.name || "N").charAt(0).toUpperCase()}
-                            </div>
-                            <div>
-                                <p>${client.name || "Nome não informado"}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">${
-                                  client.email || "Email não informado"
-                                }</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">${client.document || "N/A"}</td>
-                    <td class="px-6 py-4">${
-                      client.plan_name || "Plano não especificado"
-                    }</td>
-                    <td class="px-6 py-4">${getCategoryFromPlan(
-                      client.plan_name
-                    )}</td>
-                    <td class="px-6 py-4">R$ ${formatCurrency(
-                      client.plan_value
-                    )}</td>
-                    <td class="px-6 py-4">${formatDate(
-                      client.contract_date
-                    )}</td>
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusClass(
-                          client.status
-                        )}">
-                            ${getStatusText(client.status)}
-                        </span>
-                    </td>
-                </tr>
-            `
-            )
-            .join("");
-        }
-
-        updatePagination();
-      }
-
-      // ✅ FUNÇÕES AUXILIARES
-      function getCategoryFromPlan(planName) {
-        if (!planName) return "Outros";
-        const plan = planName.toLowerCase();
-        if (plan.includes("odontol") || plan.includes("dental"))
-          return "Odontológico";
-        if (plan.includes("saúde") || plan.includes("health")) return "Saúde";
-        return "Outros";
-      }
-
-      function formatDate(dateString) {
-        if (!dateString) return "N/A";
-        try {
-          return new Date(dateString).toLocaleDateString("pt-BR");
-        } catch {
-          return dateString;
-        }
-      }
-
-      function formatCurrency(value) {
-        if (!value) return "0,00";
-        return parseFloat(value).toLocaleString("pt-BR", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
-      }
-
-      function getStatusClass(status) {
-        const statusLower = (status || "").toLowerCase();
-        if (statusLower.includes("fechado") || statusLower.includes("ativo")) {
-          return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300";
-        }
-        if (statusLower.includes("pendente")) {
-          return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300";
-        }
-        if (statusLower.includes("cancelado")) {
-          return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300";
-        }
-        return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300";
-      }
-
-      function getStatusText(status) {
-        const statusLower = (status || "").toLowerCase();
-        if (statusLower.includes("fechado")) return "Ativo";
-        if (statusLower.includes("ativo")) return "Ativo";
-        if (statusLower.includes("pendente")) return "Pendente";
-        if (statusLower.includes("cancelado")) return "Cancelado";
-        return status || "Desconhecido";
-      }
-
-      function showError(message) {
-        console.error("💥 Erro:", message);
-        // Você pode implementar notificações toast aqui
-      }
-
-      // ✅ FUNÇÕES DE PAGINAÇÃO ATUALIZADAS
-      function updatePagination() {
-        const totalPages = Math.ceil(filteredClients.length / itemsPerPage);
-        const startItem = (currentPage - 1) * itemsPerPage + 1;
-        const endItem = Math.min(
-          currentPage * itemsPerPage,
-          filteredClients.length
-        );
-
-        // ✅ TEXTO CENTRALIZADO
-        document.getElementById(
-          "paginationInfo"
-        ).textContent = `Mostrando ${startItem}-${endItem} de ${filteredClients.length} clientes`;
-
-        let paginationHTML = "";
-
-        // ✅ BOTÃO ANTERIOR COM ÍCONE
-        if (currentPage > 1) {
-          paginationHTML += `
-                <a class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white flex items-center" 
-                   href="#" onclick="changePage(${
-                     currentPage - 1
-                   }); return false;">
-                    <span class="material-symbols-outlined text-sm">chevron_left</span>
-                </a>`;
-        } else {
-          paginationHTML += `
-                <span class="px-3 py-2 ml-0 leading-tight text-gray-300 bg-white border border-gray-300 rounded-l-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-600 flex items-center">
-                    <span class="material-symbols-outlined text-sm">chevron_left</span>
-                </span>`;
-        }
-
-        // ✅ PÁGINAS VISÍVEIS (MÁXIMO 12)
-        let startPage = Math.max(
-          1,
-          currentPage - Math.floor(maxVisiblePages / 2)
-        );
-        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-        // Ajusta o início se estiver no final
-        if (endPage - startPage + 1 < maxVisiblePages) {
-          startPage = Math.max(1, endPage - maxVisiblePages + 1);
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
-          if (i === currentPage) {
-            paginationHTML += `
-                    <a class="px-3 py-2 leading-tight text-primary bg-primary/20 border border-primary hover:bg-primary/30" 
-                       href="#" onclick="changePage(${i}); return false;">
-                        ${i}
-                    </a>`;
-          } else {
-            paginationHTML += `
-                    <a class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" 
-                       href="#" onclick="changePage(${i}); return false;">
-                        ${i}
-                    </a>`;
-          }
-        }
-
-        // ✅ BOTÃO PRÓXIMO COM ÍCONE
-        if (currentPage < totalPages) {
-          paginationHTML += `
-                <a class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white flex items-center" 
-                   href="#" onclick="changePage(${
-                     currentPage + 1
-                   }); return false;">
-                    <span class="material-symbols-outlined text-sm">chevron_right</span>
-                </a>`;
-        } else {
-          paginationHTML += `
-                <span class="px-3 py-2 leading-tight text-gray-300 bg-white border border-gray-300 rounded-r-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-600 flex items-center">
-                    <span class="material-symbols-outlined text-sm">chevron_right</span>
-                </span>`;
-        }
-
-        document.getElementById("paginationContainer").innerHTML =
-          paginationHTML;
-      }
-
-      function changePage(page) {
-        currentPage = page;
-        renderClients();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-
-      function applyFilters() {
-        const category = document.getElementById("categoryFilter").value;
-        const origin = document.getElementById("originFilter").value;
-        const status = document.getElementById("statusFilter").value;
-        const clientName = document
-          .getElementById("clientNameFilter")
-          .value.toLowerCase();
-        const contract = document
-          .getElementById("contractFilter")
-          .value.toLowerCase();
-        const email = document
-          .getElementById("emailFilter")
-          .value.toLowerCase();
-        const broker = document.getElementById("brokerFilter").value;
-
-        filteredClients = allClients.filter((client) => {
-          const clientCategory = getCategoryFromPlan(client.plan_name);
-          const clientStatus = getStatusText(client.status);
-
-          return (
-            (!category || clientCategory === category) &&
-            (!origin ||
-              (client.origin &&
-                client.origin.toLowerCase().includes(origin.toLowerCase()))) &&
-            (!status || clientStatus === status) &&
-            (!clientName ||
-              (client.name &&
-                client.name.toLowerCase().includes(clientName))) &&
-            (!contract ||
-              (client.document &&
-                client.document.toLowerCase().includes(contract))) &&
-            (!email ||
-              (client.email && client.email.toLowerCase().includes(email))) &&
-            (!broker || (client.broker_name && client.broker_name === broker))
-          );
-        });
-
-        currentPage = 1;
-        renderClients();
-      }
-
-      function clearFilters() {
-        document.getElementById("categoryFilter").value = "";
-        document.getElementById("originFilter").value = "";
-        document.getElementById("statusFilter").value = "";
-        document.getElementById("clientNameFilter").value = "";
-        document.getElementById("contractFilter").value = "";
-        document.getElementById("emailFilter").value = "";
-        document.getElementById("brokerFilter").value = "";
-        document.getElementById("periodFilter").value = "";
-
-        filteredClients = [...allClients];
-        currentPage = 1;
-        renderClients();
-      }
-
-      function filterTable(searchTerm) {
-        const term = searchTerm.toLowerCase();
-        filteredClients = allClients.filter(
-          (client) =>
-            (client.name && client.name.toLowerCase().includes(term)) ||
-            (client.email && client.email.toLowerCase().includes(term)) ||
-            (client.document && client.document.toLowerCase().includes(term)) ||
-            (client.plan_name && client.plan_name.toLowerCase().includes(term))
-        );
-        currentPage = 1;
-        renderClients();
-      }
-
-      function openClientDetails(clientId) {
-        const client = allClients.find((c) => c.id === clientId);
-        if (!client) return;
-
-        document.getElementById("clientDetails").innerHTML = `
+        <!-- Filter Bar Card -->
+        <div
+          class="bg-card-light dark:bg-card-dark p-4 rounded-lg shadow-sm border border-border-light dark:border-border-dark">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Coluna 1 -->
             <div class="space-y-4">
-                <div class="flex items-center gap-3">
-                    <div class="size-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-semibold text-lg">
-                        ${(client.name || "N").charAt(0).toUpperCase()}
-                    </div>
-                    <div>
-                        <h3 class="font-semibold">${
-                          client.name || "Nome não informado"
-                        }</h3>
-                        <p class="text-sm text-gray-500">${
-                          client.email || "Email não informado"
-                        }</p>
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <p class="text-sm text-gray-500">Telefone</p>
-                        <p class="font-medium">${client.phone || "N/A"}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">CPF/CNPJ</p>
-                        <p class="font-medium">${client.document || "N/A"}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Plano</p>
-                        <p class="font-medium">${client.plan_name || "N/A"}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Valor</p>
-                        <p class="font-medium">R$ ${formatCurrency(
-                          client.plan_value
-                        )}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Data Contrato</p>
-                        <p class="font-medium">${formatDate(
-                          client.contract_date
-                        )}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Status</p>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusClass(
-                          client.status
-                        )}">
-                            ${getStatusText(client.status)}
-                        </span>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Corretor</p>
-                        <p class="font-medium">${
-                          client.broker_name || "N/A"
-                        }</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Origem</p>
-                        <p class="font-medium">${client.origin || "N/A"}</p>
-                    </div>
-                </div>
-                
-                ${
-                  client.observations
-                    ? `
-                <div>
-                    <p class="text-sm text-gray-500">Observações</p>
-                    <p class="font-medium text-sm">${client.observations}</p>
-                </div>
-                `
-                    : ""
-                }
+              <label class="flex flex-col">
+                <p class="text-sm font-medium pb-2">Período</p>
+                <input
+                  class="form-input w-full flex flex-1 overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
+                  placeholder="Selecionar período" type="text"
+                  id="periodFilter" />
+              </label>
+              <label class="flex flex-col">
+                <p class="text-sm font-medium pb-2">Status</p>
+                <select
+                  class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
+                  id="statusFilter">
+                  <option value>Todos</option>
+                  <option>Ativo</option>
+                  <option>Pendente</option>
+                  <option>Cancelado</option>
+                </select>
+              </label>
+              <label class="flex flex-col">
+                <p class="text-sm font-medium pb-2">Email</p>
+                <input
+                  class="form-input w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
+                  placeholder="ex: cliente@email.com" type="text"
+                  id="emailFilter" />
+              </label>
             </div>
-        `;
 
-        document.getElementById("drawerOverlay").classList.remove("hidden");
-        document
-          .getElementById("clientDrawer")
-          .classList.remove("translate-x-full");
-      }
+            <!-- Coluna 2 -->
+            <div class="space-y-4">
+              <label class="flex flex-col">
+                <p class="text-sm font-medium pb-2">Categoria do Plano</p>
+                <select
+                  class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
+                  id="categoryFilter">
+                  <option value>Todos</option>
+                  <option>Plano de Saúde</option>
+                  <option>Plano Odontológico</option>
+                </select>
+              </label>
+              <label class="flex flex-col">
+                <p class="text-sm font-medium pb-2">Nome do Cliente</p>
+                <input
+                  class="form-input w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
+                  placeholder="ex: João Silva" type="text"
+                  id="clientNameFilter" />
+              </label>
+              <label class="flex flex-col">
+                <p class="text-sm font-medium pb-2">Corretor</p>
+                <select
+                  class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
+                  id="brokerFilter">
+                  <option value>Todos</option>
+                  <option>João Silva</option>
+                  <option>Maria Santos</option>
+                  <option>Pedro Oliveira</option>
+                </select>
+              </label>
+            </div>
 
-      function closeDrawer() {
-        document.getElementById("drawerOverlay").classList.add("hidden");
-        document
-          .getElementById("clientDrawer")
-          .classList.add("translate-x-full");
-      }
-    </script>
+            <!-- Coluna 3 -->
+            <div class="space-y-4">
+              <label class="flex flex-col">
+                <p class="text-sm font-medium pb-2">Origem</p>
+                <select
+                  class="form-select w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent px-3 py-2 text-sm"
+                  id="originFilter">
+                  <option value>Todas</option>
+                  <option>Online</option>
+                  <option>Indicação</option>
+                </select>
+              </label>
+              <label class="flex flex-col">
+                <p class="text-sm font-medium pb-2">Número do Contrato</p>
+                <input
+                  class="form-input w-full flex flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary border border-border-light dark:border-border-dark bg-transparent placeholder:text-gray-500 px-3 py-2 text-sm"
+                  placeholder="ex: C12345" type="text" id="contractFilter" />
+              </label>
+              <!-- Botões ocupando o mesmo espaço que os inputs acima -->
+              <div class="flex flex-col justify-end h-[42px]">
+                <div class="flex gap-2">
+                  <button
+                    class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-gray-200 dark:bg-gray-600 text-text-light dark:text-text-dark text-sm font-semibold leading-normal tracking-[0.015em] hover:bg-gray-300 dark:hover:bg-gray-500"
+                    id="clearFilters">
+                    <span class="truncate">Limpar Filtros</span>
+                  </button>
+                  <button
+                    class="flex-1 flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-primary text-white text-sm font-semibold leading-normal tracking-[0.015em] hover:bg-primary/90"
+                    id="applyFilters">
+                    <span class="truncate">Aplicar Filtros</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Table Card -->
+        <div
+          class="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-border-light dark:border-border-dark overflow-hidden">
+          <div
+            class="p-4 flex justify-between items-center border-b border-border-light dark:border-border-dark">
+            <label class="flex flex-col min-w-40 !h-10 max-w-sm">
+              <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                <div
+                  class="text-gray-500 flex bg-gray-100 dark:bg-gray-700 items-center justify-center pl-3 rounded-l-lg border-r-0">
+                  <span class="material-symbols-outlined">search</span>
+                </div>
+                <input
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-0 border-none bg-gray-100 dark:bg-gray-700 focus:border-none h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal"
+                  placeholder="Buscar na tabela..." value id="tableSearch" />
+              </div>
+            </label>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left">
+              <thead
+                class="text-xs text-gray-500 dark:text-gray-400 uppercase bg-gray-50 dark:bg-gray-700/50">
+                <tr>
+                  <th class="px-6 py-3 font-semibold" scope="col">
+                    Cliente
+                  </th>
+                  <th class="px-6 py-3 font-semibold" scope="col">
+                    Nº Contrato
+                  </th>
+                  <th class="px-6 py-3 font-semibold" scope="col">
+                    Produto
+                  </th>
+                  <th class="px-6 py-3 font-semibold" scope="col">
+                    Categoria
+                  </th>
+                  <th class="px-6 py-3 font-semibold" scope="col">Valor</th>
+                  <th class="px-6 py-3 font-semibold" scope="col">Data</th>
+                  <th class="px-6 py-3 font-semibold" scope="col">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="clientsTableBody">
+                <!-- Dados serão carregados via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+          <!-- Pagination -->
+          <div class="p-4 space-y-4">
+            <div class="w-full text-center">
+              <span class="text-gray-500 dark:text-gray-400 text-sm"
+                id="paginationInfo">Carregando...</span>
+            </div>
+            <div class="w-full flex justify-center">
+              <div class="inline-flex items-center -space-x-px"
+                id="paginationContainer">
+                <!-- Paginação será gerada via JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> <!-- Fim do dashboard-container -->
+
+    <!-- =========================================== -->
+    <!-- SCRIPT PADRÃO PARA TODOS OS DASHBOARDS -->
+    <!-- =========================================== -->
+    <script>
+      // CONFIGURAÇÃO PADRÃO PARA DASHBOARDS EM IFRAME
+      (function () {
+        'use strict';
+
+        console.log('📊 Dashboard Template - Carregado');
+
+        // ===========================================
+        // 1. VERIFICAR SE ESTÁ DENTRO DE IFRAME
+        // ===========================================
+        const isInIframe = window.self !== window.top;
+
+        if (isInIframe) {
+          console.log('🎯 Dashboard carregado dentro de iframe');
+
+          // ===========================================
+          // 2. INICIALIZAÇÃO DO DASHBOARD
+          // ===========================================
+          document.addEventListener('DOMContentLoaded', function () {
+            console.log('✅ DOM totalmente carregado');
+
+            // Ajustar tema automaticamente
+            adjustTheme();
+
+            // Garantir altura suficiente para scroll
+            guaranteeScrollHeight();
+
+            // Configurar componentes dinâmicos
+            setupDynamicComponents();
+
+            // Informar ao parent que o dashboard está pronto
+            notifyParentDashboardReady();
+          });
+
+          // ===========================================
+          // 3. FUNÇÕES UTILITÁRIAS
+          // ===========================================
+
+          /**
+           * Ajusta o tema (claro/escuro) com base no parent
+           */
+          function adjustTheme() {
+            try {
+              const parentTheme = window.parent.document.documentElement.classList.contains('dark')
+                ? 'dark'
+                : 'light';
+
+              document.body.className = parentTheme;
+              console.log(`🎨 Tema ajustado para: ${parentTheme}`);
+            } catch (e) {
+              console.log('⚠️ Não foi possível detectar tema do parent');
+            }
+          }
+
+          /**
+           * Garante que o dashboard tenha altura suficiente para scroll
+           */
+          function guaranteeScrollHeight() {
+            setTimeout(() => {
+              const bodyHeight = document.body.scrollHeight;
+              const viewportHeight = window.innerHeight;
+              const minRequiredHeight = viewportHeight + 400;
+
+              console.log('📏 Verificando altura:', {
+                atual: bodyHeight + 'px',
+                viewport: viewportHeight + 'px',
+                necessária: minRequiredHeight + 'px',
+                precisaExpandir: bodyHeight < minRequiredHeight
+              });
+
+              // Se necessário, ajustar a área de scroll
+              if (bodyHeight < minRequiredHeight) {
+                const scrollMarker = document.querySelector('.scroll-end-marker');
+                if (scrollMarker) {
+                  const extraHeight = minRequiredHeight - bodyHeight + 100;
+                  scrollMarker.style.height = `${extraHeight}px`;
+                  console.log(`⚡ Área de scroll expandida em ${extraHeight}px`);
+                }
+              }
+            }, 300);
+          }
+
+          /**
+           * Configura componentes dinâmicos do dashboard
+           */
+          function setupDynamicComponents() {
+            // Adicionar tooltips nos KPIs
+            document.querySelectorAll('.kpi-card').forEach(card => {
+              card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-4px)';
+              });
+
+              card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0)';
+              });
+            });
+
+            // Configurar tooltips de status
+            document.querySelectorAll('[data-tooltip]').forEach(element => {
+              const tooltipText = element.getAttribute('data-tooltip');
+              if (tooltipText) {
+                element.title = tooltipText;
+              }
+            });
+
+            console.log('🔧 Componentes dinâmicos configurados');
+          }
+
+          /**
+           * Informa ao parent que o dashboard está pronto
+           */
+          function notifyParentDashboardReady() {
+            setTimeout(() => {
+              try {
+                const dashboardData = {
+                  type: 'dashboardReady',
+                  title: document.title,
+                  height: document.body.scrollHeight,
+                  url: window.location.href,
+                  timestamp: Date.now()
+                };
+
+                window.parent.postMessage(dashboardData, '*');
+                console.log('📤 Dashboard notificado como pronto para parent');
+
+              } catch (e) {
+                console.log('⚠️ Não foi possível notificar parent');
+              }
+            }, 1000);
+          }
+
+          // ===========================================
+          // 4. ESCUTAR COMANDOS DO PARENT
+          // ===========================================
+          window.addEventListener('message', function (event) {
+            try {
+              const data = event.data;
+
+              if (data.type === 'refreshDashboard') {
+                console.log('🔄 Parent solicitou refresh do dashboard');
+                // Implementar refresh se necessário
+              }
+
+              if (data.type === 'updateTheme') {
+                console.log(`🎨 Parent solicitou mudança de tema: ${data.theme}`);
+                document.body.className = data.theme || 'light';
+              }
+
+            } catch (e) {
+              // Ignorar erros
+            }
+          });
+
+          // ===========================================
+          // 5. FUNÇÕES GLOBAIS PARA DEBUG
+          // ===========================================
+
+          // Debug helper
+          window.dashboardDebug = function () {
+            console.group('🔧 DEBUG DO DASHBOARD');
+            console.log('URL:', window.location.href);
+            console.log('Título:', document.title);
+            console.log('Altura body:', document.body.scrollHeight + 'px');
+            console.log('Viewport:', window.innerHeight + 'px');
+            console.log('Tema atual:', document.body.className);
+            console.log('Em iframe:', isInIframe);
+            console.groupEnd();
+
+            return {
+              height: document.body.scrollHeight,
+              viewport: window.innerHeight,
+              theme: document.body.className,
+              url: window.location.href
+            };
+          };
+
+          // Forçar recálculo de altura
+          window.recalculateHeight = function () {
+            guaranteeScrollHeight();
+            notifyParentDashboardReady();
+            console.log('📐 Altura recalculada');
+          };
+
+        } else {
+          console.log('🌍 Dashboard carregado diretamente (não em iframe)');
+        }
+
+        // ===========================================
+        // 6. EXPORTAÇÃO DE FUNÇÕES PÚBLICAS
+        // ===========================================
+        window.dashboardUtils = {
+          refresh: function () {
+            location.reload();
+          },
+
+          toggleTheme: function () {
+            const currentTheme = document.body.className;
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.className = newTheme;
+            console.log(`🎨 Tema alterado para: ${newTheme}`);
+            return newTheme;
+          },
+
+          getStats: function () {
+            const cards = document.querySelectorAll('.kpi-card, .dashboard-card');
+            const tables = document.querySelectorAll('table');
+            const charts = document.querySelectorAll('[data-chart]');
+
+            return {
+              totalCards: cards.length,
+              totalTables: tables.length,
+              totalCharts: charts.length,
+              totalHeight: document.body.scrollHeight,
+              theme: document.body.className
+            };
+          }
+        };
+
+      })();
+  </script>
   </body>
+
 </html>

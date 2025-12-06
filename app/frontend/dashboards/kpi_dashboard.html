@@ -1,439 +1,932 @@
 <!DOCTYPE html>
-<html class="light" lang="pt-BR">
+<html lang="pt-BR">
+
     <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>Health CRM as SaaS</title>
-        <script
-            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- TITLE VARIÁVEL - Editar em cada dashboard -->
+        <title>HealthCRM</title>
+
+        <!-- Ícones do Google -->
         <link
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-            rel="stylesheet" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-            rel="stylesheet" />
-        <script>
-			tailwind.config = {
-				darkMode: "class",
-				theme: {
-					extend: {
-						colors: {
-							"primary": "#d48262",
-							"background-light": "#f5f5f5",
-							"background-dark": "#211511",
-							"accent": "#1c1c1c",
-							"sidebar-bg": "#ffffff"
-						},
-						fontFamily: {
-							"display": ["Inter", "sans-serif"]
-						},
-						borderRadius: {
-							"DEFAULT": "0.5rem",
-							"lg": "1rem",
-							"xl": "1.5rem",
-							"full": "9999px"
-						},
-					},
-				},
-			}
-		</script>
-        <script>
-			// Função para expandir/colapsar submenus
-			function toggleSubmenu(id) {
-				const submenu = document.getElementById(id);
-				const icon = document.getElementById(`icon-${id}`);
-				if (submenu.classList.contains('hidden')) {
-					// Expandir
-					submenu.classList.remove('hidden');
-					icon.classList.add('rotate-180');
-				} else {
-					// Colapsar
-					submenu.classList.add('hidden');
-					icon.classList.remove('rotate-180');
-				}
-			}
+            rel="stylesheet">
 
-			// Função para colapsar/expandir o sidebar principal
-			function toggleSidebar() {
-				const expandedSidebar = document.getElementById('expanded-sidebar');
-				const recolherSidebar = document.getElementById('recolher-sidebar');
-				const mainContent = document.getElementById('main-content');
-				
-				expandedSidebar.classList.toggle('hidden');
-				recolherSidebar.classList.toggle('hidden');
-			}
-		</script>
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Configuração do Tailwind -->
+        <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e67951",
+                        "primary-light": "#f8a583",
+                        "primary-dark": "#b86a50",
+                        "secondary": "#4299e1",
+                        "success": "#48bb78",
+                        "warning": "#ed8936",
+                        "danger": "#f56565",
+                        "info": "#0bc5ea",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211511",
+                        "card-light": "#ffffff",
+                        "card-dark": "#2a1a14",
+                        "text-light": "#1c1c1c",
+                        "text-dark": "#f5f5f5",
+                        "subtext-light": "#876d64",
+                        "subtext-dark": "#a18a82",
+                        "border-light": "#e5dedc",
+                        "border-dark": "#40312c",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "system-ui", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+
+        <script>
+        // Função para expandir/colapsar submenus
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            const icon = document.getElementById(`icon-${id}`);
+            if (submenu.classList.contains('hidden')) {
+                // Expandir
+                submenu.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                // Colapsar
+                submenu.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // Função para colapsar/expandir o sidebar principal
+        function toggleSidebar() {
+            const expandedSidebar = document.getElementById('expanded-sidebar');
+            const recolherSidebar = document.getElementById('recolher-sidebar');
+            const mainContent = document.getElementById('main-content');
+
+            expandedSidebar.classList.toggle('hidden');
+            recolherSidebar.classList.toggle('hidden');
+        }
+    </script>
+
+        <!-- CSS PADRÃO PARA TODOS OS DASHBOARDS -->
+        <style>
+        /* =========================================== */
+        /* RESET E ESTILOS GLOBAIS PARA IFRAME */
+        /* =========================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100vh !important;
+            height: auto !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color, #f8f6f6);
+        }
+
+        body.dark {
+            --bg-color: #211511;
+            --card-color: #2a1a14;
+            --text-color: #f5f5f5;
+            --border-color: #40312c;
+        }
+
+        body.light {
+            --bg-color: #f8f6f6;
+            --card-color: #ffffff;
+            --text-color: #1c1c1c;
+            --border-color: #e5dedc;
+        }
+
+        /* =========================================== */
+        /* CONTAINER PRINCIPAL */
+        /* =========================================== */
+
+        .dashboard-container {
+            min-height: 1000px !important;
+            padding-bottom: 200px !important;
+            background: var(--bg-color);
+        }
+
+        /* =========================================== */
+        /* COMPONENTES PADRÃO DO DASHBOARD */
+        /* =========================================== */
+
+        /* CARD PADRÃO */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .mini-card {
+            background: var(--card-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .mini-card:hover {
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+        }
+
+        /* KPI CARD */
+        .kpi-card {
+            background: var(--card-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border-left: 4px solid #e67951;
+            position: relative;
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e67951;
+            line-height: 1;
+        }
+
+        .kpi-label {
+            font-size: 0.875rem;
+            color: var(--subtext-color);
+            margin-top: 0.5rem;
+        }
+
+        /* BADGE DE STATUS */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* =========================================== */
+        /* BARRA DE ROLAGEM PADRÃO */
+        /* =========================================== */
+
+        body::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 4px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+            border-radius: 8px;
+            border: 3px solid #f8f9fa;
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #b86a50, #9c533d);
+        }
+
+        /* Firefox */
+        body {
+            scrollbar-width: auto;
+            scrollbar-color: #e67951 #f8f9fa;
+        }
+
+        /* =========================================== */
+        /* MARCADOR FINAL PADRÃO */
+        /* =========================================== */
+
+        .scroll-end-marker {
+            height: 200px;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(230, 121, 81, 0.1));
+            border-top: 3px solid #e67951;
+            margin-top: 3rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-end-text {
+            background: #e67951;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(230, 121, 81, 0.3);
+            text-align: center;
+        }
+
+        /* =========================================== */
+        /* UTILITÁRIOS */
+        /* =========================================== */
+
+        .text-gradient {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bg-gradient {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+        }
+
+        .border-gradient {
+            border-image: linear-gradient(135deg, #e67951, #b86a50) 1;
+        }
+
+        /* =========================================== */
+        /* RESPONSIVIDADE */
+        /* =========================================== */
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem !important;
+            }
+
+            .kpi-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
     </head>
-    <body class="bg-background-light dark:bg-background-dark font-display">
 
-        <div class="flex min-h-screen">
-            <!-- Main Content -->
-            <div class="flex-1 p-6 space-y-6">
-                <!-- Date Filter -->
+    <body class="bg-gray-50 p-4 md:p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Date Filter -->
+            <div
+                class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-1 gap-6 m-8 ml-2 mr-5">
                 <div class="flex justify-end">
                     <div
-                        class="flex items-center gap-2 p-2 rounded-lg bg-card-light dark:bg-card-dark shadow-sm">
+                        class="flex items-right gap-2 p-2 rounded-lg bg-card-light dark:bg-card-dark shadow-sm">
                         <span
-                            class="material-symbols-outlined text-muted-light dark:text-muted-dark">calendar_today</span>
+                            class="material-symbols-outlined text-muted-light dark:text-muted-dark text-primary">calendar_today</span>
                         <p
-                            class="text-sm font-medium text-text-light dark:text-text-dark">Jan
+                            class="text-sm font-medium text-text-light dark:text-text-dark text-primary">Jan
                             1, 2024 - Jan 31, 2024</p>
                         <span
-                            class="material-symbols-outlined text-muted-light dark:text-muted-dark">arrow_drop_down</span>
+                            class="material-symbols-outlined text-muted-light dark:text-muted-dark text-primary">arrow_drop_down</span>
                     </div>
                 </div>
-                <!-- KPI Cards Grid -->
+
+            </div>
+
+            <!-- KPI Cards Grid -->
+            <div
+                class="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-8 ml-2 mr-5">
+                <!-- Metas Mensais vs. Atingido -->
                 <div
-                    class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
-                    <!-- Metas Mensais vs. Atingido -->
-                    <div
-                        class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 lg:col-span-2">
+                    class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 lg:col-span-2">
+                    <h3
+                        class="text-text-light dark:text-text-dark text-base font-medium">⚖️
+                        Metas
+                        Mensais vs. Atingido</h3>
+                    <p
+                        class="tracking-tight text-3xl font-bold mt-1 text-primary">R$
+                        80.000</p>
+                    <div class="flex gap-1.5 items-center mb-1">
                         <p
-                            class="text-text-light dark:text-text-dark text-base font-medium">Metas
-                            Mensais vs. Atingido</p>
+                            class="text-muted-light dark:text-muted-dark text-sm">vs.
+                            R$ 75.000 meta</p>
                         <p
-                            class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold mt-1">R$
-                            80.000</p>
-                        <div class="flex gap-1.5 items-center mt-1">
-                            <p
-                                class="text-muted-light dark:text-muted-dark text-sm">vs.
-                                R$ 75.000 meta</p>
-                            <p
-                                class="text-green-500 text-sm font-medium flex items-center"><span
-                                    class="material-symbols-outlined text-base">arrow_upward</span>+5%</p>
-                        </div>
-                        <div
-                            class="grid min-h-[180px] grid-flow-col gap-6 grid-rows-[1fr_auto] items-end justify-items-center pt-4">
-                            <div
-                                class="w-full flex flex-col items-center gap-1.5"><div
-                                    class="bg-[#e6a88f] w-full"
-                                    style="height: 80%;"></div> <div
-                                    class="bg-primary w-full"
-                                    style="height: 90%;"></div></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Week
-                                1</p>
-                            <div
-                                class="w-full flex flex-col items-center gap-1.5"><div
-                                    class="bg-[#e6a88f] w-full"
-                                    style="height: 80%;"></div> <div
-                                    class="bg-primary w-full"
-                                    style="height: 70%;"></div></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Week
-                                2</p>
-                            <div
-                                class="w-full flex flex-col items-center gap-1.5"><div
-                                    class="bg-[#e6a88f] w-full"
-                                    style="height: 80%;"></div> <div
-                                    class="bg-primary w-full"
-                                    style="height: 95%;"></div></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Week
-                                3</p>
-                            <div
-                                class="w-full flex flex-col items-center gap-1.5"><div
-                                    class="bg-[#e6a88f] w-full"
-                                    style="height: 80%;"></div> <div
-                                    class="bg-primary w-full"
-                                    style="height: 100%;"></div></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Week
-                                4</p>
-                        </div>
+                            class="text-green-500 text-sm font-medium flex items-center"><span
+                                class="material-symbols-outlined text-base">arrow_upward</span>+5%</p>
                     </div>
-                    <!-- Planos Fechados por Operadora -->
-                    <div
-                        class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 lg:col-span-2">
-                        <p
-                            class="text-text-light dark:text-text-dark text-base font-medium">Planos
-                            Fechados por Operadora</p>
-                        <p
-                            class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold mt-1">120
-                            Planos</p>
-                        <div class="flex gap-1.5 items-center mt-1">
-                            <p
-                                class="text-muted-light dark:text-muted-dark text-sm">Este
-                                mês</p>
-                            <p
-                                class="text-green-500 text-sm font-medium flex items-center"><span
-                                    class="material-symbols-outlined text-base">arrow_upward</span>+10%</p>
-                        </div>
-                        <div
-                            class="grid min-h-[180px] grid-flow-col gap-6 grid-rows-[1fr_auto] items-end justify-items-center pt-4">
-                            <div class="bg-primary w-full"
-                                style="height: 90%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Amil</p>
-                            <div class="bg-primary w-full"
-                                style="height: 60%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Bradesco</p>
-                            <div class="bg-primary w-full"
-                                style="height: 75%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">SulAmérica</p>
-                            <div class="bg-primary w-full"
-                                style="height: 40%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Unimed</p>
-                            <div class="bg-primary w-full"
-                                style="height: 50%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Outros</p>
-                        </div>
-                    </div>
-                    <!-- Taxa de Conversão -->
-                    <div
-                        class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 lg:col-span-2">
-                        <p
-                            class="text-text-light dark:text-text-dark text-base font-medium">Taxa
-                            de Conversão</p>
-                        <p
-                            class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold mt-1">65%</p>
-                        <div class="flex gap-1.5 items-center mt-1">
-                            <p
-                                class="text-muted-light dark:text-muted-dark text-sm">Últimos
-                                6 meses</p>
-                            <p
-                                class="text-green-500 text-sm font-medium flex items-center"><span
-                                    class="material-symbols-outlined text-base">arrow_upward</span>+2%</p>
-                        </div>
-                        <div
-                            class="flex min-h-[180px] flex-1 flex-col justify-end pt-4">
-                            <svg fill="none" height="148"
-                                preserveaspectratio="none"
-                                viewbox="-3 0 478 150" width="100%"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <lineargradient
-                                        gradientunits="userSpaceOnUse"
-                                        id="paint0_linear_conv" x1="236"
-                                        x2="236" y1="1" y2="149">
-                                        <stop stop-color="#d48262"
-                                            stop-opacity="0.3"></stop>
-                                        <stop offset="1" stop-color="#d48262"
-                                            stop-opacity="0"></stop>
-                                    </lineargradient>
-                                </defs>
-                                <path
-                                    d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H0V109Z"
-                                    fill="url(#paint0_linear_conv)"></path>
-                                <path
-                                    d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25"
-                                    stroke="#d48262" stroke-linecap="round"
-                                    stroke-width="3"></path>
+                    <div class="h-48 relative">
+                        <div class="mt-8">
+                            <svg class="absolute inset-0 w-full h-60"
+                                fill="none" viewbox="0 0 300 150">
+                                <polyline class="stroke-blue-500"
+                                    points="0,71 50,64 100,55 150,41 200,34 250,20 300,13"
+                                    stroke-width="2">
+                                </polyline>
+                                <polyline class="stroke-red-500"
+                                    points="0,82 50,77 100,61 150,53 200,30 250,15 300,11"
+                                    stroke-width="2">
+                                </polyline>
                             </svg>
-                            <div class="flex justify-around pt-2">
-                                <p
-                                    class="text-muted-light dark:text-muted-dark text-xs font-bold">Aug</p>
-                                <p
-                                    class="text-muted-light dark:text-muted-dark text-xs font-bold">Sep</p>
-                                <p
-                                    class="text-muted-light dark:text-muted-dark text-xs font-bold">Oct</p>
-                                <p
-                                    class="text-muted-light dark:text-muted-dark text-xs font-bold">Nov</p>
-                                <p
-                                    class="text-muted-light dark:text-muted-dark text-xs font-bold">Dec</p>
-                                <p
-                                    class="text-muted-light dark:text-muted-dark text-xs font-bold">Jan</p>
-                            </div>
                         </div>
                     </div>
-                    <!-- Receita Total (Mensal) -->
+                </div>
+
+                <!-- Planos Fechados por Operadora -->
+                <div
+                    class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 lg:col-span-2">
+                    <h3
+                        class="text-text-light dark:text-text-dark text-base font-medium">🤝
+                        Planos
+                        Fechados por Operadora</h3>
+                    <p
+                        class="tracking-tight text-3xl font-bold mt-1 text-primary">120
+                        Planos</p>
+                    <div class="flex gap-1.5 items-center mt-1">
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-sm">Este
+                            mês</p>
+                        <p
+                            class="text-green-500 text-sm font-medium flex items-center"><span
+                                class="material-symbols-outlined text-base">arrow_upward</span>+10%</p>
+                    </div>
                     <div
-                        class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 lg:col-span-2">
+                        class="grid min-h-[180px] grid-flow-col gap-6 grid-rows-[1fr_auto] items-end justify-items-center mt-8 pt-4">
+                        <div class="bg-primary w-full"
+                            style="height: 90%;"></div>
                         <p
-                            class="text-text-light dark:text-text-dark text-base font-medium">Receita
-                            Total (Mensal)</p>
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Amil</p>
+                        <div class="bg-primary w-full"
+                            style="height: 60%;"></div>
                         <p
-                            class="text-text-light dark:text-text-dark tracking-tight text-3xl font-bold mt-1">R$
-                            1.2M</p>
-                        <div class="flex gap-1.5 items-center mt-1">
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Bradesco</p>
+                        <div class="bg-primary w-full"
+                            style="height: 75%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">SulAmérica</p>
+                        <div class="bg-primary w-full"
+                            style="height: 40%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Unimed</p>
+                        <div class="bg-primary w-full"
+                            style="height: 50%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Outros</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI Graphics Grid -->
+            <div
+                class="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-8 ml-2 mr-5">
+                <!-- Metas Mensais vs. Atingido -->
+                <div
+                    class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 lg:col-span-2">
+                    <h3
+                        class="text-text-light dark:text-text-dark text-base font-medium">
+                        Taxa de Conversão
+                    </h3>
+                    <p
+                        class="tracking-tight text-3xl font-bold mt-1 text-primary">65%</p>
+                    <div class="flex gap-1.5 items-center mt-1">
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-sm">Últimos
+                            6 Mêsese</p>
+                        <p
+                            class="text-green-500 text-sm font-medium flex items-center"><span
+                                class="material-symbols-outlined text-base">arrow_upward</span>+2%</p>
+                    </div>
+                    <div
+                        class="flex min-h-[180px] flex-1 flex-col justify-end pt-4">
+                        <svg fill="none" height="148" preserveaspectratio="none"
+                            viewbox="-3 0 478 150" width="100%"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <lineargradient gradientunits="userSpaceOnUse"
+                                    id="paint0_linear_conv" x1="236" x2="236"
+                                    y1="1" y2="149">
+                                    <stop stop-color="#d48262"
+                                        stop-opacity="0.3"></stop>
+                                    <stop offset="1" stop-color="#d48262"
+                                        stop-opacity="0"></stop>
+                                </lineargradient>
+                            </defs>
+                            <path
+                                d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H0V109Z"
+                                fill="url(#paint0_linear_conv)"></path>
+                            <path
+                                d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25"
+                                stroke="#d48262" stroke-linecap="round"
+                                stroke-width="3"></path>
+                        </svg>
+                        <div class="flex justify-around pt-2">
                             <p
-                                class="text-muted-light dark:text-muted-dark text-sm">Últimos
-                                12 meses</p>
-                            <p
-                                class="text-green-500 text-sm font-medium flex items-center"><span
-                                    class="material-symbols-outlined text-base">arrow_upward</span>+8%</p>
-                        </div>
-                        <div
-                            class="grid min-h-[180px] grid-flow-col gap-4 grid-rows-[1fr_auto] items-end justify-items-center pt-4">
-                            <div class="bg-primary w-full"
-                                style="height: 20%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Feb</p>
-                            <div class="bg-primary w-full"
-                                style="height: 30%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Mar</p>
-                            <div class="bg-primary w-full"
-                                style="height: 25%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Apr</p>
-                            <div class="bg-primary w-full"
-                                style="height: 40%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">May</p>
-                            <div class="bg-primary w-full"
-                                style="height: 50%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Jun</p>
-                            <div class="bg-primary w-full"
-                                style="height: 60%;"></div><p
-                                class="text-muted-light dark:text-muted-dark text-xs font-bold">Jul</p>
-                            <div class="bg-primary w-full"
-                                style="height: 55%;"></div><p
                                 class="text-muted-light dark:text-muted-dark text-xs font-bold">Aug</p>
-                            <div class="bg-primary w-full"
-                                style="height: 70%;"></div><p
+                            <p
                                 class="text-muted-light dark:text-muted-dark text-xs font-bold">Sep</p>
-                            <div class="bg-primary w-full"
-                                style="height: 80%;"></div><p
+                            <p
                                 class="text-muted-light dark:text-muted-dark text-xs font-bold">Oct</p>
-                            <div class="bg-primary w-full"
-                                style="height: 75%;"></div><p
+                            <p
                                 class="text-muted-light dark:text-muted-dark text-xs font-bold">Nov</p>
-                            <div class="bg-primary w-full"
-                                style="height: 85%;"></div><p
+                            <p
                                 class="text-muted-light dark:text-muted-dark text-xs font-bold">Dec</p>
-                            <div class="bg-primary w-full"
-                                style="height: 95%;"></div><p
+                            <p
                                 class="text-muted-light dark:text-muted-dark text-xs font-bold">Jan</p>
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Faturamento por Plano -->
-                    <div
-                        class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm lg:col-span-2">
+
+                <!-- Metas Mensais vs. Atingido -->
+                <div
+                    class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 lg:col-span-2">
+                    <h3
+                        class="text-text-light dark:text-text-dark text-base font-medium">
+                        Receita Total (Mensal)
+                    </h3>
+                    <p
+                        class="tracking-tight text-3xl font-bold mt-1 text-primary">R$
+                        1.2M</p>
+                    <div class="flex gap-1.5 items-center mt-1">
                         <p
-                            class="text-text-light dark:text-text-dark text-base font-medium mb-4">Faturamento
-                            por Plano</p>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left">
-                                <thead
+                            class="text-muted-light dark:text-muted-dark text-sm">Últimos
+                            12 Mêsese</p>
+                        <p
+                            class="text-green-500 text-sm font-medium flex items-center"><span
+                                class="material-symbols-outlined text-base">arrow_upward</span>+8%</p>
+                    </div>
+                    <div
+                        class="grid min-h-[180px] grid-flow-col gap-4 grid-rows-[1fr_auto] items-end justify-items-center pt-4">
+                        <div class="bg-primary w-full"
+                            style="height: 20%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Feb</p>
+                        <div class="bg-primary w-full"
+                            style="height: 30%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Mar</p>
+                        <div class="bg-primary w-full"
+                            style="height: 25%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Apr</p>
+                        <div class="bg-primary w-full"
+                            style="height: 40%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">May</p>
+                        <div class="bg-primary w-full"
+                            style="height: 50%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Jun</p>
+                        <div class="bg-primary w-full"
+                            style="height: 60%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Jul</p>
+                        <div class="bg-primary w-full"
+                            style="height: 55%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Aug</p>
+                        <div class="bg-primary w-full"
+                            style="height: 70%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Sep</p>
+                        <div class="bg-primary w-full"
+                            style="height: 80%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Oct</p>
+                        <div class="bg-primary w-full"
+                            style="height: 75%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Nov</p>
+                        <div class="bg-primary w-full"
+                            style="height: 85%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Dec</p>
+                        <div class="bg-primary w-full"
+                            style="height: 95%;"></div>
+                        <p
+                            class="text-muted-light dark:text-muted-dark text-xs font-bold">Jan</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KPI REPORTS-->
+            <div
+                class="grid grid-cols-3 lg:grid-cols-2 xl:grid-cols-4 gap-6 mb-8 ml-2 mr-5">
+                <!-- Faturamento por Plano -->
+                <div
+                    class=" col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 lg:col-span-2">
+                    <h3
+                        class="text-text-light dark:text-text-dark text-base font-medium">
+                        💰 Faturamento por Plano
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead
+                                class="border-b border-background-light dark:border-background-dark">
+                                <tr>
+                                    <th
+                                        class="py-2 px-4 text-xs font-bold text-muted-light dark:text-muted-dark uppercase tracking-wider">
+                                        Plano</th>
+                                    <th
+                                        class="py-2 px-4 text-xs font-bold text-muted-light dark:text-muted-dark uppercase tracking-wider">
+                                        Operadora</th>
+                                    <th
+                                        class="py-2 px-4 text-xs font-bold text-muted-light dark:text-muted-dark uppercase tracking-wider text-right">
+                                        Receita</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
                                     class="border-b border-background-light dark:border-background-dark">
-                                    <tr>
-                                        <th
-                                            class="py-2 px-4 text-xs font-bold text-muted-light dark:text-muted-dark uppercase tracking-wider">Plano</th>
-                                        <th
-                                            class="py-2 px-4 text-xs font-bold text-muted-light dark:text-muted-dark uppercase tracking-wider">Operadora</th>
-                                        <th
-                                            class="py-2 px-4 text-xs font-bold text-muted-light dark:text-muted-dark uppercase tracking-wider text-right">Receita</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr
-                                        class="border-b border-background-light dark:border-background-dark">
-                                        <td
-                                            class="py-3 px-4 text-sm text-text-light dark:text-text-dark">Amil
-                                            Fácil S80</td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-muted-light dark:text-muted-dark">Amil</td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-text-light dark:text-text-dark text-right font-medium">R$
-                                            15.200,00</td>
-                                    </tr>
-                                    <tr
-                                        class="border-b border-background-light dark:border-background-dark">
-                                        <td
-                                            class="py-3 px-4 text-sm text-text-light dark:text-text-dark">Bradesco
-                                            Saúde Efetivo</td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-muted-light dark:text-muted-dark">Bradesco</td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-text-light dark:text-text-dark text-right font-medium">R$
-                                            12.800,00</td>
-                                    </tr>
-                                    <tr
-                                        class="border-b border-background-light dark:border-background-dark">
-                                        <td
-                                            class="py-3 px-4 text-sm text-text-light dark:text-text-dark">SulAmérica
-                                            Exato</td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-muted-light dark:text-muted-dark">SulAmérica</td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-text-light dark:text-text-dark text-right font-medium">R$
-                                            11.500,00</td>
-                                    </tr>
-                                    <tr
-                                        class="border-b border-background-light dark:border-background-dark">
-                                        <td
-                                            class="py-3 px-4 text-sm text-text-light dark:text-text-dark">Unimed
-                                            Absoluto</td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-muted-light dark:text-muted-dark">Unimed</td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-text-light dark:text-text-dark text-right font-medium">R$
-                                            9.750,00</td>
-                                    </tr>
-                                    <tr>
-                                        <td
-                                            class="py-3 px-4 text-sm text-text-light dark:text-text-dark">Amil
-                                            S750</td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-muted-light dark:text-muted-dark">Amil</td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-text-light dark:text-text-dark text-right font-medium">R$
-                                            8.900,00</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    <td
+                                        class="py-3 px-4 text-sm text-text-light dark:text-text-dark">Amil
+                                        Fácil S80</td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-muted-light dark:text-muted-dark">Amil</td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-text-light dark:text-text-dark text-right font-medium">
+                                        R$
+                                        15.200,00</td>
+                                </tr>
+                                <tr
+                                    class="border-b border-background-light dark:border-background-dark">
+                                    <td
+                                        class="py-3 px-4 text-sm text-text-light dark:text-text-dark">Bradesco
+                                        Saúde Efetivo</td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-muted-light dark:text-muted-dark">Bradesco</td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-text-light dark:text-text-dark text-right font-medium">
+                                        R$
+                                        12.800,00</td>
+                                </tr>
+                                <tr
+                                    class="border-b border-background-light dark:border-background-dark">
+                                    <td
+                                        class="py-3 px-4 text-sm text-text-light dark:text-text-dark">SulAmérica
+                                        Exato</td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-muted-light dark:text-muted-dark">SulAmérica</td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-text-light dark:text-text-dark text-right font-medium">
+                                        R$
+                                        11.500,00</td>
+                                </tr>
+                                <tr
+                                    class="border-b border-background-light dark:border-background-dark">
+                                    <td
+                                        class="py-3 px-4 text-sm text-text-light dark:text-text-dark">Unimed
+                                        Absoluto</td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-muted-light dark:text-muted-dark">Unimed</td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-text-light dark:text-text-dark text-right font-medium">
+                                        R$
+                                        9.750,00</td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        class="py-3 px-4 text-sm text-text-light dark:text-text-dark">Amil
+                                        S750</td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-muted-light dark:text-muted-dark">Amil</td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-text-light dark:text-text-dark text-right font-medium">
+                                        R$
+                                        8.900,00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm col-span-1 lg:col-span-2">
+                    <h3
+                        class="text-text-light dark:text-text-dark text-base font-medium">
+                        🛒 Distribuição de Vendas
+                    </h3>
+                    <div class="flex justify-center items-center h-48 my-4">
+                        <div class="relative w-48 h-48">
+                            <svg class="w-full h-full" viewbox="0 0 36 36">
+                                <path
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    fill="none" stroke="#f2c7b5"
+                                    stroke-width="4"></path>
+                                <path
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                                    fill="none" stroke="#e6a88f"
+                                    stroke-dasharray="70, 30"
+                                    stroke-width="4"></path>
+                                <path
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+                                    fill="none" stroke="#d48262"
+                                    stroke-dasharray="45, 55"
+                                    stroke-width="4"></path>
+                            </svg>
+                            <div
+                                class="absolute inset-0 flex items-center justify-center">
+                                <span
+                                    class="text-2xl font-bold text-text-light dark:text-text-dark">120</span>
+                            </div>
                         </div>
                     </div>
-                    <!-- Distribuição de Vendas -->
-                    <div
-                        class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm">
-                        <p
-                            class="text-text-light dark:text-text-dark text-base font-medium mb-4">Distribuição
-                            de Vendas</p>
-                        <div class="flex justify-center items-center h-48 my-4">
-                            <div class="relative w-48 h-48">
-                                <svg class="w-full h-full" viewbox="0 0 36 36">
-                                    <path
-                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                        fill="none" stroke="#f2c7b5"
-                                        stroke-width="4"></path>
-                                    <path
-                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                                        fill="none" stroke="#e6a88f"
-                                        stroke-dasharray="70, 30"
-                                        stroke-width="4"></path>
-                                    <path
-                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                                        fill="none" stroke="#d48262"
-                                        stroke-dasharray="45, 55"
-                                        stroke-width="4"></path>
-                                </svg>
-                                <div
-                                    class="absolute inset-0 flex items-center justify-center">
-                                    <span
-                                        class="text-2xl font-bold text-text-light dark:text-text-dark">120</span>
-                                </div>
+                    <div class="flex flex-col gap-2 text-sm">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="w-3 h-3 rounded-full bg-primary"></span>
+                                <p
+                                    class="text-text-light dark:text-text-dark">PME</p>
                             </div>
+                            <p
+                                class="font-medium text-text-light dark:text-text-dark">45%</p>
                         </div>
-                        <div class="flex flex-col gap-2 text-sm">
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center gap-2">
-                                    <span
-                                        class="w-3 h-3 rounded-full bg-primary"></span>
-                                    <p
-                                        class="text-text-light dark:text-text-dark">PME</p>
-                                </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="w-3 h-3 rounded-full bg-[#e6a88f]"></span>
                                 <p
-                                    class="font-medium text-text-light dark:text-text-dark">45%</p>
+                                    class="text-text-light dark:text-text-dark">PF</p>
                             </div>
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center gap-2">
-                                    <span
-                                        class="w-3 h-3 rounded-full bg-[#e6a88f]"></span>
-                                    <p
-                                        class="text-text-light dark:text-text-dark">PF</p>
-                                </div>
+                            <p
+                                class="font-medium text-text-light dark:text-text-dark">25%</p>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="w-3 h-3 rounded-full bg-[#f2c7b5]"></span>
                                 <p
-                                    class="font-medium text-text-light dark:text-text-dark">25%</p>
+                                    class="text-text-light dark:text-text-dark">Adesão</p>
                             </div>
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center gap-2">
-                                    <span
-                                        class="w-3 h-3 rounded-full bg-[#f2c7b5]"></span>
-                                    <p
-                                        class="text-text-light dark:text-text-dark">Adesão</p>
-                                </div>
-                                <p
-                                    class="font-medium text-text-light dark:text-text-dark">30%</p>
-                            </div>
+                            <p
+                                class="font-medium text-text-light dark:text-text-dark">30%</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
-</body></html>
+
+        </div> <!-- Fim do dashboard-container -->
+
+        <!-- =========================================== -->
+        <!-- SCRIPT PADRÃO PARA TODOS OS DASHBOARDS -->
+        <!-- =========================================== -->
+        <script>
+        // CONFIGURAÇÃO PADRÃO PARA DASHBOARDS EM IFRAME
+        (function () {
+            'use strict';
+
+            console.log('📊 Dashboard Template - Carregado');
+
+            // ===========================================
+            // 1. VERIFICAR SE ESTÁ DENTRO DE IFRAME
+            // ===========================================
+            const isInIframe = window.self !== window.top;
+
+            if (isInIframe) {
+                console.log('🎯 Dashboard carregado dentro de iframe');
+
+                // ===========================================
+                // 2. INICIALIZAÇÃO DO DASHBOARD
+                // ===========================================
+                document.addEventListener('DOMContentLoaded', function () {
+                    console.log('✅ DOM totalmente carregado');
+
+                    // Ajustar tema automaticamente
+                    adjustTheme();
+
+                    // Garantir altura suficiente para scroll
+                    guaranteeScrollHeight();
+
+                    // Configurar componentes dinâmicos
+                    setupDynamicComponents();
+
+                    // Informar ao parent que o dashboard está pronto
+                    notifyParentDashboardReady();
+                });
+
+                // ===========================================
+                // 3. FUNÇÕES UTILITÁRIAS
+                // ===========================================
+
+                /**
+                 * Ajusta o tema (claro/escuro) com base no parent
+                 */
+                function adjustTheme() {
+                    try {
+                        const parentTheme = window.parent.document.documentElement.classList.contains('dark')
+                            ? 'dark'
+                            : 'light';
+
+                        document.body.className = parentTheme;
+                        console.log(`🎨 Tema ajustado para: ${parentTheme}`);
+                    } catch (e) {
+                        console.log('⚠️ Não foi possível detectar tema do parent');
+                    }
+                }
+
+                /**
+                 * Garante que o dashboard tenha altura suficiente para scroll
+                 */
+                function guaranteeScrollHeight() {
+                    setTimeout(() => {
+                        const bodyHeight = document.body.scrollHeight;
+                        const viewportHeight = window.innerHeight;
+                        const minRequiredHeight = viewportHeight + 400;
+
+                        console.log('📏 Verificando altura:', {
+                            atual: bodyHeight + 'px',
+                            viewport: viewportHeight + 'px',
+                            necessária: minRequiredHeight + 'px',
+                            precisaExpandir: bodyHeight < minRequiredHeight
+                        });
+
+                        // Se necessário, ajustar a área de scroll
+                        if (bodyHeight < minRequiredHeight) {
+                            const scrollMarker = document.querySelector('.scroll-end-marker');
+                            if (scrollMarker) {
+                                const extraHeight = minRequiredHeight - bodyHeight + 100;
+                                scrollMarker.style.height = `${extraHeight}px`;
+                                console.log(`⚡ Área de scroll expandida em ${extraHeight}px`);
+                            }
+                        }
+                    }, 300);
+                }
+
+                /**
+                 * Configura componentes dinâmicos do dashboard
+                 */
+                function setupDynamicComponents() {
+                    // Adicionar tooltips nos KPIs
+                    document.querySelectorAll('.kpi-card').forEach(card => {
+                        card.addEventListener('mouseenter', function () {
+                            this.style.transform = 'translateY(-4px)';
+                        });
+
+                        card.addEventListener('mouseleave', function () {
+                            this.style.transform = 'translateY(0)';
+                        });
+                    });
+
+                    // Configurar tooltips de status
+                    document.querySelectorAll('[data-tooltip]').forEach(element => {
+                        const tooltipText = element.getAttribute('data-tooltip');
+                        if (tooltipText) {
+                            element.title = tooltipText;
+                        }
+                    });
+
+                    console.log('🔧 Componentes dinâmicos configurados');
+                }
+
+                /**
+                 * Informa ao parent que o dashboard está pronto
+                 */
+                function notifyParentDashboardReady() {
+                    setTimeout(() => {
+                        try {
+                            const dashboardData = {
+                                type: 'dashboardReady',
+                                title: document.title,
+                                height: document.body.scrollHeight,
+                                url: window.location.href,
+                                timestamp: Date.now()
+                            };
+
+                            window.parent.postMessage(dashboardData, '*');
+                            console.log('📤 Dashboard notificado como pronto para parent');
+
+                        } catch (e) {
+                            console.log('⚠️ Não foi possível notificar parent');
+                        }
+                    }, 1000);
+                }
+
+                // ===========================================
+                // 4. ESCUTAR COMANDOS DO PARENT
+                // ===========================================
+                window.addEventListener('message', function (event) {
+                    try {
+                        const data = event.data;
+
+                        if (data.type === 'refreshDashboard') {
+                            console.log('🔄 Parent solicitou refresh do dashboard');
+                            // Implementar refresh se necessário
+                        }
+
+                        if (data.type === 'updateTheme') {
+                            console.log(`🎨 Parent solicitou mudança de tema: ${data.theme}`);
+                            document.body.className = data.theme || 'light';
+                        }
+
+                    } catch (e) {
+                        // Ignorar erros
+                    }
+                });
+
+                // ===========================================
+                // 5. FUNÇÕES GLOBAIS PARA DEBUG
+                // ===========================================
+
+                // Debug helper
+                window.dashboardDebug = function () {
+                    console.group('🔧 DEBUG DO DASHBOARD');
+                    console.log('URL:', window.location.href);
+                    console.log('Título:', document.title);
+                    console.log('Altura body:', document.body.scrollHeight + 'px');
+                    console.log('Viewport:', window.innerHeight + 'px');
+                    console.log('Tema atual:', document.body.className);
+                    console.log('Em iframe:', isInIframe);
+                    console.groupEnd();
+
+                    return {
+                        height: document.body.scrollHeight,
+                        viewport: window.innerHeight,
+                        theme: document.body.className,
+                        url: window.location.href
+                    };
+                };
+
+                // Forçar recálculo de altura
+                window.recalculateHeight = function () {
+                    guaranteeScrollHeight();
+                    notifyParentDashboardReady();
+                    console.log('📐 Altura recalculada');
+                };
+
+            } else {
+                console.log('🌍 Dashboard carregado diretamente (não em iframe)');
+            }
+
+            // ===========================================
+            // 6. EXPORTAÇÃO DE FUNÇÕES PÚBLICAS
+            // ===========================================
+            window.dashboardUtils = {
+                refresh: function () {
+                    location.reload();
+                },
+
+                toggleTheme: function () {
+                    const currentTheme = document.body.className;
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    document.body.className = newTheme;
+                    console.log(`🎨 Tema alterado para: ${newTheme}`);
+                    return newTheme;
+                },
+
+                getStats: function () {
+                    const cards = document.querySelectorAll('.kpi-card, .dashboard-card');
+                    const tables = document.querySelectorAll('table');
+                    const charts = document.querySelectorAll('[data-chart]');
+
+                    return {
+                        totalCards: cards.length,
+                        totalTables: tables.length,
+                        totalCharts: charts.length,
+                        totalHeight: document.body.scrollHeight,
+                        theme: document.body.className
+                    };
+                }
+            };
+
+        })();
+    </script>
+    </body>
+
+</html>

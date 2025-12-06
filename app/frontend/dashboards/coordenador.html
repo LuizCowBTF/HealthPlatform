@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="light" lang="pt-BR">
+
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -13,207 +14,214 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet" />
     <script>
-			tailwind.config = {
-				darkMode: "class",
-				theme: {
-					extend: {
-						colors: {
-							"primary": "#d48262",
-							"background-light": "#f5f5f5",
-							"background-dark": "#211511",
-							"accent": "#1c1c1c",
-							"sidebar-bg": "#ffffff"
-						},
-						fontFamily: {
-							"display": ["Inter", "sans-serif"]
-						},
-						borderRadius: {
-							"DEFAULT": "0.5rem",
-							"lg": "1rem",
-							"xl": "1.5rem",
-							"full": "9999px"
-						},
-					},
-				},
-			}
-		</script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#d48262",
+            "background-light": "#f5f5f5",
+            "background-dark": "#211511",
+            "accent": "#1c1c1c",
+            "sidebar-bg": "#ffffff"
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
     <script>
-			// Função para expandir/colapsar submenus
-			function toggleSubmenu(id) {
-				const submenu = document.getElementById(id);
-				const icon = document.getElementById(`icon-${id}`);
-				if (submenu.classList.contains('hidden')) {
-					// Expandir
-					submenu.classList.remove('hidden');
-					icon.classList.add('rotate-180');
-				} else {
-					// Colapsar
-					submenu.classList.add('hidden');
-					icon.classList.remove('rotate-180');
-				}
-			}
+    // Função para expandir/colapsar submenus
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      const icon = document.getElementById(`icon-${id}`);
+      if (submenu.classList.contains('hidden')) {
+        // Expandir
+        submenu.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        // Colapsar
+        submenu.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
 
-			// Função para colapsar/expandir o sidebar principal
-			function toggleSidebar() {
-				const expandedSidebar = document.getElementById('expanded-sidebar');
-				const recolherSidebar = document.getElementById('recolher-sidebar');
-				const mainContent = document.getElementById('main-content');
-				
-				expandedSidebar.classList.toggle('hidden');
-				recolherSidebar.classList.toggle('hidden');
-			}
-		</script>
+    // Função para colapsar/expandir o sidebar principal
+    function toggleSidebar() {
+      const expandedSidebar = document.getElementById('expanded-sidebar');
+      const recolherSidebar = document.getElementById('recolher-sidebar');
+      const mainContent = document.getElementById('main-content');
+
+      expandedSidebar.classList.toggle('hidden');
+      recolherSidebar.classList.toggle('hidden');
+    }
+  </script>
   </head>
-  <body class="bg-background-light dark:bg-background-dark font-display">
 
-    <div class="flex min-h-screen">
-      <!-- Main Content -->
-      <main class="flex-1 p-8">
-        <!-- PageHeading -->
-        <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
-          <div class="flex flex-col gap-1">
-            <p class="text-3xl font-bold text-accent dark:text-white text-primary">Desempenho por Equipe</p>
-            <p class="text-gray-500 dark:text-gray-400 text-base text-primary">Bem-vindo,
-              John! Aqui está um resumo do desempenho da sua equipe.</p>
-          </div>
-          <button
-            class="flex items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-white dark:bg-gray-800 text-accent dark:text-white text-sm font-medium border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-            <span
-              class="material-symbols-outlined mr-2 text-lg text-primary">calendar_today</span>
-            <span class="truncate text-primary">Últimos 30 Dias</span>
-          </button>
+  <body class="bg-gray-50 p-4 md:p-6">
+    <div class="max-w-7xl mx-auto">
+      <!-- Stats -->
+      <div
+        class="flex flex-wrap justify-between items-center gap-6 mb-8 ml-2 mr-5">
+        <div class="flex gap-6 justify-between">
+          <h3 class="text-text-light dark:text-text-dark text-base font-medium">
+            🎯 Meta Mensal</h3>
         </div>
-        <!-- Stats -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div
-            class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800 shadow-sm transform hover:-translate-y-1 transition-transform duration-300 text-primary">
-            <p
-              class="text-gray-500 dark:text-gray-400 text-base font-medium text-primary">Total
-              por Líderes de Equipe</p>
-            <p class="text-accent dark:text-white text-3xl font-bold">1,234</p>
-            <p
-              class="text-green-500 text-sm font-medium flex items-center text-primary"><span
-                class="material-symbols-outlined text-base mr-1">arrow_upward</span>+10%</p>
-          </div>
-          <div
-            class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800 shadow-sm transform hover:-translate-y-1 transition-transform duration-300 text-primary">
-            <p
-              class="text-gray-500 dark:text-gray-400 text-base font-medium text-primary">Planos
-              Fechados por Equipe</p>
-            <p class="text-accent dark:text-white text-3xl font-bold">56</p>
-            <p
-              class="text-green-500 text-sm font-medium flex items-center"><span
-                class="material-symbols-outlined text-base mr-1">arrow_upward</span>+5%</p>
-          </div>
-          <div
-            class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800 shadow-sm transform hover:-translate-y-1 transition-transform duration-300 text-primary">
-            <p
-              class="text-gray-500 dark:text-gray-400 text-base font-medium text-primary">Taxa
-              de Conversão por Equipe</p>
-            <p class="text-accent dark:text-white text-3xl font-bold">4.5%</p>
-            <p class="text-red-500 text-sm font-medium flex items-center"><span
-                class="material-symbols-outlined text-base mr-1">arrow_downward</span>-0.2%</p>
-          </div>
-          <div
-            class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800 shadow-sm transform hover:-translate-y-1 transition-transform duration-300 text-primary">
-            <p
-              class="text-gray-500 dark:text-gray-400 text-base font-medium text-primary">Comissão
-              Total da Equipe</p>
-            <p
-              class="text-accent dark:text-white text-3xl font-bold">$12,345</p>
-            <p
-              class="text-green-500 text-sm font-medium flex items-center"><span
-                class="material-symbols-outlined text-base mr-1">arrow_upward</span>+8%</p>
-          </div>
+        <button
+          class="flex items-center justify-right overflow-hidden rounded-lg h-10 px-4 bg-white dark:bg-gray-800 text-accent dark:text-white text-sm font-medium border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+          <span
+            class="material-symbols-outlined mr-2 text-lg text-primary">calendar_today</span>
+          <span class="truncate text-primary">Últimos 30 Dias</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div
+          class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800 shadow-sm transform hover:-translate-y-1 transition-transform duration-300 text-primary">
+          <h3 class="font-semibold text-gray-700">🧑‍💼 Total por Líderes de
+            Equipe</h3>
+          <p
+            class="text-accent dark:text-white text-3xl font-bold text-primary">1,234</p>
+          <p class="text-green-500 text-sm font-medium flex items-center"><span
+              class="material-symbols-outlined text-base mr-1">arrow_upward</span>+10%</p>
         </div>
-        <!-- Charts -->
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
-          <div
-            class="lg:col-span-3 flex flex-col gap-4 rounded-xl border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-800 shadow-sm">
-            <div class="flex justify-between items-start">
-              <div>
-                <p
-                  class="text-accent dark:text-white text-lg font-semibold text-primary">Progresso
-                  por Equipe</p>
-                <p class="text-gray-500 dark:text-gray-400 text-sm text-primary">Taxa de
-                  conversão nos últimos 30 dias</p>
-              </div>
-              <div class="flex items-center gap-1 text-green-500">
-                <span
-                  class="material-symbols-outlined text-lg text-primary">trending_up</span>
-                <p class="text-sm font-medium">+0.2%</p>
-              </div>
+        <div
+          class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800 shadow-sm transform hover:-translate-y-1 transition-transform duration-300 text-primary">
+          <h3 class="font-semibold text-gray-700">🔒 Planos Fechados por
+            Equipe</p>
+          <p
+            class="text-accent dark:text-white text-3xl font-bold text-primary">56</p>
+          <p class="text-green-500 text-sm font-medium flex items-center"><span
+              class="material-symbols-outlined text-base mr-1">arrow_upward</span>+5%</p>
+        </div>
+        <div
+          class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800 shadow-sm transform hover:-translate-y-1 transition-transform duration-300 text-primary">
+          <h3 class="font-semibold text-gray-700">📈 Taxa de Conversão por
+            Equipe</p>
+          <p
+            class="text-accent dark:text-white text-3xl font-bold text-primary">4.5%</p>
+          <p class="text-red-500 text-sm font-medium flex items-center"><span
+              class="material-symbols-outlined text-base mr-1">arrow_downward</span>-0.2%</p>
+        </div>
+        <div
+          class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-gray-800 shadow-sm transform hover:-translate-y-1 transition-transform duration-300 text-primary">
+          <h3 class="font-semibold text-gray-700">💰 Comissão Total da
+            Equipe</p>
+          <p
+            class="text-accent dark:text-white text-3xl font-bold text-primary">$12,345</p>
+          <p class="text-green-500 text-sm font-medium flex items-center"><span
+              class="material-symbols-outlined text-base mr-1">arrow_upward</span>+8%</p>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="grid grid-cols-2 lg:grid-cols-2 gap-6 mb-8 ml-2 mr-5">
+        <div
+          class="grid-col rounded-xl gap-2 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+          <div class="flex justify-between items-start">
+            <div class=" p-4">
+              <h3 class="font-semibold text-gray-700">🔄 Progresso por
+                Equipe</h3>
+              <p
+                class="text-gray-500 dark:text-gray-400 text-sm text-primary">Taxa
+                de conversão nos últimos 30 dias</p>
             </div>
-            <div class="flex min-h-[250px] flex-1 flex-col justify-end">
-              <svg fill="none" height="100%" preserveaspectratio="none"
-                viewbox="0 0 472 150" width="100%"
-                xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <lineargradient id="chartGradient" x1="0" x2="0" y1="0"
-                    y2="100%">
-                    <stop offset="0%" stop-color="#d48262"
-                      stop-opacity="0.4"></stop>
-                    <stop offset="100%" stop-color="#d48262"
-                      stop-opacity="0"></stop>
-                  </lineargradient>
-                </defs>
-                <path
-                  d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V150H0V109Z"
-                  fill="url(#chartGradient)"></path>
-                <path
-                  d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25"
-                  stroke="#d48262" stroke-linecap="round"
+            <div class="flex items-center gap-1 text-green-500 p-4">
+              <span
+                class="material-symbols-outlined text-lg text-primary">trending_up</span>
+              <p class="text-sm font-medium">+0.2%</p>
+            </div>
+          </div>
+          <div class="flex min-h-[250px] flex-1 flex-col justify-end m-4">
+            <svg fill="none" height="100%" preserveaspectratio="none"
+              viewbox="0 0 472 150" width="100%"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <lineargradient id="chartGradient" x1="0" x2="0" y1="0"
+                  y2="100%">
+                  <stop offset="0%" stop-color="#d48262"
+                    stop-opacity="0.4"></stop>
+                  <stop offset="100%" stop-color="#d48262"
+                    stop-opacity="0"></stop>
+                </lineargradient>
+              </defs>
+              <path
+                d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V150H0V109Z"
+                fill="url(#chartGradient)"></path>
+              <path
+                d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25"
+                stroke="#d48262" stroke-linecap="round" stroke-width="3"></path>
+            </svg>
+            <div
+              class="flex justify-around mt-2 text-gray-500 dark:text-gray-400 text-xs font-medium text-primary">
+              <p>Semana 1</p>
+              <p>Semana 2</p>
+              <p>Semana 3</p>
+              <p>Semana 4</p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="grid-col rounded-xl gap-2 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+          <div class="flex justify-between items-start">
+            <div class="p-4">
+              <h3 class="font-semibold text-gray-700">🏁 Objetivo por
+                equipe</h3>
+              <p
+                class="text-gray-500 dark:text-gray-400 text-sm text-primary">Meta
+                de planos fechados mensais</p>
+            </div>
+          </div>
+          <div class="flex items-center flex-1 flex-col justify-end">
+            <div class="relative w-40 h-40">
+              <svg class="w-full h-full" viewbox="0 0 36 36">
+                <path class="text-gray-200 dark:text-gray-700" d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
                   stroke-width="3"></path>
+                <path class="text-primary" d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
+                  stroke-dasharray="75, 100"
+                  stroke-linecap="round" stroke-width="3"></path>
               </svg>
               <div
-                class="flex justify-around mt-2 text-gray-500 dark:text-gray-400 text-xs font-medium text-primary">
-                <p>Semana 1</p><p>Semana 2</p><p>Semana 3</p><p>Semana 4</p>
+                class="absolute inset-0 flex flex-col items-center justify-center">
+                <span
+                  class="text-3xl font-bold text-accent dark:text-white">75%</span>
+                <span
+                  class="text-sm text-gray-500 dark:text-gray-400 text-primary">Achieved</span>
               </div>
             </div>
           </div>
-          <div
-            class="lg:col-span-2 flex flex-col gap-4 rounded-xl border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-800 shadow-sm">
+          <div class="text-center">
             <p
-              class="text-accent dark:text-white text-lg font-semibold text-primary">Objetivo
-              por equipe</p>
-            <p class="text-gray-500 dark:text-gray-400 text-sm -mt-3 text-primary">Meta de
-              planos fechados mensais</p>
-            <div class="flex items-center justify-center flex-1">
-              <div class="relative w-40 h-40">
-                <svg class="w-full h-full" viewbox="0 0 36 36">
-                  <path class="text-gray-200 dark:text-gray-700" d="M18 2.0845
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831"
-                    fill="none" stroke-width="3"></path>
-                  <path class="text-primary" d="M18 2.0845
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831"
-                    fill="none" stroke-dasharray="75, 100"
-                    stroke-linecap="round" stroke-width="3"></path>
-                </svg>
-                <div
-                  class="absolute inset-0 flex flex-col items-center justify-center">
-                  <span
-                    class="text-3xl font-bold text-accent dark:text-white">75%</span>
-                  <span
-                    class="text-sm text-gray-500 dark:text-gray-400 text-primary">Achieved</span>
-                </div>
-              </div>
-            </div>
-            <div class="text-center">
-              <p class="text-gray-500 dark:text-gray-400 text-sm text-primary">75 of 100
-                plans closed this month.</p>
-            </div>
+              class="text-gray-500 dark:text-gray-400 text-sm text-primary">75
+              of 100
+              plans closed this month.</p>
           </div>
         </div>
-        <!-- Broker Performance Table -->
+      </div>
+
+      <!-- Broker Performance Table -->
+      <div class="grid grid-cols-1 lg:grid-cols-1 gap-1 mb-8 ml-2 mr-5">
         <div
           class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
           <div class="p-6">
             <h3
               class="text-lg font-semibold text-accent dark:text-white text-primary">Desempenho
               por Corretor</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400 text-primary">Análise
+            <p
+              class="text-sm text-gray-500 dark:text-gray-400 text-primary">Análise
               detalhada das métricas de desempenho de cada corretora.</p>
           </div>
           <div class="overflow-x-auto">
@@ -242,8 +250,10 @@
                       <div
                         class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8"
                         data-alt="avatar 1"
-                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDCVhWVzfrMMcquTSvcT96tNMDh_UgtxdUlodnm8q9kmw1Ru_Y3vXPfXtgj_1UvQWH0IYRFkdloh43V4qEgQNByvxBmc3dn-FCDBC1WWhKD5gLmIqumWr2aW-SKCKup3BMi9tHdt_v2qgQowXij-8W4LWHl7MWA-zrrF7o8YbYBVCX0sggWX2rHWziyNM3whG-3IzeuCp5ySG85I78n8SCHIsjz9_gEkJNSmcwFXr9LOJj4I-oo8e0XUNazlLhm4MrrZPqB8TEsTxs");'></div>
-                      <span class="font-medium text-accent dark:text-white text-primary">Alex
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDCVhWVzfrMMcquTSvcT96tNMDh_UgtxdUlodnm8q9kmw1Ru_Y3vXPfXtgj_1UvQWH0IYRFkdloh43V4qEgQNByvxBmc3dn-FCDBC1WWhKD5gLmIqumWr2aW-SKCKup3BMi9tHdt_v2qgQowXij-8W4LWHl7MWA-zrrF7o8YbYBVCX0sggWX2rHWziyNM3whG-3IzeuCp5ySG85I78n8SCHIsjz9_gEkJNSmcwFXr9LOJj4I-oo8e0XUNazlLhm4MrrZPqB8TEsTxs");'>
+                      </div>
+                      <span
+                        class="font-medium text-accent dark:text-white text-primary">Alex
                         Johnson</span>
                     </div>
                   </td>
@@ -262,7 +272,8 @@
                       <div
                         class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8"
                         data-alt="avatar 2"
-                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGrFaUEXhv4ub78AweTcy6-V5qe-We41aCjL3pnYI7WE7kgTFPHdMPIdUDS5htzeyXXhEZcrt6QOE8aqp6ZIl3SqT0BSp30Mzq3MxTa-QuVFu5rk3nQXNy2EjhlrNyH4Td4Kb3wPqSdXdaFgugMFVGO9Dz15fuaEiGd-ui69TcQOmo_sk4tBIiFUxzDLK87W0MDrOOoMlg694Ehj2XMMZC1B13P-U_vPUeQIlqL8wlIcOrIy4lbIreEno4JnOitB-q_U-hnuiX4dA");'></div>
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGrFaUEXhv4ub78AweTcy6-V5qe-We41aCjL3pnYI7WE7kgTFPHdMPIdUDS5htzeyXXhEZcrt6QOE8aqp6ZIl3SqT0BSp30Mzq3MxTa-QuVFu5rk3nQXNy2EjhlrNyH4Td4Kb3wPqSdXdaFgugMFVGO9Dz15fuaEiGd-ui69TcQOmo_sk4tBIiFUxzDLK87W0MDrOOoMlg694Ehj2XMMZC1B13P-U_vPUeQIlqL8wlIcOrIy4lbIreEno4JnOitB-q_U-hnuiX4dA");'>
+                      </div>
                       <span
                         class="font-medium text-accent dark:text-white text-primary">Maria
                         Garcia</span>
@@ -283,7 +294,8 @@
                       <div
                         class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8"
                         data-alt="avatar 3"
-                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDE1j6c5BlDaWen7hu23OmxLdmQfvI-fWyQejjL88-hqOUOHxHKhZ_kL_DBMtsRPKnPALwmbgTIcdd8FY78NSGCxzwPNMM-Cz8QfbtyMLBL0e1AEVJmdtL-njHR6KEHEZaWatm3CJQAnr68EMY69u_IiyeHh013lsWhPBDHB3pCoaBVt088ZuKLklNP3VdbCGy1lZPMeqXcoqFTasRL_JHjhfR3YfqEh0O7gjkqcW3Rf2ZLMk6AMgeeve8eGXzZg7S_ELCBasy_v5w");'></div>
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDE1j6c5BlDaWen7hu23OmxLdmQfvI-fWyQejjL88-hqOUOHxHKhZ_kL_DBMtsRPKnPALwmbgTIcdd8FY78NSGCxzwPNMM-Cz8QfbtyMLBL0e1AEVJmdtL-njHR6KEHEZaWatm3CJQAnr68EMY69u_IiyeHh013lsWhPBDHB3pCoaBVt088ZuKLklNP3VdbCGy1lZPMeqXcoqFTasRL_JHjhfR3YfqEh0O7gjkqcW3Rf2ZLMk6AMgeeve8eGXzZg7S_ELCBasy_v5w");'>
+                      </div>
                       <span
                         class="font-medium text-accent dark:text-white text-primary">David
                         Smith</span>
@@ -304,7 +316,8 @@
                       <div
                         class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8"
                         data-alt="avatar 4"
-                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD8ItsfNKPCxIDka3GCVmWNHbY3HoIup0yYSN2ANbqUIKZF6ulZMiTGLJIfOPh1qdC0CJUjffns6zX7pPrs9NPnjSfp9ci6Y96etTg7cW556g9q6z2q3dPdIRjYeUVo_hP2lSRQTV4sAXD_dRC4KnpMG4Dx867vQLBo3-65q6uusbb1O3s5TM417C62v4NSe067NdXJ-6unruXmRpPWFWjVMWkfa2OeIVRz9PxL1nb3m5qovWf-D02ReSc84MYAIVL_jepveJKfPvA");'></div>
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD8ItsfNKPCxIDka3GCVmWNHbY3HoIup0yYSN2ANbqUIKZF6ulZMiTGLJIfOPh1qdC0CJUjffns6zX7pPrs9NPnjSfp9ci6Y96etTg7cW556g9q6z2q3dPdIRjYeUVo_hP2lSRQTV4sAXD_dRC4KnpMG4Dx867vQLBo3-65q6uusbb1O3s5TM417C62v4NSe067NdXJ-6unruXmRpPWFWjVMWkfa2OeIVRz9PxL1nb3m5qovWf-D02ReSc84MYAIVL_jepveJKfPvA");'>
+                      </div>
                       <span
                         class="font-medium text-accent dark:text-white text-primary">Sophia
                         Williams</span>
@@ -323,7 +336,8 @@
             </table>
           </div>
         </div>
-      </main>
-    </div>
-  </body>
-</html>
+
+      </div>
+    </body>
+
+  </html>
