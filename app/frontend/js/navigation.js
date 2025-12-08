@@ -39,7 +39,7 @@ class NavigationSystem {
         const pageParam = urlParams.get('page');
 
         if (pageParam) {
-            this.loadPage(decodeURIComponent(pageParam), 'Página Carregada');
+            this.loadPage(decodeURIComponent(pageParam), 'Sistema Atualizado');
         } else {
             setTimeout(() => {
                 this.loadPage('dashboard.html', 'Dashboard Geral');

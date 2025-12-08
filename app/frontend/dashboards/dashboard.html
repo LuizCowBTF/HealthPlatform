@@ -62,6 +62,21 @@
             margin: 0 !important;
             padding: 0 !important;
             padding-bottom: 10px !important;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.dark {
+            --bg-color: #211511;
+            --card-color: #2a1a14;
+            --text-color: #f5f5f5;
+            --border-color: #40312c;
+        }
+
+        body.light {
+            --bg-color: #f8f6f6;
+            --card-color: #ffffff;
+            --text-color: #1c1c1c;
+            --border-color: #e5dedc;
         }
 
         .max-w-7xl {
@@ -395,7 +410,8 @@
                         <div class="grid gap-2 items-center"
                             style="grid-template-columns: 50px 1fr;">
                             <p
-                                class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">Amil</p>
+                                class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">Amil
+                            </p>
                             <div
                                 class="w-full bg-background-light dark:bg-background-dark rounded-full h-4 ml-5">
                                 <div class="bg-primary h-4 rounded-full"
@@ -405,7 +421,8 @@
                         <div class="grid gap-2 items-center"
                             style="grid-template-columns: 50px 1fr;">
                             <p
-                                class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">Bradesco</p>
+                                class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
+                                Bradesco</p>
                             <div
                                 class="w-full bg-background-light dark:bg-background-dark rounded-full h-4 ml-5">
                                 <div class="bg-primary h-4 rounded-full"
@@ -415,7 +432,8 @@
                         <div class="grid gap-2 items-center"
                             style="grid-template-columns: 50px 1fr;">
                             <p
-                                class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">SulAmérica</p>
+                                class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
+                                SulAmérica</p>
                             <div
                                 class="w-full bg-background-light dark:bg-background-dark rounded-full h-4 ml-5">
                                 <div class="bg-primary h-4 rounded-full"
@@ -425,7 +443,8 @@
                         <div class="grid gap-2 items-center"
                             style="grid-template-columns: 50px 1fr;">
                             <p
-                                class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">NotreDame</p>
+                                class="text-subtext-light dark:text-subtext-dark text-sm font-medium text-right pr-4">
+                                NotreDame</p>
                             <div
                                 class="w-full bg-background-light dark:bg-background-dark rounded-full h-4 ml-5">
                                 <div class="bg-primary h-4 rounded-full"
@@ -482,7 +501,7 @@
                 </div>
             </div>
 
-            <!-- SISTEMA DE SAÚDE DO SISTEMA -->
+            <!-- PAINEL DE SAÚDE DO SISTEMA -->
             <div class="grid grid-cols-1 lg:grid-cols-1 gap-6 mb-8 ml-2 mr-5">
                 <h3
                     class="text-text-light dark:text-text-dark text-lg font-semibold p-4">
@@ -519,51 +538,51 @@
 
         <script> // Verificar se está dentro de iframe
 
-            if (window.self !== window.top) {
-                console.log('📦 Dashboard carregado em iframe');
+        if (window.self !== window.top) {
+            console.log('📦 Dashboard carregado em iframe');
 
-                // Garantir altura suficiente
-                document.addEventListener('DOMContentLoaded', function () {
-                    const bodyHeight = document.body.scrollHeight;
-                    const viewportHeight = window.innerHeight;
+            // Garantir altura suficiente
+            document.addEventListener('DOMContentLoaded', function () {
+                const bodyHeight = document.body.scrollHeight;
+                const viewportHeight = window.innerHeight;
 
-                    console.log('📏 Alturas:', {
-                        body: bodyHeight + 'px',
-                        viewport: viewportHeight + 'px'
-                    });
-
-                    // Se necessário, expandir mais
-                    if (bodyHeight < viewportHeight + 300) {
-                        const scrollArea = document.querySelector('.scroll-end-area');
-
-                        if (scrollArea) {
-                            scrollArea.style.height = (viewportHeight + 400 - bodyHeight) + 'px';
-                            console.log('⚡ Área de scroll ajustada');
-                        }
-                    }
-
-                    // Informar ao parent que carregamos
-                    setTimeout(() => {
-                        try {
-                            window.parent.postMessage({
-                                type: 'iframeLoaded',
-                                page: 'dashboard.html',
-                                height: document.body.scrollHeight
-                            }
-
-                                , '*');
-                        }
-
-                        catch (e) {
-                            // Ignorar cross-origin
-                        }
-                    }
-
-                        , 500);
+                console.log('📏 Alturas:', {
+                    body: bodyHeight + 'px',
+                    viewport: viewportHeight + 'px'
                 });
-            }
 
-        </script>
+                // Se necessário, expandir mais
+                if (bodyHeight < viewportHeight + 300) {
+                    const scrollArea = document.querySelector('.scroll-end-area');
+
+                    if (scrollArea) {
+                        scrollArea.style.height = (viewportHeight + 400 - bodyHeight) + 'px';
+                        console.log('⚡ Área de scroll ajustada');
+                    }
+                }
+
+                // Informar ao parent que carregamos
+                setTimeout(() => {
+                    try {
+                        window.parent.postMessage({
+                            type: 'iframeLoaded',
+                            page: 'dashboard.html',
+                            height: document.body.scrollHeight
+                        }
+
+                            , '*');
+                    }
+
+                    catch (e) {
+                        // Ignorar cross-origin
+                    }
+                }
+
+                    , 500);
+            });
+        }
+
+    </script>
     </body>
 
 </html>
