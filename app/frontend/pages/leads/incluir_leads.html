@@ -1,258 +1,701 @@
 <!DOCTYPE html>
-<html class="light" lang="pt-BR">
+<html lang="pt-BR">
 
-    <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>Health CRM as SaaS</title>
-        <script
-            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-            rel="stylesheet" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-            rel="stylesheet" />
-        <script>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- TITLE VARIÁVEL - Editar em cada dashboard -->
+    <title>HealthCRM</title>
+
+    <!-- Ícones do Google -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configuração do Tailwind -->
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#d48262",
-                        "background-light": "#f5f5f5",
+                        "primary": "#e67951",
+                        "primary-light": "#f8a583",
+                        "primary-dark": "#b86a50",
+                        "secondary": "#4299e1",
+                        "success": "#48bb78",
+                        "warning": "#ed8936",
+                        "danger": "#f56565",
+                        "info": "#0bc5ea",
+                        "background-light": "#f8f6f6",
                         "background-dark": "#211511",
-                        "accent": "#1c1c1c",
-                        "sidebar-bg": "#ffffff"
+                        "card-light": "#ffffff",
+                        "card-dark": "#2a1a14",
+                        "text-light": "#1c1c1c",
+                        "text-dark": "#f5f5f5",
+                        "subtext-light": "#876d64",
+                        "subtext-dark": "#a18a82",
+                        "border-light": "#e5dedc",
+                        "border-dark": "#40312c",
                     },
                     fontFamily: {
-                        "display": ["Inter", "sans-serif"]
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "system-ui", "sans-serif"]
                     },
                     borderRadius: {
-                        "DEFAULT": "0.5rem",
+                        "DEFAULT": "0.75rem",
                         "lg": "1rem",
                         "xl": "1.5rem",
+                        "2xl": "2rem",
                         "full": "9999px"
                     },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                    }
                 },
             },
         }
     </script>
-        <script>
-        // Função para expandir/colapsar submenus
-        function toggleSubmenu(id) {
-            const submenu = document.getElementById(id);
-            const icon = document.getElementById(`icon-${id}`);
-            if (submenu.classList.contains('hidden')) {
-                // Expandir
-                submenu.classList.remove('hidden');
-                icon.classList.add('rotate-180');
-            } else {
-                // Colapsar
-                submenu.classList.add('hidden');
-                icon.classList.remove('rotate-180');
+
+    <!-- CSS PADRÃO PARA TODOS OS DASHBOARDS -->
+    <style>
+        /* =========================================== */
+        /* RESET E ESTILOS GLOBAIS PARA IFRAME */
+        /* =========================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100vh !important;
+            height: auto !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color, #f8f6f6);
+        }
+
+        body.dark {
+            --bg-color: #211511;
+            --card-color: #2a1a14;
+            --text-color: #f5f5f5;
+            --border-color: #40312c;
+        }
+
+        body.light {
+            --bg-color: #f8f6f6;
+            --card-color: #ffffff;
+            --text-color: #1c1c1c;
+            --border-color: #e5dedc;
+        }
+
+        /* =========================================== */
+        /* CONTAINER PRINCIPAL */
+        /* =========================================== */
+
+        .dashboard-container {
+            min-height: 1000px !important;
+            padding-bottom: 200px !important;
+            background: var(--bg-color);
+        }
+
+        /* =========================================== */
+        /* COMPONENTES PADRÃO DO DASHBOARD */
+        /* =========================================== */
+
+        /* CARD PADRÃO */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .mini-card {
+            background: var(--card-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            border-left: 4px solid #e67951;
+            position: relative;
+        }
+
+        .mini-card:hover {
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+        }
+
+        /* KPI CARD */
+        .kpi-card {
+            background: var(--card-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border-left: 4px solid #e67951;
+            position: relative;
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e67951;
+            line-height: 1;
+        }
+
+        .kpi-label {
+            font-size: 0.875rem;
+            color: var(--subtext-color);
+            margin-top: 0.5rem;
+        }
+
+        /* BADGE DE STATUS */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* =========================================== */
+        /* BARRA DE ROLAGEM PADRÃO */
+        /* =========================================== */
+
+        body::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 4px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+            border-radius: 8px;
+            border: 3px solid #f8f9fa;
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #b86a50, #9c533d);
+        }
+
+        /* Firefox */
+        body {
+            scrollbar-width: auto;
+            scrollbar-color: #e67951 #f8f9fa;
+        }
+
+        /* =========================================== */
+        /* MARCADOR FINAL PADRÃO */
+        /* =========================================== */
+
+        .scroll-end-marker {
+            height: 200px;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(230, 121, 81, 0.1));
+            border-top: 3px solid #e67951;
+            margin-top: 3rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-end-text {
+            background: #e67951;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(230, 121, 81, 0.3);
+            text-align: center;
+        }
+
+        /* =========================================== */
+        /* UTILITÁRIOS */
+        /* =========================================== */
+
+        .text-gradient {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bg-gradient {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+        }
+
+        .border-gradient {
+            border-image: linear-gradient(135deg, #e67951, #b86a50) 1;
+        }
+
+        /* =========================================== */
+        /* RESPONSIVIDADE */
+        /* =========================================== */
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem !important;
+            }
+
+            .kpi-value {
+                font-size: 2rem;
             }
         }
+    </style>
+  </head>
 
-        // Função para colapsar/expandir o sidebar principal
-        function toggleSidebar() {
-            const expandedSidebar = document.getElementById('expanded-sidebar');
-            const recolherSidebar = document.getElementById('recolher-sidebar');
-            const mainContent = document.getElementById('main-content');
-
-            expandedSidebar.classList.toggle('hidden');
-            recolherSidebar.classList.toggle('hidden');
-        }
-    </script>
-    </head>
-
-    <body
-        class="bg-background-light dark:bg-background-dark font-display text-[#212529] dark:text-white">
+  <body class="bg-gray-50 p-4 md:p-6">
+    <div class="max-w-7xl mx-auto">
+      <!-- NOVAS ObjetivoS -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-1 gap-6 m-8 ml-2 mr-5">
         <div
-            class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-            <div class="layout-container flex h-full grow flex-col">
-                <div
-                    class="px-4 md:px-10 lg:px-20 xl:px-40 flex flex-1 justify-center py-5">
-                    <div
-                        class="layout-content-container flex flex-col w-full max-w-4xl flex-1">
-                        <div class="flex flex-wrap justify-between gap-3 p-4">
-                            <p
-                                class="text-[#171311] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">
-                                Add
-                                New Lead</p>
-                        </div>
-                        <div
-                            class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <label class="flex flex-col min-w-40 flex-1">
-                                    <p
-                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
-                                        Name</p>
-                                    <div class="relative">
-                                        <span
-                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">person</span>
-                                        <input
-                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
-                                            placeholder="Enter first name"
-                                            value />
-                                    </div>
-                                </label>
-                                <label class="flex flex-col min-w-40 flex-1">
-                                    <p
-                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
-                                        Last
-                                        Name</p>
-                                    <div class="relative">
-                                        <span
-                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">badge</span>
-                                        <input
-                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
-                                            placeholder="Enter last name"
-                                            value />
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <label class="flex flex-col min-w-40 flex-1">
-                                    <p
-                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
-                                        Phone</p>
-                                    <div class="relative">
-                                        <span
-                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">phone</span>
-                                        <input
-                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
-                                            pattern="[0-9]*"
-                                            placeholder="Enter phone number"
-                                            type="tel" value />
-                                    </div>
-                                    <p
-                                        class="text-error text-sm mt-1 hidden">Phone
-                                        must contain only digits.</p>
-                                </label>
-                                <label class="flex flex-col min-w-40 flex-1">
-                                    <p
-                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
-                                        Email</p>
-                                    <div class="relative">
-                                        <span
-                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">email</span>
-                                        <input
-                                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
-                                            placeholder="Enter email address"
-                                            type="email" value />
-                                    </div>
-                                </label>
-                            </div>
-                            <label class="flex flex-col min-w-40 flex-1">
-                                <p
-                                    class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
-                                    Neighborhood</p>
-                                <div class="relative">
-                                    <span
-                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">location_city</span>
-                                    <input
-                                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
-                                        placeholder="Enter neighborhood"
-                                        value />
-                                </div>
-                            </label>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="flex flex-col">
-                                    <p
-                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
-                                        Category</p>
-                                    <div
-                                        class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
-                                        <button
-                                            class="flex-1 py-2 px-4 rounded-md text-center text-sm font-medium bg-primary text-white shadow">PME</button>
-                                        <button
-                                            class="flex-1 py-2 px-4 rounded-md text-center text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600">PF</button>
-                                        <button
-                                            class="flex-1 py-2 px-4 rounded-md text-center text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600">Adesão</button>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col">
-                                    <p
-                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
-                                        Temperature</p>
-                                    <div class="relative">
-                                        <span
-                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">thermostat</span>
-                                        <select
-                                            class="form-select w-full appearance-none cursor-pointer rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 pl-11 pr-10 text-base font-normal">
-                                            <option>Cold</option>
-                                            <option>Warm</option>
-                                            <option>Hot</option>
-                                        </select>
-                                        <span
-                                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">expand_more</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="flex flex-col">
-                                    <p
-                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
-                                        Negotiation
-                                        Status</p>
-                                    <div class="relative">
-                                        <span
-                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">work</span>
-                                        <select
-                                            class="form-select w-full appearance-none cursor-pointer rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 pl-11 pr-10 text-base font-normal">
-                                            <option>Em Conversação</option>
-                                            <option>Proposta Digitada</option>
-                                            <option>Plano Fechado</option>
-                                        </select>
-                                        <span
-                                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">expand_more</span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col">
-                                    <p
-                                        class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
-                                        Lead
-                                        Source</p>
-                                    <div class="relative">
-                                        <span
-                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">campaign</span>
-                                        <select
-                                            class="form-select w-full appearance-none cursor-pointer rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 pl-11 pr-10 text-base font-normal">
-                                            <option>Facebook</option>
-                                            <option>Instagram</option>
-                                            <option>Indicação</option>
-                                            <option>Landing Page</option>
-                                        </select>
-                                        <span
-                                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">expand_more</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-center pt-4">
-                                <input
-                                    class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-primary focus:ring-primary bg-gray-100 dark:bg-gray-700"
-                                    id="current-date-checkbox"
-                                    type="checkbox" />
-                                <label
-                                    class="ml-2 block text-sm text-gray-900 dark:text-gray-300"
-                                    for="current-date-checkbox">Use current
-                                    date</label>
-                            </div>
-                            <div class="pt-6 flex justify-end">
-                                <button
-                                    class="bg-primary text-white font-bold py-3 px-8 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-300 flex items-center gap-2"
-                                    disabled>
-                                    <span
-                                        class="material-symbols-outlined">save</span>
-                                    Save Lead
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+          class="bg-white dark:bg-gray-900/50 p-6 rounded-xl shadow-sm mb-8">
+          <h2
+            class="text-text-light dark:text-text-dark text-[22px] font-bold leading-tight tracking-[-0.015em] pb-5">
+            📥 Nova Lead
+          </h2>
+          <div
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 space-y-6">
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <label
+                class="flex flex-col min-w-40 flex-1">
+                <p
+                  class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
+                  Nome:</p>
+                <div class="relative">
+                  <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">person</span>
+                  <input
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
+                    placeholder="Primeiro Nome:"
+                    value />
                 </div>
+              </label>
+              <label
+                class="flex flex-col min-w-40 flex-1">
+                <p
+                  class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
+                  Sobrenome:</p>
+                <div class="relative">
+                  <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">badge</span>
+                  <input
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
+                    placeholder="Sobrenome"
+                    value />
+                </div>
+              </label>
             </div>
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <label
+                class="flex flex-col min-w-40 flex-1">
+                <p
+                  class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
+                  WhatsApp:</p>
+                <div class="relative">
+                  <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">contact_phone</span>
+                  <input
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
+                    pattern="[0-9]*"
+                    placeholder="Número Celular / WhatsApp"
+                    type="tel" value />
+                </div>
+                <p
+                  class="text-error text-sm mt-1 hidden">Phone
+                  must contain only digits.</p>
+              </label>
+              <label
+                class="flex flex-col min-w-40 flex-1">
+                <p
+                  class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
+                  Email:</p>
+                <div class="relative">
+                  <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">email</span>
+                  <input
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
+                    placeholder="Endereço Email"
+                    type="email" value />
+                </div>
+              </label>
+            </div>
+            <label class="flex flex-col min-w-40 flex-1">
+              <p
+                class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
+                Bairro:</p>
+              <div class="relative">
+                <span
+                  class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">location_city</span>
+                <input
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 placeholder:text-gray-400 dark:placeholder-gray-500 pl-11 pr-4 text-base font-normal leading-normal"
+                  placeholder="Bairro"
+                  value />
+              </div>
+            </label>
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col">
+                <p
+                  class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
+                  Categoria</p>
+                <div
+                  class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
+                  <button
+                    class="flex-1 py-2 px-4 rounded-md text-center text-sm font-medium bg-primary text-white shadow">PME</button>
+                  <button
+                    class="flex-1 py-2 px-4 rounded-md text-center text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600">PF</button>
+                  <button
+                    class="flex-1 py-2 px-4 rounded-md text-center text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600">Adesão</button>
+                </div>
+              </div>
+              <div class="flex flex-col">
+                <p
+                  class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
+                  Temperatura</p>
+                <div class="relative">
+                  <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">thermostat</span>
+                  <select
+                    class="form-select w-full appearance-none cursor-pointer rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 pl-11 pr-10 text-base font-normal">
+                    <option>Frio</option>
+                    <option>Esquentando</option>
+                    <option>Quente</option>
+                  </select>
+                  <span
+                    class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">expand_more</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col">
+                <p
+                  class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
+                  Status Negociação:</p>
+                <div class="relative">
+                  <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">work</span>
+                  <select
+                    class="form-select w-full appearance-none cursor-pointer rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 pl-11 pr-10 text-base font-normal">
+                    <option>Em Conversação</option>
+                    <option>Proposta
+                      Digitada</option>
+                    <option>Plano Fechado</option>
+                  </select>
+                  <span
+                    class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">expand_more</span>
+                </div>
+              </div>
+              <div class="flex flex-col">
+                <p
+                  class="text-[#171311] dark:text-gray-300 text-base font-medium leading-normal pb-2">
+                  Fonte de Leads:
+                </p>
+                <div class="relative">
+                  <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">campaign</span>
+                  <select
+                    class="form-select w-full appearance-none cursor-pointer rounded-lg text-[#171311] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#e5dedc] dark:border-gray-600 bg-white dark:bg-gray-700 h-14 pl-11 pr-10 text-base font-normal">
+                    <option>Facebook</option>
+                    <option>Instagram</option>
+                    <option>Indicação</option>
+                    <option>Landing Page</option>
+                  </select>
+                  <span
+                    class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 pointer-events-none">expand_more</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center pt-4">
+              <input
+                class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-primary focus:ring-primary bg-gray-100 dark:bg-gray-700"
+                id="current-date-checkbox"
+                type="checkbox" />
+              <label
+                class="ml-2 block text-sm text-gray-900 dark:text-gray-300"
+                for="current-date-checkbox">Usar data atual</label>
+            </div>
+            <div class="pt-6 flex justify-end">
+              <button
+                class="bg-primary text-white font-bold py-3 px-8 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-300 flex items-center gap-2"
+                disabled>
+                <span
+                  class="material-symbols-outlined">save</span>
+                Salvar Lead
+              </button>
+            </div>
+          </div>
         </div>
+
+      </div> <!-- Fim do dashboard-container -->
+
+      <!-- =========================================== -->
+      <!-- SCRIPT PADRÃO PARA TODOS OS DASHBOARDS -->
+      <!-- =========================================== -->
+      <script>
+            // CONFIGURAÇÃO PADRÃO PARA DASHBOARDS EM IFRAME
+            (function () {
+                'use strict';
+
+                console.log('📊 Dashboard Template - Carregado');
+
+                // ===========================================
+                // 1. VERIFICAR SE ESTÁ DENTRO DE IFRAME
+                // ===========================================
+                const isInIframe = window.self !== window.top;
+
+                if (isInIframe) {
+                    console.log('🎯 Dashboard carregado dentro de iframe');
+
+                    // ===========================================
+                    // 2. INICIALIZAÇÃO DO DASHBOARD
+                    // ===========================================
+                    document.addEventListener('DOMContentLoaded', function () {
+                        console.log('✅ DOM totalmente carregado');
+
+                        // Ajustar tema automaticamente
+                        adjustTheme();
+
+                        // Garantir altura suficiente para scroll
+                        guaranteeScrollHeight();
+
+                        // Configurar componentes dinâmicos
+                        setupDynamicComponents();
+
+                        // Informar ao parent que o dashboard está pronto
+                        notifyParentDashboardReady();
+                    });
+
+                    // ===========================================
+                    // 3. FUNÇÕES UTILITÁRIAS
+                    // ===========================================
+
+                    /**
+                     * Ajusta o tema (claro/escuro) com base no parent
+                     */
+                    function adjustTheme() {
+                        try {
+                            const parentTheme = window.parent.document.documentElement.classList.contains('dark')
+                                ? 'dark'
+                                : 'light';
+
+                            document.body.className = parentTheme;
+                            console.log(`🎨 Tema ajustado para: ${parentTheme}`);
+                        } catch (e) {
+                            console.log('⚠️ Não foi possível detectar tema do parent');
+                        }
+                    }
+
+                    /**
+                     * Garante que o dashboard tenha altura suficiente para scroll
+                     */
+                    function guaranteeScrollHeight() {
+                        setTimeout(() => {
+                            const bodyHeight = document.body.scrollHeight;
+                            const viewportHeight = window.innerHeight;
+                            const minRequiredHeight = viewportHeight + 400;
+
+                            console.log('📏 Verificando altura:', {
+                                atual: bodyHeight + 'px',
+                                viewport: viewportHeight + 'px',
+                                necessária: minRequiredHeight + 'px',
+                                precisaExpandir: bodyHeight < minRequiredHeight
+                            });
+
+                            // Se necessário, ajustar a área de scroll
+                            if (bodyHeight < minRequiredHeight) {
+                                const scrollMarker = document.querySelector('.scroll-end-marker');
+                                if (scrollMarker) {
+                                    const extraHeight = minRequiredHeight - bodyHeight + 100;
+                                    scrollMarker.style.height = `${extraHeight}px`;
+                                    console.log(`⚡ Área de scroll expandida em ${extraHeight}px`);
+                                }
+                            }
+                        }, 300);
+                    }
+
+                    /**
+                     * Configura componentes dinâmicos do dashboard
+                     */
+                    function setupDynamicComponents() {
+                        // Adicionar tooltips nos KPIs
+                        document.querySelectorAll('.kpi-card').forEach(card => {
+                            card.addEventListener('mouseenter', function () {
+                                this.style.transform = 'translateY(-4px)';
+                            });
+
+                            card.addEventListener('mouseleave', function () {
+                                this.style.transform = 'translateY(0)';
+                            });
+                        });
+
+                        // Configurar tooltips de status
+                        document.querySelectorAll('[data-tooltip]').forEach(element => {
+                            const tooltipText = element.getAttribute('data-tooltip');
+                            if (tooltipText) {
+                                element.title = tooltipText;
+                            }
+                        });
+
+                        console.log('🔧 Componentes dinâmicos configurados');
+                    }
+
+                    /**
+                     * Informa ao parent que o dashboard está pronto
+                     */
+                    function notifyParentDashboardReady() {
+                        setTimeout(() => {
+                            try {
+                                const dashboardData = {
+                                    type: 'dashboardReady',
+                                    title: document.title,
+                                    height: document.body.scrollHeight,
+                                    url: window.location.href,
+                                    timestamp: Date.now()
+                                };
+
+                                window.parent.postMessage(dashboardData, '*');
+                                console.log('📤 Dashboard notificado como pronto para parent');
+
+                            } catch (e) {
+                                console.log('⚠️ Não foi possível notificar parent');
+                            }
+                        }, 1000);
+                    }
+
+                    // ===========================================
+                    // 4. ESCUTAR COMANDOS DO PARENT
+                    // ===========================================
+                    window.addEventListener('message', function (event) {
+                        try {
+                            const data = event.data;
+
+                            if (data.type === 'refreshDashboard') {
+                                console.log('🔄 Parent solicitou refresh do dashboard');
+                                // Implementar refresh se necessário
+                            }
+
+                            if (data.type === 'updateTheme') {
+                                console.log(`🎨 Parent solicitou mudança de tema: ${data.theme}`);
+                                document.body.className = data.theme || 'light';
+                            }
+
+                        } catch (e) {
+                            // Ignorar erros
+                        }
+                    });
+
+                    // ===========================================
+                    // 5. FUNÇÕES GLOBAIS PARA DEBUG
+                    // ===========================================
+
+                    // Debug helper
+                    window.dashboardDebug = function () {
+                        console.group('🔧 DEBUG DO DASHBOARD');
+                        console.log('URL:', window.location.href);
+                        console.log('Título:', document.title);
+                        console.log('Altura body:', document.body.scrollHeight + 'px');
+                        console.log('Viewport:', window.innerHeight + 'px');
+                        console.log('Tema atual:', document.body.className);
+                        console.log('Em iframe:', isInIframe);
+                        console.groupEnd();
+
+                        return {
+                            height: document.body.scrollHeight,
+                            viewport: window.innerHeight,
+                            theme: document.body.className,
+                            url: window.location.href
+                        };
+                    };
+
+                    // Forçar recálculo de altura
+                    window.recalculateHeight = function () {
+                        guaranteeScrollHeight();
+                        notifyParentDashboardReady();
+                        console.log('📐 Altura recalculada');
+                    };
+
+                } else {
+                    console.log('🌍 Dashboard carregado diretamente (não em iframe)');
+                }
+
+                // ===========================================
+                // 6. EXPORTAÇÃO DE FUNÇÕES PÚBLICAS
+                // ===========================================
+                window.dashboardUtils = {
+                    refresh: function () {
+                        location.reload();
+                    },
+
+                    toggleTheme: function () {
+                        const currentTheme = document.body.className;
+                        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                        document.body.className = newTheme;
+                        console.log(`🎨 Tema alterado para: ${newTheme}`);
+                        return newTheme;
+                    },
+
+                    getStats: function () {
+                        const cards = document.querySelectorAll('.kpi-card, .dashboard-card');
+                        const tables = document.querySelectorAll('table');
+                        const charts = document.querySelectorAll('[data-chart]');
+
+                        return {
+                            totalCards: cards.length,
+                            totalTables: tables.length,
+                            totalCharts: charts.length,
+                            totalHeight: document.body.scrollHeight,
+                            theme: document.body.className
+                        };
+                    }
+                };
+
+            })();
+    </script>
     </body>
 
-</html>
+  </html>
