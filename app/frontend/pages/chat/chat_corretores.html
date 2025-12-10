@@ -1,301 +1,772 @@
 <!DOCTYPE html>
-<html class="light" lang="pt-BR">
+<html lang="pt-BR">
+
     <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>Health CRM as SaaS</title>
-        <script
-            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- TITLE VARIÁVEL - Editar em cada dashboard -->
+        <title>HealthCRM</title>
+
+        <!-- Ícones do Google -->
         <link
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-            rel="stylesheet" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-            rel="stylesheet" />
-        <script>
-			tailwind.config = {
-				darkMode: "class",
-				theme: {
-					extend: {
-						colors: {
-							"primary": "#d48262",
-							"background-light": "#f5f5f5",
-							"background-dark": "#211511",
-							"accent": "#1c1c1c",
-							"sidebar-bg": "#ffffff"
-						},
-						fontFamily: {
-							"display": ["Inter", "sans-serif"]
-						},
-						borderRadius: {
-							"DEFAULT": "0.5rem",
-							"lg": "1rem",
-							"xl": "1.5rem",
-							"full": "9999px"
-						},
-					},
-				},
-			}
-		</script>
-        <script>
-			// Função para expandir/colapsar submenus
-			function toggleSubmenu(id) {
-				const submenu = document.getElementById(id);
-				const icon = document.getElementById(`icon-${id}`);
-				if (submenu.classList.contains('hidden')) {
-					// Expandir
-					submenu.classList.remove('hidden');
-					icon.classList.add('rotate-180');
-				} else {
-					// Colapsar
-					submenu.classList.add('hidden');
-					icon.classList.remove('rotate-180');
-				}
-			}
+            rel="stylesheet">
 
-			// Função para colapsar/expandir o sidebar principal
-			function toggleSidebar() {
-				const expandedSidebar = document.getElementById('expanded-sidebar');
-				const recolherSidebar = document.getElementById('recolher-sidebar');
-				const mainContent = document.getElementById('main-content');
-				
-				expandedSidebar.classList.toggle('hidden');
-				recolherSidebar.classList.toggle('hidden');
-			}
-		</script>
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+        <!-- Configuração do Tailwind -->
+        <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e67951",
+                        "primary-light": "#f8a583",
+                        "primary-dark": "#b86a50",
+                        "secondary": "#4299e1",
+                        "success": "#48bb78",
+                        "warning": "#ed8936",
+                        "danger": "#f56565",
+                        "info": "#0bc5ea",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211511",
+                        "card-light": "#ffffff",
+                        "card-dark": "#2a1a14",
+                        "text-light": "#1c1c1c",
+                        "text-dark": "#f5f5f5",
+                        "subtext-light": "#876d64",
+                        "subtext-dark": "#a18a82",
+                        "border-light": "#e5dedc",
+                        "border-dark": "#40312c",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "system-ui", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.75rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+
+        <!-- CSS PADRÃO PARA TODOS OS DASHBOARDS -->
+        <style>
+        /* =========================================== */
+        /* RESET E ESTILOS GLOBAIS PARA IFRAME */
+        /* =========================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100vh !important;
+            height: auto !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color, #f8f6f6);
+        }
+
+        body.dark {
+            --bg-color: #211511;
+            --card-color: #2a1a14;
+            --text-color: #f5f5f5;
+            --border-color: #40312c;
+        }
+
+        body.light {
+            --bg-color: #f8f6f6;
+            --card-color: #ffffff;
+            --text-color: #1c1c1c;
+            --border-color: #e5dedc;
+        }
+
+        /* =========================================== */
+        /* CONTAINER PRINCIPAL */
+        /* =========================================== */
+
+        .dashboard-container {
+            min-height: 1000px !important;
+            padding-bottom: 200px !important;
+            background: var(--bg-color);
+        }
+
+        /* =========================================== */
+        /* COMPONENTES PADRÃO DO DASHBOARD */
+        /* =========================================== */
+
+        /* CARD PADRÃO */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .mini-card {
+            background: var(--card-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            border-left: 4px solid #e67951;
+            position: relative;
+        }
+
+        .mini-card:hover {
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+        }
+
+        /* KPI CARD */
+        .kpi-card {
+            background: var(--card-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border-left: 4px solid #e67951;
+            position: relative;
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e67951;
+            line-height: 1;
+        }
+
+        .kpi-label {
+            font-size: 0.875rem;
+            color: var(--subtext-color);
+            margin-top: 0.5rem;
+        }
+
+        /* BADGE DE STATUS */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* =========================================== */
+        /* BARRA DE ROLAGEM PADRÃO */
+        /* =========================================== */
+
+        body::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 4px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+            border-radius: 8px;
+            border: 3px solid #f8f9fa;
+        }
+
+        body::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #b86a50, #9c533d);
+        }
+
+        /* Firefox */
+        body {
+            scrollbar-width: auto;
+            scrollbar-color: #e67951 #f8f9fa;
+        }
+
+        /* =========================================== */
+        /* MARCADOR FINAL PADRÃO */
+        /* =========================================== */
+
+        .scroll-end-marker {
+            height: 200px;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(230, 121, 81, 0.1));
+            border-top: 3px solid #e67951;
+            margin-top: 3rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-end-text {
+            background: #e67951;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(230, 121, 81, 0.3);
+            text-align: center;
+        }
+
+        /* =========================================== */
+        /* UTILITÁRIOS */
+        /* =========================================== */
+
+        .text-gradient {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bg-gradient {
+            background: linear-gradient(135deg, #e67951, #b86a50);
+        }
+
+        .border-gradient {
+            border-image: linear-gradient(135deg, #e67951, #b86a50) 1;
+        }
+
+        /* =========================================== */
+        /* RESPONSIVIDADE */
+        /* =========================================== */
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem !important;
+            }
+
+            .kpi-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
     </head>
-    <body class="bg-background-light dark:bg-background-dark font-display">
 
-        <div class="flex min-h-screen">
-            <!-- Main Content -->
-            <main
-                class="flex-1 flex bg-background-light dark:bg-background-dark">
-                <!-- Conversation List Panel -->
+    <body class="bg-gray-50 p-4 md:p-6">
+        <div class="max-w-7xl mx-auto">
+            <div
+                class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-1 gap-6 mb-8 ml-2 mr-5">
                 <div
-                    class="w-1/3 border-r border-gray-200 dark:border-gray-700 bg-secondary dark:bg-background-dark flex flex-col">
-                    <div
-                        class="p-4 border-b border-gray-200 dark:border-gray-700">
-                        <label class="flex flex-col min-w-40 h-12 w-full">
+                    class="bg-white dark:bg-[#2a201c] rounded-xl p-6 shadow-sm">
+                    <div class="flex min-h-screen">
+                        <!-- Main Content -->
+                        <main
+                            class="flex-1 flex bg-background-light dark:bg-background-dark">
+                            <!-- Conversation List Panel -->
                             <div
-                                class="flex w-full flex-1 items-stretch rounded-xl h-full">
+                                class="w-1/3 border-r border-gray-200 dark:border-gray-700 bg-secondary dark:bg-background-dark flex flex-col">
                                 <div
-                                    class="text-gray-500 dark:text-gray-400 flex border-none bg-background-light dark:bg-gray-800 items-center justify-center pl-4 rounded-l-xl border-r-0">
-                                    <span
-                                        class="material-symbols-outlined">search</span>
+                                    class="p-4 border-b border-gray-200 dark:border-gray-700">
+                                    <label
+                                        class="flex flex-col min-w-40 h-12 w-full">
+                                        <div
+                                            class="flex w-full flex-1 items-stretch rounded-xl h-full">
+                                            <div
+                                                class="text-gray-500 dark:text-gray-400 flex border-none bg-background-light dark:bg-gray-800 items-center justify-center pl-4 rounded-l-xl border-r-0">
+                                                <span
+                                                    class="material-symbols-outlined text-primary">search</span>
+                                            </div>
+                                            <input
+                                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-xl text-accent dark:text-white focus:outline-0 focus:ring-0 border-none bg-background-light dark:bg-gray-800 h-full placeholder:text-primary dark:placeholder:text-primary px-4 pl-2 text-base font-normal leading-normal text-primary"
+                                                placeholder="Pesquisar Chats"
+                                                value />
+                                        </div>
+                                    </label>
                                 </div>
-                                <input
-                                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-xl text-accent dark:text-white focus:outline-0 focus:ring-0 border-none bg-background-light dark:bg-gray-800 h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 pl-2 text-base font-normal leading-normal"
-                                    placeholder="Search chats" value />
-                            </div>
-                        </label>
-                    </div>
-                    <div class="flex-1 overflow-y-auto">
-                        <div
-                            class="flex items-center gap-4 bg-primary/20 dark:bg-primary/30 px-4 min-h-[72px] py-2 justify-between cursor-pointer">
-                            <div class="flex items-center gap-4">
-                                <div class="relative">
+                                <div class="flex-1 overflow-y-auto">
                                     <div
-                                        class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14"
-                                        data-alt="John Doe's profile picture"
-                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfnorx7cI457YiHRpQ6DlIW2xDgb2klS1frTblIRGB6N2txVH8FJ1ZL89XuT4t4vt1EjUyhFjaEQtM3iU_ln8pxGxaXBNt7SWbRo7Yx4iM4N8_wwcdMhjnG96X-ve_ROxMbYMpYUbRcH2rrhqESo3m4C7wRtO-XHvKFL_S2VaWZ6sYxNk5QPhohUlTrMa-NzTqgjrLiSM5tngPE0sNQZH_HauUssPUc0opDGZtu1U_xsfh6GTjzShUc-5dMZV4Unp_ZHMnhtr30Hg");'></div>
-                                    <span
-                                        class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-secondary dark:border-background-dark"></span>
-                                </div>
-                                <div class="flex flex-col justify-center">
-                                    <p
-                                        class="text-accent dark:text-white text-base font-medium leading-normal line-clamp-1">John
-                                        Doe</p>
-                                    <p
-                                        class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Sure,
-                                        I will get back to you on that.</p>
+                                        class="flex items-center gap-4 bg-primary/20 dark:bg-primary/30 px-4 min-h-[72px] py-2 justify-between cursor-pointer">
+                                        <div class="flex items-center gap-4">
+                                            <div class="relative">
+                                                <div
+                                                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14"
+                                                    data-alt="John Doe's profile picture"
+                                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfnorx7cI457YiHRpQ6DlIW2xDgb2klS1frTblIRGB6N2txVH8FJ1ZL89XuT4t4vt1EjUyhFjaEQtM3iU_ln8pxGxaXBNt7SWbRo7Yx4iM4N8_wwcdMhjnG96X-ve_ROxMbYMpYUbRcH2rrhqESo3m4C7wRtO-XHvKFL_S2VaWZ6sYxNk5QPhohUlTrMa-NzTqgjrLiSM5tngPE0sNQZH_HauUssPUc0opDGZtu1U_xsfh6GTjzShUc-5dMZV4Unp_ZHMnhtr30Hg");'></div>
+                                                <span
+                                                    class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-secondary dark:border-background-dark"></span>
+                                            </div>
+                                            <div
+                                                class="flex flex-col justify-center">
+                                                <p
+                                                    class="text-accent dark:text-white text-base font-medium leading-normal line-clamp-1">John
+                                                    Doe</p>
+                                                <p
+                                                    class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Claro,
+                                                    Entrarei em contato com você
+                                                    sobre isso.</p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="shrink-0 flex flex-col items-end gap-1">
+                                            <p
+                                                class="text-gray-500 dark:text-gray-400 text-xs font-normal">10:45
+                                                AM</p>
+                                            <div
+                                                class="flex size-6 items-center justify-center rounded-full bg-primary text-white text-xs font-bold">2</div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex items-center gap-4 bg-secondary dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+                                        <div class="flex items-center gap-4">
+                                            <div class="relative">
+                                                <div
+                                                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14"
+                                                    data-alt="Jane Smith's profile picture"
+                                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAiT9QHlzgip_3iI1azdlg4MgjmsN19HIekPMs9tSChsy_WXz-ZGxouweqlwHa7dk_z4WseNzYQFGHKWTrM3d2BR3Co21soGEAHOj_jdyG5l_UzsMEYPq102bBa0WAsbTMvLROMbghKvMQrZXhwKIZW6sdU-04CNkNlEvCmM57eDiXbqqMzIc-QB0AyHlSQYbfMk1VhVtJyl4IHegMD5Z-s9xXLsflLw0BmW9vkDDwy6ByRbs5-w_QVtFtioKv21kt5nDRZIa9n9PQ");'></div>
+                                                <span
+                                                    class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-gray-400 border-2 border-secondary dark:border-background-dark"></span>
+                                            </div>
+                                            <div
+                                                class="flex flex-col justify-center">
+                                                <p
+                                                    class="text-accent dark:text-white text-base font-medium leading-normal line-clamp-1">Jane
+                                                    Smith</p>
+                                                <p
+                                                    class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Você
+                                                    poderia verificar a política
+                                                    do novo cliente, por
+                                                    favor?</p>
+                                            </div>
+                                        </div>
+                                        <div class="shrink-0"><p
+                                                class="text-gray-500 dark:text-gray-400 text-xs font-normal">10:42
+                                                AM</p></div>
+                                    </div>
+                                    <div
+                                        class="flex items-center gap-4 bg-secondary dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+                                        <div class="flex items-center gap-4">
+                                            <div class="relative">
+                                                <div
+                                                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14"
+                                                    data-alt="Samuel Green's profile picture"
+                                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjWLJoXWE6LoSoYnZqTW9EyIW_cjcVseslmUsPXglnbWFylWkbOBa0ILLDZtMWtwnQ4h-iArEAX79m9ZJBK3ul6h53LuX9Y15fgZNgdWeCpIp7yCwCfn8k8QHkt71o8JC_haoyvnZV8vJSdXYF4uxTiVA8kN3ultu3kJIKOxdHkiNzrjjb3vlSHOVsRLEfydHEEhuQLAO6dj0jqWwKhZNkCMOqJgG5W5oeivNa1CRBpoh55Pg79TMb7YtZWWBxzhcoCMtIMx3CNA4");'></div>
+                                                <span
+                                                    class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-secondary dark:border-background-dark"></span>
+                                            </div>
+                                            <div
+                                                class="flex flex-col justify-center">
+                                                <p
+                                                    class="text-accent dark:text-white text-base font-medium leading-normal line-clamp-1">Samuel
+                                                    Green</p>
+                                                <p
+                                                    class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Perfeito,
+                                                    obrigado!</p>
+                                            </div>
+                                        </div>
+                                        <div class="shrink-0"><p
+                                                class="text-gray-500 dark:text-gray-400 text-xs font-normal">Ontem</p></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="shrink-0 flex flex-col items-end gap-1">
-                                <p
-                                    class="text-gray-500 dark:text-gray-400 text-xs font-normal">10:45
-                                    AM</p>
+                            <!-- Active Chat Panel -->
+                            <div class="flex-1 flex flex-col">
+                                <!-- Chat Header -->
                                 <div
-                                    class="flex size-6 items-center justify-center rounded-full bg-primary text-white text-xs font-bold">2</div>
-                            </div>
-                        </div>
-                        <div
-                            class="flex items-center gap-4 bg-secondary dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
-                            <div class="flex items-center gap-4">
-                                <div class="relative">
+                                    class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-secondary dark:bg-background-dark shadow-sm">
+                                    <div class="flex items-center gap-4">
+                                        <div class="relative">
+                                            <div
+                                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12"
+                                                data-alt="John Doe's profile picture"
+                                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZQW9hw0wWapaOEc-FCr5UHdaOt9DHdubbzigKSuthQooyH6yfuh_qJ8vrZLmSawxyXcMpFxI3lpE_2_NYARREAnDI0cZ7p-z0YOyu676pMNPyYZ1yEx9d2fVe_4tkcKOxvWVWMQZnC2cwiTW9U3kKBK6Pq5vVrpg-XqtywPZibiOpyurAROYETDatpYj1x8_fjKjitK3kpFPGZhsK3KF2T_N6EzplSMGG2XfOxsClgaZUjH0BAyFpfczzTwxteXehsGna_Pd0Jw0");'></div>
+                                            <span
+                                                class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 border-2 border-secondary dark:border-background-dark"></span>
+                                        </div>
+                                        <div>
+                                            <h3
+                                                class="text-lg font-bold text-accent dark:text-white">John
+                                                Doe</h3>
+                                            <p
+                                                class="text-sm text-green-500">Online</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <button
+                                            class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                            <span
+                                                class="material-symbols-outlined">call</span>
+                                        </button>
+                                        <button
+                                            class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                            <span
+                                                class="material-symbols-outlined">videocam</span>
+                                        </button>
+                                        <button
+                                            class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                            <span
+                                                class="material-symbols-outlined">more_vert</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- Chat History -->
+                                <div
+                                    class="flex-1 p-6 overflow-y-auto space-y-6">
+                                    <!-- Received Message -->
+                                    <div class="flex items-start gap-3">
+                                        <div
+                                            class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                                            data-alt="John Doe's profile picture"
+                                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBR7Ru7yiVSh8ZFQmx8mfaLmXLx1c1t-fP4UYiwaGw5d8Fb2cHk_73CYK-lhnrTcuN7EvxKoZJAr7hNN6gODi4ZEVYm38VpWCt8YaA0Lo20f2NLF9CDtJCFXSmmFUHROrqQHmGd7lthZzTnPzDRhtcZ9X3ybutkIXdAgd53S4tGvTepeopltYnn4HQN0lN1nRWpay2DkCxR_Ud3LIgPzhWCU1rIcQLJhIA2Gk2jPrEYuglC-JNJ2DVjCfaqWV8h59kpbDd_GnioQtE");'></div>
+                                        <div class="max-w-md">
+                                            <div
+                                                class="bg-secondary dark:bg-gray-800 p-3 rounded-lg rounded-tl-none shadow">
+                                                <p
+                                                    class="text-sm text-accent dark:text-white">Olá,
+                                                    estou revisando a apólice
+                                                    para o novo cliente. Você
+                                                    pode confirmar a data de
+                                                    início?</p>
+                                            </div>
+                                            <p
+                                                class="text-xs text-gray-500 dark:text-gray-400 mt-1">10:40
+                                                AM</p>
+                                        </div>
+                                    </div>
+                                    <!-- Sent Message -->
                                     <div
-                                        class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14"
-                                        data-alt="Jane Smith's profile picture"
-                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAiT9QHlzgip_3iI1azdlg4MgjmsN19HIekPMs9tSChsy_WXz-ZGxouweqlwHa7dk_z4WseNzYQFGHKWTrM3d2BR3Co21soGEAHOj_jdyG5l_UzsMEYPq102bBa0WAsbTMvLROMbghKvMQrZXhwKIZW6sdU-04CNkNlEvCmM57eDiXbqqMzIc-QB0AyHlSQYbfMk1VhVtJyl4IHegMD5Z-s9xXLsflLw0BmW9vkDDwy6ByRbs5-w_QVtFtioKv21kt5nDRZIa9n9PQ");'></div>
-                                    <span
-                                        class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-gray-400 border-2 border-secondary dark:border-background-dark"></span>
+                                        class="flex items-start gap-3 justify-end">
+                                        <div class="max-w-md">
+                                            <div
+                                                class="bg-primary text-white p-3 rounded-lg rounded-br-none shadow">
+                                                <p class="text-sm">Claro. A
+                                                    política deles entra em
+                                                    vigor no dia 1º do mês que
+                                                    vem.</p>
+                                            </div>
+                                            <div
+                                                class="flex items-center justify-end mt-1">
+                                                <p
+                                                    class="text-xs text-gray-500 dark:text-gray-400 mr-1">10:41
+                                                    AM</p>
+                                                <span
+                                                    class="material-symbols-outlined text-blue-500 text-base">done_all</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                                            data-alt="Admin's profile picture"
+                                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuByOuTyMw5AtJVz1YuPYPIMo44KhjfFe-IBhPVV43w4B6OIO6KnPBbTrug73wfx4oALDnK_r7mXYF5CC8tErRCVevPI7NAnr5OT14j35GKQ3Tsg7dblOWCqAvmjrzw63XMZEQLyNLHtur_BTopvDFnL94FMKx46xlRxHPz4HcQyxZQDbWSQqg1-mp5y1S5ieiP0-80C37tETpz7itKjKUxAvesBJwoqczr6eMCyF3Stm_oR2AJSkfTrT_-qHGHvx-Taj9v3RvuwkBY");'></div>
+                                    </div>
+                                    <!-- Received Message -->
+                                    <div class="flex items-start gap-3">
+                                        <div
+                                            class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                                            data-alt="John Doe's profile picture"
+                                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvy7rl_GzjX-P6gHqN3KNmKidkVnKiwdTk0C_1n1QcwwD3H041_Dd_nRmBlGJNAgQDwwkFqeiqY1DVYLt20efJ_wV7jwmZXaxvY0SMIkvkwCpWQWr7zK-N_s7yIr4c8MoyAg7OD92RhDhnQzW3nC6SBoUrYR3Nc10bxg3rKa4H7K9_4NpLjAUURgxsW7n5wYlQEiKUw2LH3Q0uh7Inw9NK1GmGFM3oTDm8_t_LLNjCLzSpY5tuXYoXrWO_T4R9tgGCHqsUOZaFkLc");'></div>
+                                        <div class="max-w-md">
+                                            <div
+                                                class="bg-secondary dark:bg-gray-800 p-3 rounded-lg rounded-tl-none shadow">
+                                                <p
+                                                    class="text-sm text-accent dark:text-white">Claro,
+                                                    entrarei em contato com você
+                                                    sobre isso.</p>
+                                            </div>
+                                            <p
+                                                class="text-xs text-gray-500 dark:text-gray-400 mt-1">10:45
+                                                AM</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="flex flex-col justify-center">
-                                    <p
-                                        class="text-accent dark:text-white text-base font-medium leading-normal line-clamp-1">Jane
-                                        Smith</p>
-                                    <p
-                                        class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Can
-                                        you please check the new client's
-                                        policy?</p>
+                                <!-- Message Input Area -->
+                                <div
+                                    class="p-4 bg-secondary dark:bg-background-dark border-t border-gray-200 dark:border-gray-700">
+                                    <div class="flex items-center gap-4">
+                                        <button
+                                            class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                            <span
+                                                class="material-symbols-outlined">sentiment_satisfied</span>
+                                        </button>
+                                        <button
+                                            class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                                            <span
+                                                class="material-symbols-outlined">attach_file</span>
+                                        </button>
+                                        <input
+                                            class="flex-1 bg-background-light dark:bg-gray-800 border-none rounded-full h-12 px-5 text-sm focus:ring-primary focus:border-primary placeholder-primary dark:placeholder-white text-accent dark:text-white"
+                                            placeholder="Digite sua mensagem aqui..."
+                                            type="text" />
+                                        <button
+                                            class="bg-primary text-white rounded-full p-3 shadow-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                                            <span
+                                                class="material-symbols-outlined">send</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="shrink-0"><p
-                                    class="text-gray-500 dark:text-gray-400 text-xs font-normal">10:42
-                                    AM</p></div>
-                        </div>
-                        <div
-                            class="flex items-center gap-4 bg-secondary dark:bg-background-dark px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
-                            <div class="flex items-center gap-4">
-                                <div class="relative">
-                                    <div
-                                        class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14"
-                                        data-alt="Samuel Green's profile picture"
-                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjWLJoXWE6LoSoYnZqTW9EyIW_cjcVseslmUsPXglnbWFylWkbOBa0ILLDZtMWtwnQ4h-iArEAX79m9ZJBK3ul6h53LuX9Y15fgZNgdWeCpIp7yCwCfn8k8QHkt71o8JC_haoyvnZV8vJSdXYF4uxTiVA8kN3ultu3kJIKOxdHkiNzrjjb3vlSHOVsRLEfydHEEhuQLAO6dj0jqWwKhZNkCMOqJgG5W5oeivNa1CRBpoh55Pg79TMb7YtZWWBxzhcoCMtIMx3CNA4");'></div>
-                                    <span
-                                        class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-secondary dark:border-background-dark"></span>
-                                </div>
-                                <div class="flex flex-col justify-center">
-                                    <p
-                                        class="text-accent dark:text-white text-base font-medium leading-normal line-clamp-1">Samuel
-                                        Green</p>
-                                    <p
-                                        class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Perfect,
-                                        thank you!</p>
-                                </div>
-                            </div>
-                            <div class="shrink-0"><p
-                                    class="text-gray-500 dark:text-gray-400 text-xs font-normal">Yesterday</p></div>
-                        </div>
+                        </main>
                     </div>
                 </div>
-                <!-- Active Chat Panel -->
-                <div class="flex-1 flex flex-col">
-                    <!-- Chat Header -->
-                    <div
-                        class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-secondary dark:bg-background-dark shadow-sm">
-                        <div class="flex items-center gap-4">
-                            <div class="relative">
-                                <div
-                                    class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12"
-                                    data-alt="John Doe's profile picture"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZQW9hw0wWapaOEc-FCr5UHdaOt9DHdubbzigKSuthQooyH6yfuh_qJ8vrZLmSawxyXcMpFxI3lpE_2_NYARREAnDI0cZ7p-z0YOyu676pMNPyYZ1yEx9d2fVe_4tkcKOxvWVWMQZnC2cwiTW9U3kKBK6Pq5vVrpg-XqtywPZibiOpyurAROYETDatpYj1x8_fjKjitK3kpFPGZhsK3KF2T_N6EzplSMGG2XfOxsClgaZUjH0BAyFpfczzTwxteXehsGna_Pd0Jw0");'></div>
-                                <span
-                                    class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 border-2 border-secondary dark:border-background-dark"></span>
-                            </div>
-                            <div>
-                                <h3
-                                    class="text-lg font-bold text-accent dark:text-white">John
-                                    Doe</h3>
-                                <p class="text-sm text-green-500">Online</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button
-                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
-                                <span
-                                    class="material-symbols-outlined">call</span>
-                            </button>
-                            <button
-                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
-                                <span
-                                    class="material-symbols-outlined">videocam</span>
-                            </button>
-                            <button
-                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
-                                <span
-                                    class="material-symbols-outlined">more_vert</span>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Chat History -->
-                    <div class="flex-1 p-6 overflow-y-auto space-y-6">
-                        <!-- Received Message -->
-                        <div class="flex items-start gap-3">
-                            <div
-                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                                data-alt="John Doe's profile picture"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBR7Ru7yiVSh8ZFQmx8mfaLmXLx1c1t-fP4UYiwaGw5d8Fb2cHk_73CYK-lhnrTcuN7EvxKoZJAr7hNN6gODi4ZEVYm38VpWCt8YaA0Lo20f2NLF9CDtJCFXSmmFUHROrqQHmGd7lthZzTnPzDRhtcZ9X3ybutkIXdAgd53S4tGvTepeopltYnn4HQN0lN1nRWpay2DkCxR_Ud3LIgPzhWCU1rIcQLJhIA2Gk2jPrEYuglC-JNJ2DVjCfaqWV8h59kpbDd_GnioQtE");'></div>
-                            <div class="max-w-md">
-                                <div
-                                    class="bg-secondary dark:bg-gray-800 p-3 rounded-lg rounded-tl-none shadow">
-                                    <p
-                                        class="text-sm text-accent dark:text-white">Hi,
-                                        I'm reviewing the policy for the new
-                                        client. Can you confirm their start
-                                        date?</p>
-                                </div>
-                                <p
-                                    class="text-xs text-gray-500 dark:text-gray-400 mt-1">10:40
-                                    AM</p>
-                            </div>
-                        </div>
-                        <!-- Sent Message -->
-                        <div class="flex items-start gap-3 justify-end">
-                            <div class="max-w-md">
-                                <div
-                                    class="bg-primary text-white p-3 rounded-lg rounded-br-none shadow">
-                                    <p class="text-sm">Of course. Their policy
-                                        starts on the 1st of next month.</p>
-                                </div>
-                                <div class="flex items-center justify-end mt-1">
-                                    <p
-                                        class="text-xs text-gray-500 dark:text-gray-400 mr-1">10:41
-                                        AM</p>
-                                    <span
-                                        class="material-symbols-outlined text-blue-500 text-base">done_all</span>
-                                </div>
-                            </div>
-                            <div
-                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                                data-alt="Admin's profile picture"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuByOuTyMw5AtJVz1YuPYPIMo44KhjfFe-IBhPVV43w4B6OIO6KnPBbTrug73wfx4oALDnK_r7mXYF5CC8tErRCVevPI7NAnr5OT14j35GKQ3Tsg7dblOWCqAvmjrzw63XMZEQLyNLHtur_BTopvDFnL94FMKx46xlRxHPz4HcQyxZQDbWSQqg1-mp5y1S5ieiP0-80C37tETpz7itKjKUxAvesBJwoqczr6eMCyF3Stm_oR2AJSkfTrT_-qHGHvx-Taj9v3RvuwkBY");'></div>
-                        </div>
-                        <!-- Received Message -->
-                        <div class="flex items-start gap-3">
-                            <div
-                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                                data-alt="John Doe's profile picture"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAvy7rl_GzjX-P6gHqN3KNmKidkVnKiwdTk0C_1n1QcwwD3H041_Dd_nRmBlGJNAgQDwwkFqeiqY1DVYLt20efJ_wV7jwmZXaxvY0SMIkvkwCpWQWr7zK-N_s7yIr4c8MoyAg7OD92RhDhnQzW3nC6SBoUrYR3Nc10bxg3rKa4H7K9_4NpLjAUURgxsW7n5wYlQEiKUw2LH3Q0uh7Inw9NK1GmGFM3oTDm8_t_LLNjCLzSpY5tuXYoXrWO_T4R9tgGCHqsUOZaFkLc");'></div>
-                            <div class="max-w-md">
-                                <div
-                                    class="bg-secondary dark:bg-gray-800 p-3 rounded-lg rounded-tl-none shadow">
-                                    <p
-                                        class="text-sm text-accent dark:text-white">Sure,
-                                        I will get back to you on that.</p>
-                                </div>
-                                <p
-                                    class="text-xs text-gray-500 dark:text-gray-400 mt-1">10:45
-                                    AM</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Message Input Area -->
-                    <div
-                        class="p-4 bg-secondary dark:bg-background-dark border-t border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center gap-4">
-                            <button
-                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
-                                <span
-                                    class="material-symbols-outlined">sentiment_satisfied</span>
-                            </button>
-                            <button
-                                class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
-                                <span
-                                    class="material-symbols-outlined">attach_file</span>
-                            </button>
-                            <input
-                                class="flex-1 bg-background-light dark:bg-gray-800 border-none rounded-full h-12 px-5 text-sm focus:ring-primary focus:border-primary placeholder-gray-500 dark:placeholder-gray-400 text-accent dark:text-white"
-                                placeholder="Type your message here..."
-                                type="text" />
-                            <button
-                                class="bg-primary text-white rounded-full p-3 shadow-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                                <span
-                                    class="material-symbols-outlined">send</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-</body></html>
+            </div>
+
+        </div> <!-- Fim do dashboard-container -->
+
+        <!-- =========================================== -->
+        <!-- SCRIPT PADRÃO PARA TODOS OS DASHBOARDS -->
+        <!-- =========================================== -->
+        <script>
+            // CONFIGURAÇÃO PADRÃO PARA DASHBOARDS EM IFRAME
+            (function () {
+                'use strict';
+
+                console.log('📊 Dashboard Template - Carregado');
+
+                // ===========================================
+                // 1. VERIFICAR SE ESTÁ DENTRO DE IFRAME
+                // ===========================================
+                const isInIframe = window.self !== window.top;
+
+                if (isInIframe) {
+                    console.log('🎯 Dashboard carregado dentro de iframe');
+
+                    // ===========================================
+                    // 2. INICIALIZAÇÃO DO DASHBOARD
+                    // ===========================================
+                    document.addEventListener('DOMContentLoaded', function () {
+                        console.log('✅ DOM totalmente carregado');
+
+                        // Ajustar tema automaticamente
+                        adjustTheme();
+
+                        // Garantir altura suficiente para scroll
+                        guaranteeScrollHeight();
+
+                        // Configurar componentes dinâmicos
+                        setupDynamicComponents();
+
+                        // Informar ao parent que o dashboard está pronto
+                        notifyParentDashboardReady();
+                    });
+
+                    // ===========================================
+                    // 3. FUNÇÕES UTILITÁRIAS
+                    // ===========================================
+
+                    /**
+                     * Ajusta o tema (claro/escuro) com base no parent
+                     */
+                    function adjustTheme() {
+                        try {
+                            const parentTheme = window.parent.document.documentElement.classList.contains('dark')
+                                ? 'dark'
+                                : 'light';
+
+                            document.body.className = parentTheme;
+                            console.log(`🎨 Tema ajustado para: ${parentTheme}`);
+                        } catch (e) {
+                            console.log('⚠️ Não foi possível detectar tema do parent');
+                        }
+                    }
+
+                    /**
+                     * Garante que o dashboard tenha altura suficiente para scroll
+                     */
+                    function guaranteeScrollHeight() {
+                        setTimeout(() => {
+                            const bodyHeight = document.body.scrollHeight;
+                            const viewportHeight = window.innerHeight;
+                            const minRequiredHeight = viewportHeight + 400;
+
+                            console.log('📏 Verificando altura:', {
+                                atual: bodyHeight + 'px',
+                                viewport: viewportHeight + 'px',
+                                necessária: minRequiredHeight + 'px',
+                                precisaExpandir: bodyHeight < minRequiredHeight
+                            });
+
+                            // Se necessário, ajustar a área de scroll
+                            if (bodyHeight < minRequiredHeight) {
+                                const scrollMarker = document.querySelector('.scroll-end-marker');
+                                if (scrollMarker) {
+                                    const extraHeight = minRequiredHeight - bodyHeight + 100;
+                                    scrollMarker.style.height = `${extraHeight}px`;
+                                    console.log(`⚡ Área de scroll expandida em ${extraHeight}px`);
+                                }
+                            }
+                        }, 300);
+                    }
+
+                    /**
+                     * Configura componentes dinâmicos do dashboard
+                     */
+                    function setupDynamicComponents() {
+                        // Adicionar tooltips nos KPIs
+                        document.querySelectorAll('.kpi-card').forEach(card => {
+                            card.addEventListener('mouseenter', function () {
+                                this.style.transform = 'translateY(-4px)';
+                            });
+
+                            card.addEventListener('mouseleave', function () {
+                                this.style.transform = 'translateY(0)';
+                            });
+                        });
+
+                        // Configurar tooltips de status
+                        document.querySelectorAll('[data-tooltip]').forEach(element => {
+                            const tooltipText = element.getAttribute('data-tooltip');
+                            if (tooltipText) {
+                                element.title = tooltipText;
+                            }
+                        });
+
+                        console.log('🔧 Componentes dinâmicos configurados');
+                    }
+
+                    /**
+                     * Informa ao parent que o dashboard está pronto
+                     */
+                    function notifyParentDashboardReady() {
+                        setTimeout(() => {
+                            try {
+                                const dashboardData = {
+                                    type: 'dashboardReady',
+                                    title: document.title,
+                                    height: document.body.scrollHeight,
+                                    url: window.location.href,
+                                    timestamp: Date.now()
+                                };
+
+                                window.parent.postMessage(dashboardData, '*');
+                                console.log('📤 Dashboard notificado como pronto para parent');
+
+                            } catch (e) {
+                                console.log('⚠️ Não foi possível notificar parent');
+                            }
+                        }, 1000);
+                    }
+
+                    // ===========================================
+                    // 4. ESCUTAR COMANDOS DO PARENT
+                    // ===========================================
+                    window.addEventListener('message', function (event) {
+                        try {
+                            const data = event.data;
+
+                            if (data.type === 'refreshDashboard') {
+                                console.log('🔄 Parent solicitou refresh do dashboard');
+                                // Implementar refresh se necessário
+                            }
+
+                            if (data.type === 'updateTheme') {
+                                console.log(`🎨 Parent solicitou mudança de tema: ${data.theme}`);
+                                document.body.className = data.theme || 'light';
+                            }
+
+                        } catch (e) {
+                            // Ignorar erros
+                        }
+                    });
+
+                    // ===========================================
+                    // 5. FUNÇÕES GLOBAIS PARA DEBUG
+                    // ===========================================
+
+                    // Debug helper
+                    window.dashboardDebug = function () {
+                        console.group('🔧 DEBUG DO DASHBOARD');
+                        console.log('URL:', window.location.href);
+                        console.log('Título:', document.title);
+                        console.log('Altura body:', document.body.scrollHeight + 'px');
+                        console.log('Viewport:', window.innerHeight + 'px');
+                        console.log('Tema atual:', document.body.className);
+                        console.log('Em iframe:', isInIframe);
+                        console.groupEnd();
+
+                        return {
+                            height: document.body.scrollHeight,
+                            viewport: window.innerHeight,
+                            theme: document.body.className,
+                            url: window.location.href
+                        };
+                    };
+
+                    // Forçar recálculo de altura
+                    window.recalculateHeight = function () {
+                        guaranteeScrollHeight();
+                        notifyParentDashboardReady();
+                        console.log('📐 Altura recalculada');
+                    };
+
+                } else {
+                    console.log('🌍 Dashboard carregado diretamente (não em iframe)');
+                }
+
+                // ===========================================
+                // 6. EXPORTAÇÃO DE FUNÇÕES PÚBLICAS
+                // ===========================================
+                window.dashboardUtils = {
+                    refresh: function () {
+                        location.reload();
+                    },
+
+                    toggleTheme: function () {
+                        const currentTheme = document.body.className;
+                        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                        document.body.className = newTheme;
+                        console.log(`🎨 Tema alterado para: ${newTheme}`);
+                        return newTheme;
+                    },
+
+                    getStats: function () {
+                        const cards = document.querySelectorAll('.kpi-card, .dashboard-card');
+                        const tables = document.querySelectorAll('table');
+                        const charts = document.querySelectorAll('[data-chart]');
+
+                        return {
+                            totalCards: cards.length,
+                            totalTables: tables.length,
+                            totalCharts: charts.length,
+                            totalHeight: document.body.scrollHeight,
+                            theme: document.body.className
+                        };
+                    }
+                };
+
+            })();
+    </script>
+    </body>
+
+</html>
