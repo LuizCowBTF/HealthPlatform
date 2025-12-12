@@ -287,16 +287,146 @@
     <body class="bg-gray-50 p-4 md:p-6">
         <div class="max-w-7xl mx-auto">
             <!-- DIV BASE  -->
-            <div
-                class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-1 gap-6 mb-8 ml-2 mr-5">
-                <div
-                    class="bg-white dark:bg-[#2a201c] rounded-xl p-6 shadow-sm">
-                    <div class="flex items-center justify-between">
-                        <h3
-                            class="text-text-light dark:text-text-dark text-lg font-semibold pb-4">
-                            🏦 Financeiro
-                        </h3>
+            <div class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-1 gap-6 mb-8 ml-2 mr-5">
+                <div class="bg-white dark:bg-[#2a201c] rounded-xl p-6 shadow-sm">
+                    <div class="flex flex-col md:flex-row gap-4 mb-6">
+                        <div class="flex-grow">
+                            <label class="flex flex-col min-w-40 h-12 w-full">
+                                <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                                    <div class="text-gray-500 dark:text-gray-400 flex border-none bg-card-light dark:bg-card-dark items-center justify-center pl-4 rounded-l-lg border-r-0">
+                                        <span class="material-symbols-outlined text-primary">search</span>
+                                    </div>
+                                    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-card-light dark:bg-card-dark h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 pl-2 text-base text-primary font-normal leading-normal"
+                                        placeholder="Pesquisar pelo nome do solicitante..."
+                                        value />
+                                </div>
+                            </label>
+                        </div>
+                        <div class="flex gap-3 overflow-x-auto pb-2">
+                            <button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark pl-4 pr-3 text-text-light dark:text-text-dark shadow-sm">
+                                <p class="text-sm font-medium leading-normal text-primary">Todos</p>
+                                <span class="material-symbols-outlined text-primary">expand_more</span>
+                            </button>
+                            <button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-white pl-4 pr-3 shadow-sm">
+                                <p class="text-sm font-medium leading-normal text-primary">Despesa</p>
+                            </button>
+                            <button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark pl-4 pr-3 text-text-light dark:text-text-dark shadow-sm">
+                                <p class="text-sm font-medium leading-normal text-primary">Compra</p>
+                            </button>
+                            <button class="flex h-12 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-card-light dark:bg-card-dark pl-4 pr-3 text-text-light dark:text-text-dark shadow-sm">
+                                <p class="text-sm font-medium leading-normal text-primary">Desembolso</p>
+                            </button>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Approval Request Cards -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-text-light dark:text-text-dark">
+                                Relatório de Despesas - João Doe
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Solicitado em 2025-10-26</p>
+                        </div>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-600 bg-yellow-200">
+                            Pendente
+                        </span>
+                    </div>
+                    <p class="text-3xl font-bold text-primary mb-4">$1,250.75</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                            Q3 Despesas com campanhas de marketing.</p>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center justify-end gap-2">
+                        <button class="text-xs text-gray-500 dark:text-gray-400 hover:underline">
+                            Visualizar Histórico
+                        </button>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="w-full h-10 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors">Aprovar</button>
+                        <button class="w-full h-10 px-4 py-2 text-sm font-semibold text-red-600 bg-red-100 dark:bg-red-900/50 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/70 transition-colors">Rejeitar</button>
+                        <button class="h-10 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Info</button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-text-light dark:text-text-dark">
+                                Compra de um novo laptop
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Solicitado em 2025-10-25</p>
+                        </div>
+                        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-yellow-600 bg-yellow-200">
+                            Pendente
+                        </span>
+                    </div>
+                    <p class="text-3xl font-bold text-primary mb-4">$2,199.00</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Vaga para novo Desenvolvedor Sênior.</p>
+                </div>
+                <div class="flex flex-col gap-2">
+                        <div class="flex items-center justify-end gap-2">
+                            <button class="text-xs text-gray-500 dark:text-gray-400 hover:underline">
+                                Visualizar Histórico
+                            </button>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="w-full h-10 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors">Aprovar</button>
+                            <button class="w-full h-10 px-4 py-2 text-sm font-semibold text-red-600 bg-red-100 dark:bg-red-900/50 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/70 transition-colors">Rejeitar</button>
+                            <button class="h-10 px-4 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Info</button>
+                        </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-text-light dark:text-text-dark">Cadeiras de escritório</h3>
+                                <p
+                                    class="text-sm text-gray-500 dark:text-gray-400">Solicitado por Jane Smith em 2025-10-24</p>
+                            </div>
+                            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-200">
+                                Aprovado
+                            </span>
+                        </div>
+                        <p
+                            class="text-3xl font-bold text-gray-500 dark:text-gray-400 mb-4">$345.50</p>
+                        <p
+                            class="text-sm text-gray-600 dark:text-gray-300 mb-4">Reposição trimestral de materiais de escritório.</p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex items-center justify-end gap-2">
+                            <button class="text-xs text-gray-500 dark:text-gray-400 hover:underline">
+                                Visualizar Histórico
+                            </button>
+                        </div>
+                        <div class="flex gap-2">
+                            <button
+                                class="w-full h-10 px-4 py-2 text-sm font-semibold text-gray-500 bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-lg cursor-not-allowed"
+                                disabled>Aprovar</button>
+                            <button
+                                class="w-full h-10 px-4 py-2 text-sm font-semibold text-gray-500 bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-lg cursor-not-allowed"
+                                disabled>Rejeitar</button>
+                            <button
+                                class="h-10 px-4 py-2 text-sm font-semibold text-gray-500 bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-lg cursor-not-allowed"
+                                disabled>Info</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Empty State Card -->
+                <div
+                    class="lg:col-span-2 xl:col-span-3 bg-card-light dark:bg-card-dark p-10 rounded-xl shadow-md flex flex-col items-center justify-center text-center border-2 border-dashed border-border-light dark:border-border-dark">
+                    <span
+                        class="material-symbols-outlined text-6xl text-gray-400 mb-4">inbox</span>
+                    <h3
+                        class="font-bold text-xl text-text-light dark:text-text-dark">Tudo em dia!</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">
+                        Não há aprovações financeiras pendentes em sua fila.
+                    </p>
                 </div>
             </div>
 
