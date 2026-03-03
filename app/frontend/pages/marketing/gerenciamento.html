@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="pt-BR">
+<html lang="pt-BR">
 
   <head>
     <meta charset="utf-8" />
@@ -67,10 +67,181 @@
   </head>
 
   <body class="bg-background-light dark:bg-background-dark font-display">
-
     <div class="flex min-h-screen">
       <!-- Main Content -->
       <main class="flex-1 p-6 lg:p-10">
+        <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+          <h1
+            class="text-4xl font-black tracking-tight text-accent dark:text-white">Campanhas
+            de Marketing</h1>
+          <button
+            class="flex items-center justify-center gap-2 h-10 px-5 bg-primary text-white rounded-lg font-bold shadow-md hover:bg-primary/90 transition-all">
+            <span class="material-symbols-outlined">add_circle</span>
+            <span class="truncate">Criar Nova Campanha</span>
+          </button>
+        </div>
+        <!-- Tabs -->
+        <div class="pb-3 border-b border-gray-200 dark:border-gray-700 mb-6">
+          <div class="flex gap-8">
+            <a
+              class="flex flex-col items-center justify-center border-b-2 border-b-primary text-accent dark:text-white pb-3"
+              href="#">
+              <p class="text-sm font-bold tracking-wide">Todas Campanhas</p>
+            </a>
+            <a
+              class="flex flex-col items-center justify-center border-b-2 border-b-transparent text-gray-500 dark:text-gray-400 pb-3 hover:text-accent dark:hover:text-white transition-colors"
+              href="#">
+              <p class="text-sm font-bold tracking-wide">Ativo</p>
+            </a>
+            <a
+              class="flex flex-col items-center justify-center border-b-2 border-b-transparent text-gray-500 dark:text-gray-400 pb-3 hover:text-accent dark:hover:text-white transition-colors"
+              href="#">
+              <p class="text-sm font-bold tracking-wide">Pausado</p>
+            </a>
+            <a
+              class="flex flex-col items-center justify-center border-b-2 border-b-transparent text-gray-500 dark:text-gray-400 pb-3 hover:text-accent dark:hover:text-white transition-colors"
+              href="#">
+              <p class="text-sm font-bold tracking-wide">Completado</p>
+            </a>
+          </div>
+        </div>
+        <!-- Table -->
+        <div
+          class="bg-secondary dark:bg-background-dark/50 rounded-xl shadow-lg p-4">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-gray-200 dark:border-gray-700">
+                  <th
+                    class="px-4 py-3 text-sm font-semibold text-accent dark:text-gray-300">Nome
+                    Campanha</th>
+                  <th
+                    class="px-4 py-3 text-sm font-semibold text-accent dark:text-gray-300">Status</th>
+                  <th
+                    class="px-4 py-3 text-sm font-semibold text-accent dark:text-gray-300">Data
+                    Início</th>
+                  <th
+                    class="px-4 py-3 text-sm font-semibold text-accent dark:text-gray-300">Data
+                    Final</th>
+                  <th
+                    class="px-4 py-3 text-sm font-semibold text-accent dark:text-gray-300">Orçamento</th>
+                  <th
+                    class="px-4 py-3 text-sm font-semibold text-accent dark:text-gray-300">Investimento</th>
+                  <th
+                    class="px-4 py-3 text-sm font-semibold text-accent dark:text-gray-300 text-center">Landing
+                    Pages</th>
+                  <th
+                    class="px-4 py-3 text-sm font-semibold text-accent dark:text-gray-300 text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                  <td
+                    class="px-4 py-4 text-sm font-medium text-accent dark:text-white">Q3
+                    Lead Gerados</td>
+                  <td class="px-4 py-4">
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                      <span
+                        class="h-2 w-2 mr-2 bg-green-500 rounded-full"></span>
+                      Ativo
+                    </span>
+                  </td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">2025-07-01</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">2025-09-30</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">$10,000</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">$7,500</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400 text-center">3</td>
+                  <td class="px-4 py-4 text-center">
+                    <div class="flex items-center justify-center gap-2">
+                      <button
+                        class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><span
+                          class="material-symbols-outlined">edit</span></button>
+                      <button
+                        class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-500 transition-colors"><span
+                          class="material-symbols-outlined">delete</span></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                  <td
+                    class="px-4 py-4 text-sm font-medium text-accent dark:text-white">New
+                    Broker Onboarding</td>
+                  <td class="px-4 py-4">
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                      <span
+                        class="h-2 w-2 mr-2 bg-blue-500 rounded-full"></span>
+                      Completed
+                    </span>
+                  </td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">2023-05-15</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">2023-06-30</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">$5,000</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">$5,000</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400 text-center">2</td>
+                  <td class="px-4 py-4 text-center">
+                    <div class="flex items-center justify-center gap-2">
+                      <button
+                        class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><span
+                          class="material-symbols-outlined">edit</span></button>
+                      <button
+                        class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-500 transition-colors"><span
+                          class="material-symbols-outlined">delete</span></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr
+                  class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                  <td
+                    class="px-4 py-4 text-sm font-medium text-accent dark:text-white">Q4
+                    Holiday Push</td>
+                  <td class="px-4 py-4">
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
+                      <span
+                        class="h-2 w-2 mr-2 bg-yellow-500 rounded-full"></span>
+                      Paused
+                    </span>
+                  </td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">2023-10-01</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">2023-12-31</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">$15,000</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400">$2,100</td>
+                  <td
+                    class="px-4 py-4 text-sm text-gray-600 dark:text-gray-400 text-center">5</td>
+                  <td class="px-4 py-4 text-center">
+                    <div class="flex items-center justify-center gap-2">
+                      <button
+                        class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"><span
+                          class="material-symbols-outlined">edit</span></button>
+                      <button
+                        class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-500 transition-colors"><span
+                          class="material-symbols-outlined">delete</span></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </main>
     </div>
   </body>
