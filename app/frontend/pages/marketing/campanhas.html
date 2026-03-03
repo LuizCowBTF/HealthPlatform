@@ -64,15 +64,479 @@
       recolherSidebar.classList.toggle('hidden');
     }
   </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .gamified-progress-bar {
+            @apply h-4 rounded-full bg-background-light dark:bg-accent/20 overflow-hidden;
+        }
+        .gamified-progress-fill {
+            @apply h-full bg-secondary-gamified rounded-full transition-all duration-500 ease-out;
+        }
+        .gamified-badge {
+            @apply inline-flex items-center justify-center p-2 rounded-full text-white font-bold text-xs animate-bounce-in;
+            background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%);box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .cac-score-good {
+            @apply text-secondary-gamified animate-pulse-green;
+        }
+        .cac-score-bad {
+            @apply text-tertiary-gamified animate-pulse-orange;
+        }
+    </style>
   </head>
 
   <body class="bg-background-light dark:bg-background-dark font-display">
-
-    <div class="flex min-h-screen">
-      <!-- Main Content -->
-      <main class="flex-1 p-6 lg:p-10">
-      </main>
+    <!-- CONTAINER PRINCIPAL DA PÁGINA -->
+    <div class="flex-1 flex flex-col">
+      <div class="flex flex-wrap justify-between items-center gap-6 m-6">
+        <p
+          class="text-accent dark:text-white text-3xl font-bold tracking-tight">Desafios
+          de Marketing Gamificados</p>
+        <div
+          class="flex items-center gap-2 p-1 rounded-lg bg-white dark:bg-accent/10 shadow-soft">
+          <button
+            class="px-3 py-1.5 rounded-md text-sm font-semibold text-accent/60 dark:text-white/60">Hoje</button>
+          <button
+            class="px-3 py-1.5 rounded-md text-sm font-semibold text-accent/60 dark:text-white/60">Semana</button>
+          <button
+            class="px-3 py-1.5 rounded-md text-sm font-semibold bg-primary text-white">Mês</button>
+          <button
+            class="px-3 py-1.5 rounded-md text-sm font-semibold text-accent/60 dark:text-white/60">Quadrimestre</button>
+          <button
+            class="flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-md text-sm font-semibold text-accent/60 dark:text-white/60">
+            <span class="material-symbols-outlined text-lg">event</span>
+            <span>Perzonalizado</span>
+          </button>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 mr-2 ml-2 gap-1">
+        <div
+          class="lg:col-span-1 p-4 bg-white dark:bg-accent/10 rounded-xl shadow-soft flex flex-col justify-between">
+          <div class="flex justify-between items-center mb-4">
+            <p class="text-accent dark:text-white text-base font-bold">Meta MQL:
+              🎯 1.000</p>
+            <span
+              class="material-symbols-outlined text-4xl text-primary/80">workspace_premium</span>
+          </div>
+          <div class="mb-4">
+            <p
+              class="text-accent dark:text-white tracking-light text-5xl font-extrabold leading-tight">850</p>
+            <div class="flex items-center gap-1">
+              <span
+                class="material-symbols-outlined text-secondary-gamified text-lg">arrow_upward</span>
+              <p class="text-secondary-gamified text-sm font-bold">+150 Este
+                mês!</p>
+            </div>
+          </div>
+          <div class="gamified-progress-bar">
+            <div class="gamified-progress-fill" style="width: 85%;"></div>
+          </div>
+          <p
+            class="text-right text-sm text-accent/70 dark:text-white/70 mt-2">85%
+            Completo!</p>
+          <div class="flex justify-center mt-4">
+            <span class="gamified-badge">MQL Maverick em treinamento!</span>
+          </div>
+        </div>
+        <div
+          class="lg:col-span-1 p-4 bg-white dark:bg-accent/10 rounded-xl shadow-soft flex flex-col justify-between">
+          <div class="flex justify-between items-center mb-4">
+            <p class="text-accent dark:text-white text-base font-bold">Meta SQL:
+              🏆 200</p>
+            <span
+              class="material-symbols-outlined text-4xl text-primary/80">military_tech</span>
+          </div>
+          <div class="mb-4">
+            <p
+              class="text-accent dark:text-white tracking-light text-5xl font-extrabold leading-tight">120</p>
+            <div class="flex items-center gap-1">
+              <span
+                class="material-symbols-outlined text-tertiary-gamified text-lg">arrow_upward</span>
+              <p class="text-tertiary-gamified text-sm font-bold">+30 última
+                semana!</p>
+            </div>
+          </div>
+          <div class="gamified-progress-bar">
+            <div class="gamified-progress-fill" style="width: 60%;"></div>
+          </div>
+          <p
+            class="text-right text-sm text-accent/70 dark:text-white/70 mt-2">60%
+            Completo!</p>
+          <div class="flex justify-center mt-4">
+            <span class="gamified-badge">Próximo ao fechamento!</span>
+          </div>
+        </div>
+        <div
+          class="p-4 bg-white dark:bg-accent/10 rounded-xl shadow-soft flex flex-col items-center justify-center">
+          <p class="text-accent dark:text-white text-base font-bold mb-4">Seu
+            Escore CAC</p>
+          <div class="flex items-center gap-2 mb-2">
+            <p :class="{ 'cac-score-good': true, 'cac-score-bad': false }"
+              class="text-6xl font-extrabold transition-colors duration-500">$12.50</p>
+            <span
+              class="material-symbols-outlined text-secondary-gamified text-4xl animate-bounce-in">thumb_up</span>
+          </div>
+          <p
+            class="text-sm text-center text-accent/70 dark:text-white/70 mb-4">Procure
+            por preços mais baixos!<br>Abaixo de R$150, é excelente!</br>
+          <button
+            class="bg-secondary-gamified hover:bg-secondary-gamified/80 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-300">
+            <span
+              class="material-symbols-outlined text-lg mr-2">military_tech</span>
+            <span>Excelente trabalho! Continue assim!</span>
+          </button>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <div class="p-6 bg-white dark:bg-accent/10 rounded-xl shadow-soft">
+          <p class="text-accent dark:text-white text-xl font-bold mb-4">Desafios
+            Diários ⚡</p>
+          <ul class="space-y-4">
+            <li
+              class="flex items-center gap-3 p-3 rounded-lg bg-background-light dark:bg-accent/20">
+              <span
+                class="material-symbols-outlined text-tertiary-gamified text-3xl animate-shake">gpp_maybe</span>
+              <div>
+                <p class="font-semibold text-accent dark:text-white">Otimize 3
+                  anúncios com baixo desempenho!</p>
+                <p class="text-sm text-accent/70 dark:text-white/70">Melhore o
+                  CPL nas suas 3 principais campanhas.</p>
+              </div>
+              <button
+                class="ml-auto bg-primary/20 text-primary text-sm font-medium px-3 py-1.5 rounded-full hover:bg-primary/30">Iniciar</button>
+            </li>
+            <li
+              class="flex items-center gap-3 p-3 rounded-lg bg-background-light dark:bg-accent/20">
+              <span
+                class="material-symbols-outlined text-secondary-gamified text-3xl">check_circle</span>
+              <div>
+                <p class="font-semibold text-accent dark:text-white">Aumente o
+                  tráfego do seu site em 5%</p>
+                <p class="text-sm text-accent/70 dark:text-white/70">Você está
+                  no caminho certo para alcançar esse objetivo!</p>
+              </div>
+              <button
+                class="ml-auto bg-secondary-gamified text-white text-sm font-medium px-3 py-1.5 rounded-full opacity-70 cursor-not-allowed">Completo</button>
+            </li>
+            <li
+              class="flex items-center gap-3 p-3 rounded-lg bg-background-light dark:bg-accent/20">
+              <span
+                class="material-symbols-outlined text-tertiary-gamified text-3xl">error</span>
+              <div>
+                <p class="font-semibold text-accent dark:text-white">Melhorar a
+                  taxa de conversão da página "Ferramenta de Orçamento"</p>
+                <p class="text-sm text-accent/70 dark:text-white/70">Foque em
+                  melhorar o envio de formulários.</p>
+              </div>
+              <button
+                class="ml-auto bg-primary/20 text-primary text-sm font-medium px-3 py-1.5 rounded-full hover:bg-primary/30">Iniciar</button>
+            </li>
+          </ul>
+        </div>
+        <div class="p-6 bg-white dark:bg-accent/10 rounded-xl shadow-soft">
+          <p
+            class="text-accent dark:text-white text-xl font-bold mb-4">Conquistas
+            Recentes 🏅</p>
+          <ul class="space-y-4">
+            <li
+              class="flex items-center gap-3 p-3 rounded-lg bg-background-light dark:bg-accent/20 animate-bounce-in">
+              <span
+                class="material-symbols-outlined text-yellow-500 text-3xl">emoji_events</span>
+              <div>
+                <p
+                  class="font-semibold text-accent dark:text-white">"Mestre em Ímãs de Leads"</p>
+                <p class="text-sm text-accent/70 dark:text-white/70">Geramos
+                  mais de 500 MQLs em uma única campanha!</p>
+              </div>
+              <span class="text-xs text-accent/50 dark:text-white/50 ml-auto">Há
+                2 dias</span>
+            </li>
+            <li
+              class="flex items-center gap-3 p-3 rounded-lg bg-background-light dark:bg-accent/20 animate-bounce-in">
+              <span
+                class="material-symbols-outlined text-yellow-500 text-3xl">stars</span>
+              <div>
+                <p
+                  class="font-semibold text-accent dark:text-white">"Rei/Rainha da Conversão"</p>
+                <p class="text-sm text-accent/70 dark:text-white/70">Atingimos
+                  uma taxa de conversão geral superior a 3%!</p>
+              </div>
+              <span class="text-xs text-accent/50 dark:text-white/50 ml-auto">Há
+                1 semana</span>
+            </li>
+            <li
+              class="flex items-center gap-3 p-3 rounded-lg bg-background-light dark:bg-accent/20 animate-bounce-in">
+              <span
+                class="material-symbols-outlined text-yellow-500 text-3xl">rocket_launch</span>
+              <div>
+                <p
+                  class="font-semibold text-accent dark:text-white">"Titan do Tráfego"</p>
+                <p class="text-sm text-accent/70 dark:text-white/70">Gerou mais
+                  de 20.000 visitas ao site no mês passado!</p>
+              </div>
+              <span class="text-xs text-accent/50 dark:text-white/50 ml-auto">Há
+                3 semanas</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+        <div
+          class="lg:col-span-2 p-6 bg-white dark:bg-accent/10 rounded-xl shadow-soft">
+          <p
+            class="text-accent dark:text-white text-base font-bold leading-normal mb-1">Aumento
+            repentino do tráfego do site</p>
+          <div class="flex items-baseline gap-4">
+            <p
+              class="text-accent dark:text-white tracking-light text-4xl font-bold leading-tight">24,534</p>
+            <div class="flex items-center gap-1">
+              <span
+                class="material-symbols-outlined text-secondary-gamified text-lg">arrow_upward</span>
+              <p class="text-secondary-gamified text-sm font-medium">+2.5%</p>
+            </div>
+          </div>
+          <div class="h-64 mt-4">
+            <svg fill="none" height="100%" preserveAspectRatio="none"
+              viewBox="0 0 478 150" width="100%"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H0V109Z"
+                fill="url(#paint0_linear_1131_5935_2)"></path>
+              <path
+                d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25"
+                stroke="#d48262" stroke-linecap="round" stroke-width="3"></path>
+              <defs>
+                <lineargradient gradientUnits="userSpaceOnUse"
+                  id="paint0_linear_1131_5935_2" x1="236" x2="236" y1="1"
+                  y2="149">
+                  <stop stop-color="#d48262" stop-opacity="0.3"></stop>
+                  <stop offset="1" stop-color="#d48262" stop-opacity="0"></stop>
+                </lineargradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+        <div
+          class="p-6 bg-white dark:bg-accent/10 rounded-xl shadow-soft flex flex-col">
+          <p
+            class="text-accent dark:text-white text-base font-bold leading-normal mb-1">Desafio
+            da Taxa de Conversão</p>
+          <div class="flex items-baseline gap-4">
+            <p
+              class="text-accent dark:text-white tracking-light text-4xl font-bold leading-tight">2.5%</p>
+            <div class="flex items-center gap-1">
+              <span
+                class="material-symbols-outlined text-secondary-gamified text-lg">arrow_upward</span>
+              <p class="text-secondary-gamified text-sm font-medium">+0.5%</p>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center justify-center my-4">
+            <div class="relative w-40 h-40">
+              <svg class="w-full h-full" viewBox="0 0 36 36">
+                <path class="text-background-light dark:text-accent/20"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none" stroke-dasharray="100, 100"
+                  stroke-width="3"></path>
+                <path class="text-primary"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none" stroke-dasharray="65, 100" stroke-linecap="round"
+                  stroke-width="3"></path>
+              </svg>
+              <div
+                class="absolute inset-0 flex flex-col items-center justify-center">
+                <span
+                  class="text-2xl font-bold text-accent dark:text-white">65%</span>
+                <span class="text-xs text-accent/60 dark:text-white/60">Meta:
+                  80%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="lg:col-span-2 p-6 bg-white dark:bg-accent/10 rounded-xl shadow-soft">
+          <p
+            class="text-accent dark:text-white text-base font-bold leading-normal mb-2">Potencialização
+            da Fonte de Leads</p>
+          <div class="space-y-4">
+            <div
+              class="grid grid-cols-[120px_1fr_auto] items-center gap-4 text-sm">
+              <p class="font-medium text-accent dark:text-white/80">Busca
+                Orgânica</p>
+              <div
+                class="h-2.5 bg-background-light dark:bg-accent/20 rounded-full">
+                <div class="bg-primary/70 h-2.5 rounded-full"
+                  style="width: 70%;"></div>
+              </div>
+              <p class="font-semibold text-accent dark:text-white">4.203</p>
+            </div>
+            <div
+              class="grid grid-cols-[120px_1fr_auto] items-center gap-4 text-sm">
+              <p class="font-medium text-accent dark:text-white/80">Mídia social
+                paga</p>
+              <div
+                class="h-2.5 bg-background-light dark:bg-accent/20 rounded-full">
+                <div class="bg-primary/70 h-2.5 rounded-full"
+                  style="width: 60%;"></div>
+              </div>
+              <p class="font-semibold text-accent dark:text-white">3.123</p>
+            </div>
+            <div
+              class="grid grid-cols-[120px_1fr_auto] items-center gap-4 text-sm">
+              <p
+                class="font-medium text-accent dark:text-white/80">Encaminhamento</p>
+              <div
+                class="h-2.5 bg-background-light dark:bg-accent/20 rounded-full">
+                <div class="bg-primary/70 h-2.5 rounded-full"
+                  style="width: 25%;"></div>
+              </div>
+              <p class="font-semibold text-accent dark:text-white">1.892</p>
+            </div>
+            <div
+              class="grid grid-cols-[120px_1fr_auto] items-center gap-4 text-sm">
+              <p class="font-medium text-accent dark:text-white/80">Direto</p>
+              <div
+                class="h-2.5 bg-background-light dark:bg-accent/20 rounded-full">
+                <div class="bg-primary/70 h-2.5 rounded-full"
+                  style="width: 30%;"></div>
+              </div>
+              <p class="font-semibold text-accent dark:text-white">2.011</p>
+            </div>
+            <div
+              class="grid grid-cols-[120px_1fr_auto] items-center gap-4 text-sm">
+              <p class="font-medium text-accent dark:text-white/80">E-mail</p>
+              <div
+                class="h-2.5 bg-background-light dark:bg-accent/20 rounded-full">
+                <div class="bg-primary/70 h-2.5 rounded-full"
+                  style="width: 90%;"></div>
+              </div>
+              <p class="font-semibold text-accent dark:text-white">5.845</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 bg-white dark:bg-accent/10 rounded-xl shadow-soft">
+          <p
+            class="text-accent dark:text-white text-base font-bold leading-normal mb-4">Páginas
+            Principais de Missões</p>
+          <ul class="space-y-3 text-sm">
+            <li
+              class="flex justify-between items-center bg-background-light dark:bg-accent/20 rounded-md">
+              <span
+                class="text-accent/80 dark:text-white/80 flex items-center gap-2">/landing/health-insurance-plans</span>
+              <span class="font-bold text-accent dark:text-white">5.120</span>
+            </li>
+            <li class="flex justify-between items-center">
+              <span
+                class="text-accent/80 dark:text-white/80">/blog/understanding-deductibles</span>
+              <span class="font-bold text-accent dark:text-white">4.876</span>
+            </li>
+            <li class="flex justify-between items-center">
+              <span class="text-accent/80 dark:text-white/80">/contact-us</span>
+              <span class="font-bold text-accent dark:text-white">3.210</span>
+            </li>
+            <li class="flex justify-between items-center">
+              <span class="text-accent/80 dark:text-white/80">/quote-tool</span>
+              <span class="font-bold text-accent dark:text-white">2.543</span>
+            </li>
+            <li class="flex justify-between items-center">
+              <span
+                class="text-accent/80 dark:text-white/80">/about-our-agency</span>
+              <span class="font-bold text-accent dark:text-white">1.987</span>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="lg:col-span-3 p-6 bg-white dark:bg-accent/10 rounded-xl shadow-soft">
+          <p
+            class="text-accent dark:text-white text-base font-bold leading-normal mb-4">Classificação
+            da Campanha</p>
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr
+                class="border-b border-subtle-grey-light dark:border-white/20 text-accent/60 dark:text-white/60">
+                <th class="py-2 font-semibold">Nome Campanha</th>
+                <th class="py-2 font-semibold text-right">Gastos</th>
+                <th class="py-2 font-semibold text-right">Leads Gerados</th>
+                <th class="py-2 font-semibold text-right">Escore CPL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="border-b border-subtle-grey-light dark:border-white/20">
+                <td class="py-3 font-medium">Q4 Google Ads - Seniors</td>
+                <td class="py-3 text-right">$2.500,</td>
+                <td class="py-3 text-right">512</td>
+                <td
+                  class="py-3 text-right text-secondary-gamified font-bold">$4,88
+                  <span
+                    class="material-symbols-outlined text-base align-middle">verified</span></td>
+              </tr>
+              <tr
+                class="border-b border-subtle-grey-light dark:border-white/20">
+                <td class="py-3 font-medium">Redirecionamentos Facebook</td>
+                <td class="py-3 text-right">$1.200,</td>
+                <td class="py-3 text-right">320</td>
+                <td
+                  class="py-3 text-right text-secondary-gamified font-bold">$3,75
+                  <span
+                    class="material-symbols-outlined text-base align-middle">verified</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 font-medium">Formulários de geração de leads do
+                  LinkedIn</td>
+                <td class="py-3 text-right">$3.100,</td>
+                <td class="py-3 text-right">150</td>
+                <td
+                  class="py-3 text-right text-tertiary-gamified font-bold animate-shake">$20,67
+                  <span
+                    class="material-symbols-outlined text-base align-middle">report_problem</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+
+    <script>
+    // Verificar se está dentro de iframe
+        if (window.self !== window.top) {
+            console.log('📦 Dashboard carregado em iframe');
+            
+            // Garantir altura suficiente
+            document.addEventListener('DOMContentLoaded', function() {
+                const bodyHeight = document.body.scrollHeight;
+                const viewportHeight = window.innerHeight;
+                
+                console.log('📏 Alturas:', {
+                    body: bodyHeight + 'px',
+                    viewport: viewportHeight + 'px'
+                });
+                
+                // Se necessário, expandir mais
+                if (bodyHeight < viewportHeight + 300) {
+                    const scrollArea = document.querySelector('.scroll-end-area');
+                    if (scrollArea) {
+                        scrollArea.style.height = (viewportHeight + 400 - bodyHeight) + 'px';
+                        console.log('⚡ Área de scroll ajustada');
+                    }
+                }
+                
+                // Informar ao parent que carregamos
+                setTimeout(() => {
+                    try {
+                        window.parent.postMessage({
+                            type: 'iframeLoaded',
+                            page: 'dashboard.html',
+                            height: document.body.scrollHeight
+                        }, '*');
+                    } catch(e) {
+                        // Ignorar cross-origin
+                    }
+                }, 500);
+            });
+        }
+    </script>
   </body>
 
 </html>
