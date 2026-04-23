@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- TITLE VARIÁVEL - Editar em cada dashboard -->
-    <title>HealthCRM</title>
+  <!-- TITLE VARIÁVEL - Editar em cada dashboard -->
+  <title>HealthCRM</title>
 
-    <!-- Ícones do Google -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-      rel="stylesheet">
+  <!-- Ícones do Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Configuração do Tailwind -->
-    <script id="tailwind-config">
+  <!-- Configuração do Tailwind -->
+  <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
       theme: {
@@ -62,8 +60,8 @@
     }
   </script>
 
-    <!-- CSS PADRÃO PARA TODOS OS DASHBOARDS -->
-    <style>
+  <!-- CSS PADRÃO PARA TODOS OS DASHBOARDS -->
+  <style>
     /* =========================================== */
     /* RESET E ESTILOS GLOBAIS PARA IFRAME */
     /* =========================================== */
@@ -282,76 +280,74 @@
       }
     }
   </style>
-  </head>
+</head>
 
-  <body class="bg-gray-50 p-4 md:p-6">
-    <div class="max-w-7xl mx-auto">
-      <!-- CARDS METAS -->
-      <div
-        class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-4 gap-6 mt-8 ml-2 mr-5">
-        <div
-          class="grid grid-cols-1 md:grid-cols-5 xl:grid-cols-4 gap-2 mb-8 ml-2 mr-5">
-          <div class="mini-card">
-            <div class="flex items-center mt-3 mb-3">
-              <h3 class="font-base text-gray-700">Total de Leads Criados</h3>
-            </div>
-            <div class="kpi-value mb-5">125</div>
-            <div class="flex items-center mt-3 mb-3">
-              <p class="text-green-500">+15%</p>
-            </div>
+<body class="bg-gray-50 p-4 md:p-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- CARDS METAS -->
+    <div class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-3 gap-6 mt-8 ml-2 mr-5">
+      <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-2 mb-8 ml-2 mr-5">
+        <div class="mini-card">
+          <div class="flex items-center mt-3 mb-3">
+            <h3 class="font-base text-gray-700">Total de Leads Criados</h3>
           </div>
-
-          <div class="mini-card">
-            <div class="flex items-center mt-3 mb-3">
-              <h3 class="font-base text-gray-700">Total de Planos Fechados</h3>
-            </div>
-            <div class="kpi-value mb-5">32</div>
-            <div class="flex items-center mt-3 mb-3">
-              <p class="text-green-500">+10%</p>
-            </div>
+          <div class="kpi-value mb-5">125</div>
+          <div class="flex items-center mt-3 mb-3">
+            <p class="text-green-500">+15%</p>
           </div>
+        </div>
 
-          <div class="mini-card">
-            <div class="flex items-center mt-3 mb-3">
-              <h3 class="font-base text-gray-700">Taxa de Conversões</h3>
-            </div>
-            <div class="kpi-value mb-5">25.6%</div>
-            <div class="flex items-center mt-3 mb-3">
-              <p class="text-red-500">-2%</p>
-            </div>
+        <div class="mini-card">
+          <div class="flex items-center mt-3 mb-3">
+            <h3 class="font-base text-gray-700">Total de Planos Fechados</h3>
           </div>
-
-          <div class="mini-card">
-            <div class="flex items-center mt-3 mb-3">
-              <h3 class="font-base text-gray-700">Total de Renovações</h3>
-            </div>
-            <div class="kpi-value mb-5">$56.800</div>
-            <div class="flex items-center mt-3 mb-3">
-              <p class="text-green-500">+8%</p>
-            </div>
+          <div class="kpi-value mb-5">32</div>
+          <div class="flex items-center mt-3 mb-3">
+            <p class="text-green-500">+10%</p>
           </div>
+        </div>
 
-          <div class="mini-card">
-            <div class="flex items-center mt-3 mb-3">
-              <h3 class="font-base text-gray-700">Média dos Negócios</h3>
-            </div>
-            <div class="kpi-value mb-5">$1.775</div>
-            <div class="flex items-center mt-3 mb-3">
-              <p class="text-green-500">+5%</p>
-            </div>
+        <div class="mini-card">
+          <div class="flex items-center mt-3 mb-3">
+            <h3 class="font-base text-gray-700">Taxa de Conversões</h3>
+          </div>
+          <div class="kpi-value mb-5">25.6%</div>
+          <div class="flex items-center mt-3 mb-3">
+            <p class="text-red-500">-2%</p>
+          </div>
+        </div>
+
+        <div class="mini-card">
+          <div class="flex items-center mt-3 mb-3">
+            <h3 class="font-base text-gray-700">Total de Renovações</h3>
+          </div>
+          <div class="kpi-value mb-5">$56.800</div>
+          <div class="flex items-center mt-3 mb-3">
+            <p class="text-green-500">+8%</p>
+          </div>
+        </div>
+
+        <div class="mini-card">
+          <div class="flex items-center mt-3 mb-3">
+            <h3 class="font-base text-gray-700">Média dos Negócios</h3>
+          </div>
+          <div class="kpi-value mb-5">$1.775</div>
+          <div class="flex items-center mt-3 mb-3">
+            <p class="text-green-500">+5%</p>
           </div>
         </div>
       </div>
-
-      <!-- LEADS -->
-      <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white dark:bg-[#2a201c] rounded-xl p-6 shadow-sm">
-          <div class="flex items-center justify-between">
+    </div>
+    <!-- LEADS -->
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mt-8 ml-2 mr-5">
+      <div class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-1">
+        <div class="bg-white dark:bg-[#2a201c] rounded-xl shadow-sm">
+          <div class="flex items-center justify-between p-4">
             <h3 class="font-semibold text-gray-700">
               📥 Listagem de Leads
             </h3>
           </div>
-          <div class="flex justify-between gap-4 p-4 items-center">
+          <div class="flex flex-wrap justify-between gap-4 p-4 items-center">
             <div class="flex gap-2">
               <div class="relative">
                 <select
@@ -396,8 +392,8 @@
                 <span class="material-symbols-outlined">download</span>
                 <span class="truncate">Exportar Dados</span>
               </button>
-              <button
-                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-primary text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-4">
+              <button onclick="location.href='../leads/incluir_leads.html'"
+                class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-primary text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-4" type="button">
                 <span class="material-symbols-outlined">add</span>
                 <span class="truncate">Nova Lead</span>
               </button>
@@ -414,382 +410,355 @@
                     <th class="p-4 w-12 text-left"><input
                         class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary"
                         type="checkbox" /></th>
-                    <th
-                      class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Nome<span
+                    <th class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Nome<span
                         class="material-symbols-outlined text-xs">unfold_more</span></th>
-                    <th
-                      class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Status
-                      <span
+                    <th class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Status
+                      <span class="material-symbols-outlined text-xs">unfold_more</span>
+                    </th>
+                    <th class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Origem<span
                         class="material-symbols-outlined text-xs">unfold_more</span>
                     </th>
-                    <th
-                      class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Origem<span
-                        class="material-symbols-outlined text-xs">unfold_more</span>
+                    <th class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Criação<span
+                        class="material-symbols-outlined text-xs">unfold_more</span></th>
+                    <th class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Último
+                      Contato<span class="material-symbols-outlined text-xs">unfold_more</span>
                     </th>
-                    <th
-                      class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Criação<span
+                    <th class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Ação<span
                         class="material-symbols-outlined text-xs">unfold_more</span></th>
-                    <th
-                      class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Último
-                      Contato<span
-                        class="material-symbols-outlined text-xs">unfold_more</span>
-                    </th>
-                    <th
-                      class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Ação<span
+                    <th class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Designado<span
                         class="material-symbols-outlined text-xs">unfold_more</span></th>
-                    <th
-                      class="p-4 text-left text-sm font-medium leading-normal cursor-pointer">Designado<span
-                        class="material-symbols-outlined text-xs">unfold_more</span></th>
-                    <th
-                      class="p-4 text-left text-sm font-medium leading-normal">Ação</th>
+                    <th class="p-4 text-left text-sm font-medium leading-normal">Ação</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    class="border-t border-t-border-light dark:border-t-border-dark">
-                    <td class="p-4 w-12"><input
-                        class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary"
-                        type="checkbox" /></td>
-                    <td class="p-4 text-sm font-normal leading-normal">John
-                      Smith</td>
-                    <td class="p-4 text-sm font-normal leading-normal"><span
-                        class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">Novo</span>
-                    </td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">Website</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">2023-10-26</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">2023-10-26</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">Retorno</td>
-                    <td class="p-4 text-sm font-normal leading-normal">Sarah
-                      Jones</td>
-                    <td class="p-4"><button class="text-primary"><span
-                          class="material-symbols-outlined">more_vert</span></button></td>
+                  <tr class="border-t border-t-border-light dark:border-t-border-dark">
+                    <td class="p-4 w-12"><input class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary" type="checkbox" /></td>
+                    <td class="p-4 text-sm font-normal leading-normal">John Smith</td>
+                    <td class="p-4 text-sm font-normal leading-normal"><span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">Novo</span></td>
+                    <td class="p-4 text-sm font-normal leading-normal">Website</td>
+                    <td class="p-4 text-sm font-normal leading-normal">2023-10-26</td>
+                    <td class="p-4 text-sm font-normal leading-normal">2023-10-26</td>
+                    <td class="p-4 text-sm font-normal leading-normal">Retorno</td>
+                    <td class="p-4 text-sm font-normal leading-normal">Sarah Jones</td>
+                    <td class="p-4"><button command="show-modal" commandfor="dialog" class="text-primary"><span class="material-symbols-outlined">more_vert</span></button></td>
                   </tr>
-                  <tr
-                    class="border-t border-t-border-light dark:border-t-border-dark">
-                    <td class="p-4 w-12"><input
-                        class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary"
-                        type="checkbox" /></td>
-                    <td class="p-4 text-sm font-normal leading-normal">Jane
-                      Doe</td>
-                    <td class="p-4 text-sm font-normal leading-normal"><span
-                        class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">Progresso</span></td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">Referência</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">2023-10-25</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">2023-10-26</td>
-                    <td class="p-4 text-sm font-normal leading-normal">Proposta
-                      Enviada</td>
-                    <td class="p-4 text-sm font-normal leading-normal">Sarah
-                      Jones</td>
-                    <td class="p-4"><button class="text-primary"><span
-                          class="material-symbols-outlined">more_vert</span></button></td>
+                  <tr class="border-t border-t-border-light dark:border-t-border-dark">
+                    <td class="p-4 w-12"><input class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary" type="checkbox" /></td>
+                    <td class="p-4 text-sm font-normal leading-normal">Jane Doe</td>
+                    <td class="p-4 text-sm font-normal leading-normal"><span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">Progresso</span></td>
+                    <td class="p-4 text-sm font-normal leading-normal">Referência</td>
+                    <td class="p-4 text-sm font-normal leading-normal">2023-10-25</td>
+                    <td class="p-4 text-sm font-normal leading-normal">2023-10-26</td>
+                    <td class="p-4 text-sm font-normal leading-normal">Proposta Enviada</td>
+                    <td class="p-4 text-sm font-normal leading-normal">Sarah Jones</td>
+                    <td class="p-4"><button command="show-modal" commandfor="dialog" class="text-primary"><span class="material-symbols-outlined">more_vert</span></button></td>
                   </tr>
-                  <tr
-                    class="border-t border-t-border-light dark:border-t-border-dark">
-                    <td class="p-4 w-12"><input
-                        class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary"
-                        type="checkbox" /></td>
-                    <td class="p-4 text-sm font-normal leading-normal">Peter
-                      Pan</td>
-                    <td class="p-4 text-sm font-normal leading-normal"><span
-                        class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-secondary text-green-800">Fechado</span>
-                    </td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">Celular</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">2023-10-24</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">2023-10-25</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">Inegração</td>
-                    <td class="p-4 text-sm font-normal leading-normal">Sarah
-                      Jones</td>
-                    <td class="p-4"><button class="text-primary"><span
-                          class="material-symbols-outlined">more_vert</span></button></td>
+                  <tr class="border-t border-t-border-light dark:border-t-border-dark">
+                    <td class="p-4 w-12"><input class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary" type="checkbox" /></td>
+                    <td class="p-4 text-sm font-normal leading-normal">Peter Pan</td>
+                    <td class="p-4 text-sm font-normal leading-normal"><span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-secondary text-green-800">Fechado</span></td>
+                    <td class="p-4 text-sm font-normal leading-normal">Celular</td>
+                    <td class="p-4 text-sm font-normal leading-normal">2023-10-24</td>
+                    <td class="p-4 text-sm font-normal leading-normal">2023-10-25</td>
+                    <td class="p-4 text-sm font-normal leading-normal">Inegração</td>
+                    <td class="p-4 text-sm font-normal leading-normal">Sarah Jones</td>
+                    <td class="p-4"><button command="show-modal" commandfor="dialog" class="text-primary"><span class="material-symbols-outlined">more_vert</span></button></td>
                   </tr>
-                  <tr
-                    class="border-t border-t-border-light dark:border-t-border-dark">
-                    <td class="p-4 w-12"><input
-                        class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary"
-                        type="checkbox" /></td>
-                    <td class="p-4 text-sm font-normal leading-normal">Mary
-                      Poppins</td>
-                    <td class="p-4 text-sm font-normal leading-normal"><span
-                        class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">Novo</span>
-                    </td>
-                    <td class="p-4 text-sm font-normal leading-normal">Midia
-                      Social</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">2023-10-23</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">2023-10-24</td>
-                    <td class="p-4 text-sm font-normal leading-normal">Contato
-                      Inicial</td>
-                    <td class="p-4 text-sm font-normal leading-normal">Sarah
-                      Jones</td>
-                    <td class="p-4"><button class="text-primary"><span
-                          class="material-symbols-outlined">more_vert</span></button></td>
+                  <tr class="border-t border-t-border-light dark:border-t-border-dark">
+                    <td class="p-4 w-12"><input class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary" type="checkbox" /></td>
+                    <td class="p-4 text-sm font-normal leading-normal">Mary Poppins</td>
+                    <td class="p-4 text-sm font-normal leading-normal"><span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">Novo</span></td>
+                    <td class="p-4 text-sm font-normal leading-normal">Midia Social</td>
+                    <td class="p-4 text-sm font-normal leading-normal">2023-10-23</td>
+                    <td class="p-4 text-sm font-normal leading-normal">2023-10-24</td>
+                    <td class="p-4 text-sm font-normal leading-normal">Contato Inicial</td>
+                    <td class="p-4 text-sm font-normal leading-normal">Sarah Jones</td>
+                    <td class="p-4"><button command="show-modal" commandfor="dialog" class="text-primary"><span class="material-symbols-outlined">more_vert</span></button></td>
                   </tr>
-                  <tr
-                    class="border-t border-t-border-light dark:border-t-border-dark">
-                    <td class="p-4 w-12"><input
-                        class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary"
-                        type="checkbox" /></td>
-                    <td class="p-4 text-sm font-normal leading-normal">Tony
-                      Stark</td>
-                    <td class="p-4 text-sm font-normal leading-normal"><span
-                        class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">Progresso</span></td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">Website</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">2023-10-22</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">2023-10-23</td>
-                    <td
-                      class="p-4 text-sm font-normal leading-normal">Contato
-                      Inicial</td>
-                    <td class="p-4 text-sm font-normal leading-normal">Sarah
-                      Jones</td>
-                    <td class="p-4"><button class="text-primary"><span
-                          class="material-symbols-outlined">more_vert</span></button></td>
+                  <tr class="border-t border-t-border-light dark:border-t-border-dark">
+                    <td class="p-4 w-12"><input class="h-5 w-5 rounded border-border-light dark:border-border-dark border-2 bg-transparent text-primary checked:bg-primary checked:border-primary checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0 focus:border-primary" type="checkbox" /></td>
+                    <td class="p-4 text-sm font-normal leading-normal">Tony Stark</td>
+                    <td class="p-4 text-sm font-normal leading-normal"><span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">Progresso</span></td>
+                    <td class="p-4 text-sm font-normal leading-normal">Website</td>
+                    <td class="p-4 text-sm font-normal leading-normal">2023-10-22</td>
+                    <td class="p-4 text-sm font-normal leading-normal">2023-10-23</td>
+                    <td class="p-4 text-sm font-normal leading-normal">Contato Inicial</td>
+                    <td class="p-4 text-sm font-normal leading-normal">Sarah Jones</td>
+                    <td class="p-4"><button command="show-modal" commandfor="dialog" class="text-primary"><span class="material-symbols-outlined">more_vert</span></button></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 
-      </div> <!-- Fim do dashboard-container -->
 
-      <!-- =========================================== -->
-      <!-- SCRIPT PADRÃO PARA TODOS OS DASHBOARDS -->
-      <!-- =========================================== -->
-      <script>
-        // CONFIGURAÇÃO PADRÃO PARA DASHBOARDS EM IFRAME
-        (function () {
-          'use strict';
+  <el-dialog>
+    <dialog id="dialog" aria-labelledby="dialog-title" class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
+      <el-dialog-backdrop class="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in dark:bg-gray-900/50"></el-dialog-backdrop>
+      <div tabindex="0" class="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
+        <el-dialog-panel class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95 dark:bg-gray-800 dark:outline dark:-outline-offset-1 dark:outline-white/10">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:bg-gray-800">
+            <div class="sm:flex sm:items-start">
+              <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10 dark:bg-red-500/10">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 text-red-600 dark:text-red-400">
+                  <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h1 id="dialog-title" class="text-base font-semibold text-gray-900 dark:text-white">Ações:</h1>
+                <div class="mt-2 mb-2 p-2">
+                  <button type="button" command="close" commandfor="dialog" class="ml-4 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-black shadow-xs hover:bg-white sm:ml-3 sm:w-auto dark:bg-white dark:shadow-none dark:hover:bg-white">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 p-3 mt-2 mb-2">
+                      ✏️ Editar
+                    </p>
+                  </button>
+                  <button type="button" command="close" commandfor="dialog" class="ml-4 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-black shadow-xs hover:bg-white sm:ml-3 sm:w-auto dark:bg-white dark:shadow-none dark:hover:bg-white">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 p-3 mt-2 mb-2">
+                      🗑️ Excluir
+                    </p>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 dark:bg-gray-700/25">
+            <button type="button" command="close" commandfor="dialog" class="ml-4 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto dark:bg-red-500 dark:shadow-none dark:hover:bg-red-400">Cancelar</button>
+            <button type="button" command="close" commandfor="dialog" class="mr-4 mt-3 inline-flex w-full justify-center rounded-md bg-blue-400 px-3 py-2 text-sm font-semibold text-white shadow-xs inset-ring inset-ring-gray-300 hover:bg-emerald-700 sm:mt-0 sm:w-auto dark:bg-gray/10 dark:text-black dark:shadow-none dark:inset-ring-gray/5 dark:hover:bg-green/20">Alterar</button>
+          </div>
+        </el-dialog-panel>
+      </div>
+    </dialog>
+  </el-dialog>
 
-          console.log('📊 Dashboard Template - Carregado');
+
+
+  <!-- =========================================== -->
+  <!-- SCRIPT PADRÃO PARA TODOS OS DASHBOARDS -->
+  <!-- =========================================== -->
+  <script>
+      // CONFIGURAÇÃO PADRÃO PARA DASHBOARDS EM IFRAME
+      (function () {
+        'use strict';
+
+        console.log('📊 Dashboard Template - Carregado');
+
+        // ===========================================
+        // 1. VERIFICAR SE ESTÁ DENTRO DE IFRAME
+        // ===========================================
+        const isInIframe = window.self !== window.top;
+
+        if (isInIframe) {
+          console.log('🎯 Dashboard carregado dentro de iframe');
 
           // ===========================================
-          // 1. VERIFICAR SE ESTÁ DENTRO DE IFRAME
+          // 2. INICIALIZAÇÃO DO DASHBOARD
           // ===========================================
-          const isInIframe = window.self !== window.top;
+          document.addEventListener('DOMContentLoaded', function () {
+            console.log('✅ DOM totalmente carregado');
 
-          if (isInIframe) {
-            console.log('🎯 Dashboard carregado dentro de iframe');
+            // Ajustar tema automaticamente
+            adjustTheme();
 
-            // ===========================================
-            // 2. INICIALIZAÇÃO DO DASHBOARD
-            // ===========================================
-            document.addEventListener('DOMContentLoaded', function () {
-              console.log('✅ DOM totalmente carregado');
+            // Garantir altura suficiente para scroll
+            guaranteeScrollHeight();
 
-              // Ajustar tema automaticamente
-              adjustTheme();
+            // Configurar componentes dinâmicos
+            setupDynamicComponents();
 
-              // Garantir altura suficiente para scroll
-              guaranteeScrollHeight();
+            // Informar ao parent que o dashboard está pronto
+            notifyParentDashboardReady();
+          });
 
-              // Configurar componentes dinâmicos
-              setupDynamicComponents();
+          // ===========================================
+          // 3. FUNÇÕES UTILITÁRIAS
+          // ===========================================
 
-              // Informar ao parent que o dashboard está pronto
-              notifyParentDashboardReady();
+          /**
+           * Ajusta o tema (claro/escuro) com base no parent
+           */
+          function adjustTheme() {
+            try {
+              const parentTheme = window.parent.document.documentElement.classList.contains('dark')
+                ? 'dark'
+                : 'light';
+
+              document.body.className = parentTheme;
+              console.log(`🎨 Tema ajustado para: ${parentTheme}`);
+            } catch (e) {
+              console.log('⚠️ Não foi possível detectar tema do parent');
+            }
+          }
+
+          /**
+           * Garante que o dashboard tenha altura suficiente para scroll
+           */
+          function guaranteeScrollHeight() {
+            setTimeout(() => {
+              const bodyHeight = document.body.scrollHeight;
+              const viewportHeight = window.innerHeight;
+              const minRequiredHeight = viewportHeight + 400;
+
+              console.log('📏 Verificando altura:', {
+                atual: bodyHeight + 'px',
+                viewport: viewportHeight + 'px',
+                necessária: minRequiredHeight + 'px',
+                precisaExpandir: bodyHeight < minRequiredHeight
+              });
+
+              // Se necessário, ajustar a área de scroll
+              if (bodyHeight < minRequiredHeight) {
+                const scrollMarker = document.querySelector('.scroll-end-marker');
+                if (scrollMarker) {
+                  const extraHeight = minRequiredHeight - bodyHeight + 100;
+                  scrollMarker.style.height = `${extraHeight}px`;
+                  console.log(`⚡ Área de scroll expandida em ${extraHeight}px`);
+                }
+              }
+            }, 300);
+          }
+
+          /**
+           * Configura componentes dinâmicos do dashboard
+           */
+          function setupDynamicComponents() {
+            // Adicionar tooltips nos KPIs
+            document.querySelectorAll('.kpi-card').forEach(card => {
+              card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-4px)';
+              });
+
+              card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0)';
+              });
             });
 
-            // ===========================================
-            // 3. FUNÇÕES UTILITÁRIAS
-            // ===========================================
-
-            /**
-             * Ajusta o tema (claro/escuro) com base no parent
-             */
-            function adjustTheme() {
-              try {
-                const parentTheme = window.parent.document.documentElement.classList.contains('dark')
-                  ? 'dark'
-                  : 'light';
-
-                document.body.className = parentTheme;
-                console.log(`🎨 Tema ajustado para: ${parentTheme}`);
-              } catch (e) {
-                console.log('⚠️ Não foi possível detectar tema do parent');
-              }
-            }
-
-            /**
-             * Garante que o dashboard tenha altura suficiente para scroll
-             */
-            function guaranteeScrollHeight() {
-              setTimeout(() => {
-                const bodyHeight = document.body.scrollHeight;
-                const viewportHeight = window.innerHeight;
-                const minRequiredHeight = viewportHeight + 400;
-
-                console.log('📏 Verificando altura:', {
-                  atual: bodyHeight + 'px',
-                  viewport: viewportHeight + 'px',
-                  necessária: minRequiredHeight + 'px',
-                  precisaExpandir: bodyHeight < minRequiredHeight
-                });
-
-                // Se necessário, ajustar a área de scroll
-                if (bodyHeight < minRequiredHeight) {
-                  const scrollMarker = document.querySelector('.scroll-end-marker');
-                  if (scrollMarker) {
-                    const extraHeight = minRequiredHeight - bodyHeight + 100;
-                    scrollMarker.style.height = `${extraHeight}px`;
-                    console.log(`⚡ Área de scroll expandida em ${extraHeight}px`);
-                  }
-                }
-              }, 300);
-            }
-
-            /**
-             * Configura componentes dinâmicos do dashboard
-             */
-            function setupDynamicComponents() {
-              // Adicionar tooltips nos KPIs
-              document.querySelectorAll('.kpi-card').forEach(card => {
-                card.addEventListener('mouseenter', function () {
-                  this.style.transform = 'translateY(-4px)';
-                });
-
-                card.addEventListener('mouseleave', function () {
-                  this.style.transform = 'translateY(0)';
-                });
-              });
-
-              // Configurar tooltips de status
-              document.querySelectorAll('[data-tooltip]').forEach(element => {
-                const tooltipText = element.getAttribute('data-tooltip');
-                if (tooltipText) {
-                  element.title = tooltipText;
-                }
-              });
-
-              console.log('🔧 Componentes dinâmicos configurados');
-            }
-
-            /**
-             * Informa ao parent que o dashboard está pronto
-             */
-            function notifyParentDashboardReady() {
-              setTimeout(() => {
-                try {
-                  const dashboardData = {
-                    type: 'dashboardReady',
-                    title: document.title,
-                    height: document.body.scrollHeight,
-                    url: window.location.href,
-                    timestamp: Date.now()
-                  };
-
-                  window.parent.postMessage(dashboardData, '*');
-                  console.log('📤 Dashboard notificado como pronto para parent');
-
-                } catch (e) {
-                  console.log('⚠️ Não foi possível notificar parent');
-                }
-              }, 1000);
-            }
-
-            // ===========================================
-            // 4. ESCUTAR COMANDOS DO PARENT
-            // ===========================================
-            window.addEventListener('message', function (event) {
-              try {
-                const data = event.data;
-
-                if (data.type === 'refreshDashboard') {
-                  console.log('🔄 Parent solicitou refresh do dashboard');
-                  // Implementar refresh se necessário
-                }
-
-                if (data.type === 'updateTheme') {
-                  console.log(`🎨 Parent solicitou mudança de tema: ${data.theme}`);
-                  document.body.className = data.theme || 'light';
-                }
-
-              } catch (e) {
-                // Ignorar erros
+            // Configurar tooltips de status
+            document.querySelectorAll('[data-tooltip]').forEach(element => {
+              const tooltipText = element.getAttribute('data-tooltip');
+              if (tooltipText) {
+                element.title = tooltipText;
               }
             });
 
-            // ===========================================
-            // 5. FUNÇÕES GLOBAIS PARA DEBUG
-            // ===========================================
+            console.log('🔧 Componentes dinâmicos configurados');
+          }
 
-            // Debug helper
-            window.dashboardDebug = function () {
-              console.group('🔧 DEBUG DO DASHBOARD');
-              console.log('URL:', window.location.href);
-              console.log('Título:', document.title);
-              console.log('Altura body:', document.body.scrollHeight + 'px');
-              console.log('Viewport:', window.innerHeight + 'px');
-              console.log('Tema atual:', document.body.className);
-              console.log('Em iframe:', isInIframe);
-              console.groupEnd();
+          /**
+           * Informa ao parent que o dashboard está pronto
+           */
+          function notifyParentDashboardReady() {
+            setTimeout(() => {
+              try {
+                const dashboardData = {
+                  type: 'dashboardReady',
+                  title: document.title,
+                  height: document.body.scrollHeight,
+                  url: window.location.href,
+                  timestamp: Date.now()
+                };
 
-              return {
-                height: document.body.scrollHeight,
-                viewport: window.innerHeight,
-                theme: document.body.className,
-                url: window.location.href
-              };
-            };
+                window.parent.postMessage(dashboardData, '*');
+                console.log('📤 Dashboard notificado como pronto para parent');
 
-            // Forçar recálculo de altura
-            window.recalculateHeight = function () {
-              guaranteeScrollHeight();
-              notifyParentDashboardReady();
-              console.log('📐 Altura recalculada');
-            };
-
-          } else {
-            console.log('🌍 Dashboard carregado diretamente (não em iframe)');
+              } catch (e) {
+                console.log('⚠️ Não foi possível notificar parent');
+              }
+            }, 1000);
           }
 
           // ===========================================
-          // 6. EXPORTAÇÃO DE FUNÇÕES PÚBLICAS
+          // 4. ESCUTAR COMANDOS DO PARENT
           // ===========================================
-          window.dashboardUtils = {
-            refresh: function () {
-              location.reload();
-            },
+          window.addEventListener('message', function (event) {
+            try {
+              const data = event.data;
 
-            toggleTheme: function () {
-              const currentTheme = document.body.className;
-              const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-              document.body.className = newTheme;
-              console.log(`🎨 Tema alterado para: ${newTheme}`);
-              return newTheme;
-            },
+              if (data.type === 'refreshDashboard') {
+                console.log('🔄 Parent solicitou refresh do dashboard');
+                // Implementar refresh se necessário
+              }
 
-            getStats: function () {
-              const cards = document.querySelectorAll('.kpi-card, .dashboard-card');
-              const tables = document.querySelectorAll('table');
-              const charts = document.querySelectorAll('[data-chart]');
+              if (data.type === 'updateTheme') {
+                console.log(`🎨 Parent solicitou mudança de tema: ${data.theme}`);
+                document.body.className = data.theme || 'light';
+              }
 
-              return {
-                totalCards: cards.length,
-                totalTables: tables.length,
-                totalCharts: charts.length,
-                totalHeight: document.body.scrollHeight,
-                theme: document.body.className
-              };
+            } catch (e) {
+              // Ignorar erros
             }
+          });
+
+          // ===========================================
+          // 5. FUNÇÕES GLOBAIS PARA DEBUG
+          // ===========================================
+
+          // Debug helper
+          window.dashboardDebug = function () {
+            console.group('🔧 DEBUG DO DASHBOARD');
+            console.log('URL:', window.location.href);
+            console.log('Título:', document.title);
+            console.log('Altura body:', document.body.scrollHeight + 'px');
+            console.log('Viewport:', window.innerHeight + 'px');
+            console.log('Tema atual:', document.body.className);
+            console.log('Em iframe:', isInIframe);
+            console.groupEnd();
+
+            return {
+              height: document.body.scrollHeight,
+              viewport: window.innerHeight,
+              theme: document.body.className,
+              url: window.location.href
+            };
           };
 
-        })();
-    </script>
-    </body>
+          // Forçar recálculo de altura
+          window.recalculateHeight = function () {
+            guaranteeScrollHeight();
+            notifyParentDashboardReady();
+            console.log('📐 Altura recalculada');
+          };
 
-  </html>
+        } else {
+          console.log('🌍 Dashboard carregado diretamente (não em iframe)');
+        }
+
+        // ===========================================
+        // 6. EXPORTAÇÃO DE FUNÇÕES PÚBLICAS
+        // ===========================================
+        window.dashboardUtils = {
+          refresh: function () {
+            location.reload();
+          },
+
+          toggleTheme: function () {
+            const currentTheme = document.body.className;
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.className = newTheme;
+            console.log(`🎨 Tema alterado para: ${newTheme}`);
+            return newTheme;
+          },
+
+          getStats: function () {
+            const cards = document.querySelectorAll('.kpi-card, .dashboard-card');
+            const tables = document.querySelectorAll('table');
+            const charts = document.querySelectorAll('[data-chart]');
+
+            return {
+              totalCards: cards.length,
+              totalTables: tables.length,
+              totalCharts: charts.length,
+              totalHeight: document.body.scrollHeight,
+              theme: document.body.className
+            };
+          }
+        };
+
+      })();
+  </script>
+</body>
+
+</html>
