@@ -391,9 +391,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="grid grid-cols-6 gap-4 mt-4">
-                        <div class="col-start-1 col-end-5">
+                <div class="mx-auto mt-2">
+                    <!-- LINHA 2: Breadcrumb + Busca -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
                             <nav id="breadcrumb" class="flex items-center text-sm text-white/80">                          style="background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 999px; display: inline-flex;">
                                 <!-- Será preenchido pelo JavaScript -->
                                 <span class="text-white/80">Home</span>
@@ -402,11 +405,10 @@
                                 <span class="mx-2 text-white/80">/</span>
                             </nav>
                         </div>
-
-                        <div class="col-span-2 col-end-7">
+                        <div class="flex items-center gap-4">
                             <div class="relative w-64">
-                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">search</span>
-                                <input id="global-search" class="w-full pl-10 pr-4 py-2 rounded-lg bg-white/20 border-none text-sm text-white placeholder-white/50" placeholder="Buscar..." type="text">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-white/80 text-sm">search</span>
+                                <input id="global-search" class="w-full pl-10 pr-4 py-2 rounded-lg bg-primary/60 border-y-white/50 text-sm text-black/80 placeholder-white/80" placeholder="Buscar..." type="text">
                             </div>
                         </div>
                     </div>
