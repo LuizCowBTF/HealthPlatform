@@ -294,6 +294,277 @@ class NavigationSystem {
     }
 }
 
+
+// ============================================
+// BREADCRUMB DINÂMICO
+// ============================================
+
+function updateBreadcrumb(pageTitle, pathParts = []) {
+    const breadcrumbNav = document.querySelector('nav.mt-4');
+    if (!breadcrumbNav) return;
+    
+    if (!pathParts.length) {
+        // Se não tiver pathParts, usa apenas o título da página
+        breadcrumbNav.innerHTML = `
+            <a href="#" onclick="loadPage('dashboard.html', 'Dashboard Geral'); return false;" class="hover:text-white opacity-80">Home</a>
+            <span class="mx-2 opacity-60">/</span>
+            <span class="font-medium">${pageTitle}</span>
+        `;
+        return;
+    }
+    
+    // Constroi o breadcrumb com os caminhos
+    let breadcrumbHtml = `<a href="#" onclick="loadPage('dashboard.html', 'Dashboard Geral'); return false;" class="hover:text-white opacity-80">Home</a>`;
+    
+    pathParts.forEach((part, index) => {
+        breadcrumbHtml += `<span class="mx-2 opacity-60">/</span>`;
+        
+        if (index === pathParts.length - 1) {
+            // Último item (página atual)
+            breadcrumbHtml += `<span class="font-medium">${part.title || part}</span>`;
+        } else {
+            // Item clicável
+            breadcrumbHtml += `<a href="#" onclick="${part.action || `loadPage('${part.path}', '${part.title}')`}; return false;" class="hover:text-white opacity-80">${part.title || part}</a>`;
+        }
+    });
+    
+    breadcrumbNav.innerHTML = breadcrumbHtml;
+}
+
+// Override da função loadPage existente
+const originalLoadPage = window.loadPage;
+window.loadPage = function(pageUrl, pageTitle, element) {
+    // Atualiza o título da página
+    const titleElement = document.getElementById('page-title');
+    if (titleElement) {
+        titleElement.textContent = pageTitle;
+    }
+    
+    // Atualiza o breadcrumb baseado na URL
+    updateBreadcrumbFromUrl(pageUrl, pageTitle);
+    
+    // Carrega no iframe
+    const iframe = document.getElementById('main-frame');
+    const loading = document.getElementById('frame-loading');
+    
+    if (loading) loading.style.display = 'flex';
+    if (iframe) {
+        iframe.src = pageUrl;
+        
+        // Remove event listener anterior se existir
+        iframe.onload = function() {
+            if (loading) loading.style.display = 'none';
+            
+            // Tenta enviar informações do breadcrumb para o iframe
+            try {
+                iframe.contentWindow.postMessage({
+                    type: 'breadcrumb',
+                    pageTitle: pageTitle,
+                    pageUrl: pageUrl
+                }, '*');
+            } catch(e) {
+                console.log('Não foi possível enviar mensagem para o iframe');
+            }
+        };
+    }
+    
+    // Atualiza o estado ativo do menu
+    if (element) {
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.classList.remove('active', 'bg-primary/10');
+        });
+        element.classList.add('active', 'bg-primary/10');
+    }
+    
+    // Salva no histórico
+    history.pushState({ pageUrl, pageTitle }, pageTitle, `#${pageUrl}`);
+};
+
+// Função para atualizar breadcrumb baseado na URL
+function updateBreadcrumbFromUrl(url, pageTitle) {
+    const breadcrumbMap = {
+        // Dashboard
+        'dashboard.html': { title: 'Dashboard Geral', path: [] },
+        'coordenador.html': { title: 'Dashboard Coordenador', path: [] },
+        'kpi_dashboard.html': { title: 'Dashboard KPI', path: [] },
+        
+        // Relatórios
+        'relatorios/kpi_financeiro2.html': { 
+            title: 'Executivo', 
+            path: [
+                { title: 'Relatórios', action: "showAlert('Relatórios')" }
+            ]
+        },
+        'relatorios/kpi_financeiro.html': { 
+            title: 'Financeiro', 
+            path: [
+                { title: 'Relatórios', action: "showAlert('Relatórios')" }
+            ]
+        },
+        'relatorios/performance_times.html': { 
+            title: 'Times', 
+            path: [
+                { title: 'Relatórios', action: "showAlert('Relatórios')" }
+            ]
+        },
+        
+        // Clientes & Leads
+        'leads/incluir_leads.html': { 
+            title: 'Incluir Lead', 
+            path: [
+                { title: 'Clientes & Leads', action: "toggleSubmenu('clientes-leads-menu')" }
+            ]
+        },
+        'leads/atualizar_leads.html': { 
+            title: 'Atualizar Leads', 
+            path: [
+                { title: 'Clientes & Leads', action: "toggleSubmenu('clientes-leads-menu')" }
+            ]
+        },
+        'clients/base_clients.html': { 
+            title: 'Base de Clientes', 
+            path: [
+                { title: 'Clientes & Leads', action: "toggleSubmenu('clientes-leads-menu')" }
+            ]
+        },
+        'chat/chat_corretores.html': { 
+            title: 'Chat Corretores', 
+            path: [
+                { title: 'Clientes & Leads', action: "toggleSubmenu('clientes-leads-menu')" }
+            ]
+        },
+        
+        // Financeiro
+        'financeiro/despesas.html': { 
+            title: 'Despesas', 
+            path: [
+                { title: 'Financeiro', action: "toggleSubmenu('financeiro-menu')" }
+            ]
+        },
+        'financeiro/receitas.html': { 
+            title: 'Receitas', 
+            path: [
+                { title: 'Financeiro', action: "toggleSubmenu('financeiro-menu')" }
+            ]
+        },
+        'financeiro/propostas.html': { 
+            title: 'Analisador de Propostas', 
+            path: [
+                { title: 'Financeiro', action: "toggleSubmenu('financeiro-menu')" }
+            ]
+        },
+        'financeiro/aprovacoes_financeira.html': { 
+            title: 'Aprovações Financeiras', 
+            path: [
+                { title: 'Financeiro', action: "toggleSubmenu('financeiro-menu')" }
+            ]
+        },
+        'financeiro/comissionamentos.html': { 
+            title: 'Comissionamento', 
+            path: [
+                { title: 'Financeiro', action: "toggleSubmenu('financeiro-menu')" }
+            ]
+        },
+        
+        // Marketing
+        'marketing/campanhas.html': { 
+            title: 'Campanhas', 
+            path: [
+                { title: 'Marketing', action: "toggleSubmenu('marketing-menu')" }
+            ]
+        },
+        'marketing/gerenciamento.html': { 
+            title: 'Gerenciamento', 
+            path: [
+                { title: 'Marketing', action: "toggleSubmenu('marketing-menu')" }
+            ]
+        },
+        
+        // Operações
+        'operacoes/admin_chat.html': { 
+            title: 'Admin Chat', 
+            path: [
+                { title: 'Operações', action: "toggleSubmenu('operacao-menu')" }
+            ]
+        },
+        'operacoes/banco_corretores.html': { 
+            title: 'Banco de Corretores', 
+            path: [
+                { title: 'Operações', action: "toggleSubmenu('operacao-menu')" }
+            ]
+        },
+        'operacoes/calendario_geral.html': { 
+            title: 'Calendário Geral', 
+            path: [
+                { title: 'Operações', action: "toggleSubmenu('operacao-menu')" }
+            ]
+        },
+        
+        // Treinamento & RH
+        'comissoes.html': { 
+            title: 'HR Page - Central RH', 
+            path: [
+                { title: 'Treinamento & RH', action: "toggleSubmenu('treinamento-menu')" }
+            ]
+        },
+        'treinamento_rh/treinamentos.html': { 
+            title: 'Treinamentos', 
+            path: [
+                { title: 'Treinamento & RH', action: "toggleSubmenu('treinamento-menu')" }
+            ]
+        },
+        
+        // Executivo
+        'executivo/gerenc_metas.html': { 
+            title: 'Gerenciamento Metas', 
+            path: [
+                { title: 'Executivo', action: "showAlert('Executivo')" }
+            ]
+        },
+        
+        // Configurações
+        'configuracoes.html': { title: 'Configurações', path: [] },
+        'perfil.html': { title: 'Perfil', path: [] }
+    };
+    
+    const config = breadcrumbMap[url] || { title: pageTitle, path: [] };
+    updateBreadcrumb(config.title, config.path);
+}
+
+// Função auxiliar para alertas (pode ser removida ou adaptada)
+window.showAlert = function(message) {
+    console.log(message);
+    // Se quiser um toast/notificação
+    // showToast(message);
+};
+
+// Listener para navegação do histórico
+window.addEventListener('popstate', function(event) {
+    if (event.state) {
+        loadPage(event.state.pageUrl, event.state.pageTitle);
+    }
+});
+
+// Listener para mensagens do iframe (breadcrumb interno)
+window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'breadcrumb') {
+        updateBreadcrumb(event.data.pageTitle, event.data.pathParts || []);
+        const titleElement = document.getElementById('page-title');
+        if (titleElement && event.data.pageTitle) {
+            titleElement.textContent = event.data.pageTitle;
+        }
+    }
+});
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+    // Configura página inicial
+    const currentUrl = window.location.hash.substring(1) || 'dashboard.html';
+    const currentTitle = document.getElementById('page-title')?.textContent || 'Dashboard Geral';
+    updateBreadcrumbFromUrl(currentUrl, currentTitle);
+});
+
+
 // ============================================
 // INICIALIZAÇÃO
 // ============================================

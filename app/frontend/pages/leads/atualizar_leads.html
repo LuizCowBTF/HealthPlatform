@@ -342,7 +342,7 @@
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mt-8 ml-2 mr-5">
       <div class="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-1">
         <div class="bg-white dark:bg-[#2a201c] rounded-xl shadow-sm">
-          <div class="flex items-center justify-between p-4">
+          <div class="flex items-center justify-around p-4">
             <h3 class="font-semibold text-gray-700">
               📥 Listagem de Leads
             </h3>
@@ -495,7 +495,6 @@
     </div>
   </div>
 
-
   <el-dialog>
     <dialog id="dialog" aria-labelledby="dialog-title" class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
       <el-dialog-backdrop class="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in dark:bg-gray-900/50"></el-dialog-backdrop>
@@ -533,8 +532,6 @@
       </div>
     </dialog>
   </el-dialog>
-
-
 
   <!-- =========================================== -->
   <!-- SCRIPT PADRÃO PARA TODOS OS DASHBOARDS -->
@@ -759,6 +756,7 @@
 
       })();
   </script>
+  <script src="../js/iframe-breadcrumb-helper.js"></script>
 </body>
 
 </html>
