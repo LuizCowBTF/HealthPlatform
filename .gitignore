@@ -1,14 +1,8 @@
-# Raiz do repositório
+﻿# Raiz do repositório
 *.user
 *.suo
 *.lock
 .DS_Store
-
-# Testes de desenvolvimento
-/tests
-/tests/*.py
-/tests/*.*
-
 
 # Python
 __pycache__/
@@ -66,18 +60,6 @@ node_modules/
 dist/
 /.angular/cache
 
-
-# Database
-*.db
-*.sqlite3
-*.sqlite
-migrations/
-
-# Logs
-*.log
-logs/
-log/
-
 # Docker
 docker-compose.override.yml
 .dockerignore
@@ -113,16 +95,8 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
-htmlcov/
 .tox/
 .nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
 .hypothesis/
 .pytest_cache/
 
@@ -167,3 +141,11 @@ site/
 
 # Mypy
 .mypy_cache/
+
+# Testes - Agora permitindo arquivos de teste
+# Ignora arquivos temporários de teste, mas não os .py
+tests/__pycache__/
+tests/*.tmp
+tests/*.log
+!tests/*.py
+!tests/test_*.py
