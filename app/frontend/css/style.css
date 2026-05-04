@@ -1,15 +1,27 @@
 /* =========================================== */
 /* VARIÁVEIS E RESET */
 /* =========================================== */
+
 :root {
-    --primary: #d48262;
-    --primary-dark: #b86a50;
+    /* ========== CORES PRIMÁRIAS ========== */
+    --primary:        #fd7e14;    /* Laranja oficial da marca */
+    --primary-dark:   #e36f0f;    /* Hover / active */
     --background-light: #f5f5f5;
     --background-dark: #1a202c;
     --card-light: #ffffff;
     --card-dark: #2d3748;
     --text-light: #2d3748;
     --text-dark: #f7fafc;
+    --primary-light:  #ffa850;    /* Destaques suaves */
+    --primary-soft:   #fef1e4;    /* Backgrounds de alerta */
+
+    /* ========== CORES SECUNDÁRIAS ========== */
+    --secondary:      #6c757d;
+    --success:        #198754;
+    --warning:        #ffc107;
+    --danger:         #dc3545;
+    --info:           #0dcaf0;
+    --dark:           #212529;
 }
 
 /* Dark mode variables */
