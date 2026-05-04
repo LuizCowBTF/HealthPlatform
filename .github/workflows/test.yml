@@ -65,3 +65,24 @@ jobs:
       with:
         file: ./coverage.xml
         fail_ci_if_error: false
+
+  # Job de notificação de falha (independente)
+  notify-failure:
+    needs: test
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send failure notification
+        run: |
+          echo "❌ CI pipeline failed for commit ${{ github.sha }}"
+          echo "Check the logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  # Job de notificação de sucesso (independente)
+  notify-success:
+    needs: test
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send success notification
+        run: |
+          echo "✅ CI pipeline succeeded for commit ${{ github.sha }}"

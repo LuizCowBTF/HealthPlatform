@@ -32,6 +32,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)
 ![MySQL](https://img.shields.io/badge/MySQL-AWS_RDS-orange)
 ![JWT](https://img.shields.io/badge/Auth-JWT-purple)
+[![Tests](https://github.com/LuizCowBTF/HealthPlatform/actions/workflows/test.yml/badge.svg)](https://github.com/LuizCowBTF/HealthPlatform/actions/workflows/test.yml)
 ![Status](https://img.shields.io/badge/status-production--ready-brightgreen.svg)
 
 <br>
